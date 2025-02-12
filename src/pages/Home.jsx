@@ -1,7 +1,17 @@
+import Hero from "../components/Hero";
+import Features from "../components/Features";
+import HowToPlay from "../components/HowToPlay";
+import BuyNowSection from "../components/BuyNowSection";
+import JoinTheChaos from "../components/Join";
+
 function Home() {
     return (
-        <div className="flex justify-center items-center h-screen">
-            <h1 className="text-4xl font-bold">Welcome to Controlled Chaos™</h1>
+        <div>
+            <Hero />
+            <Features />
+            <HowToPlay />
+            <BuyNowSection />
+            <JoinTheChaos />
         </div>
     );
 }
