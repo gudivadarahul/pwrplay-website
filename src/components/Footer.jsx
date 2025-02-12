@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 function Footer() {
     return (
         <footer className="bg-black text-white text-center py-6 mt-12">
@@ -14,9 +15,10 @@ function Footer() {
 
             {/* Legal Links */}
             <div className="text-sm mt-2">
-                <a href="/terms" className="hover:underline">Terms of Use</a> |
-                <a href="/privacy" className="hover:underline"> Privacy Policy</a>
+                <Link to="/terms" className="hover:underline">Terms of Use</Link> |
+                <Link to="/privacy" className="hover:underline"> Privacy Policy</Link>
             </div>
+
         </footer>
     );
 }
