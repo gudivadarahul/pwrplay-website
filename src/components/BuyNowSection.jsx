@@ -1,4 +1,4 @@
-import boxTopView from "/src/assets/box-top-view.png"; // Use absolute import
+import boxTopView from "../assets/box-top-view.png";
 
 function BuyNowSection() {
     return (
