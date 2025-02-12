@@ -1,5 +1,4 @@
-import { Link } from "react-router-dom";
-import boxTopView from '../assets/box-top-view.png';
+import boxTopView from "/src/assets/box-top-view.png"; // Use absolute import
 
 function BuyNowSection() {
     return (
