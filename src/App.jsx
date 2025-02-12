@@ -6,6 +6,8 @@ import Terms from "./pages/Terms";
 import Privacy from "./pages/Privacy";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import FAQ from "./components/FAQ";
+import ControlledChaos from "./pages/ControlledChaos";
 
 function App() {
   return (
@@ -17,6 +19,8 @@ function App() {
         <Route path="/buy" element={<BuyNow />} />
         <Route path="/terms" element={<Terms />} />
         <Route path="/privacy" element={<Privacy />} />
+        <Route path="/faq" element={<FAQ />} />
+        <Route path="/controlled-chaos" element={<ControlledChaos />} />
       </Routes>
       <Footer />
     </div>
