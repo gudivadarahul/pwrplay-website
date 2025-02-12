@@ -1,5 +1,3 @@
-import boxTopView from "../assets/box-top-view.png";
-
 function BuyNowSection() {
     return (
         <section className="bg-black text-white py-16 px-6 text-center">
@@ -11,7 +9,7 @@ function BuyNowSection() {
             {/* Product Image */}
             <div className="max-w-lg mx-auto mb-6">
                 <img
-                    src={boxTopView}
+                    src="/box-top-view.png"
                     alt="Controlled Chaos™ Game Box"
                     className="rounded-lg shadow-lg"
                 />
