@@ -8,6 +8,7 @@ function Navbar() {
     const [aboutDropdown,setAboutDropdown] = useState(false);
     const [showConnectDialog,setShowConnectDialog] = useState(false);
     const [isScrolled,setIsScrolled] = useState(false);
+    const [connectDropdown,setConnectDropdown] = useState(false);
 
     const socialLinks = [
         {
@@ -83,7 +84,7 @@ function Navbar() {
                         </div>
                         {/* Added invisible bridge */}
                         <div className="absolute w-full h-0.5 bg-transparent"></div>
-                        <div className="absolute left-1/2 -translate-x-1/2 mt-0.5 bg-black/95 backdrop-blur-sm text-white rounded-lg shadow-xl hidden group-hover:block min-w-[220px] whitespace-nowrap transition-all duration-300 ease-in-out opacity-0 group-hover:opacity-100 transform group-hover:translate-y-0 translate-y-[-10px] border border-gray-800 overflow-hidden">
+                        <div className="absolute -right-4 mt-0.5 bg-black/95 backdrop-blur-sm text-white rounded-lg shadow-xl hidden group-hover:block min-w-[220px] whitespace-nowrap transition-all duration-300 ease-in-out opacity-0 group-hover:opacity-100 transform group-hover:translate-y-0 translate-y-[-10px] overflow-hidden">
                             <Link to="/controlled-chaos" className="block px-4 py-2 hover:text-red-500 transition-all duration-300 hover:pl-6 outline-none font-headers uppercase">
                                 Controlled Chaos™
                             </Link>
@@ -95,28 +96,41 @@ function Navbar() {
                         <div className="flex items-center gap-2 cursor-pointer transition-all duration-300 hover:text-red-500 py-2 px-3 rounded-lg outline-none text-lg font-headers uppercase">
                             About <FaChevronDown className="group-hover:rotate-180 transition-transform duration-300" />
                         </div>
-                        {/* Added invisible bridge */}
                         <div className="absolute w-full h-0.5 bg-transparent"></div>
-                        <div className="absolute left-1/2 -translate-x-1/2 mt-0.5 bg-black/95 backdrop-blur-sm text-white rounded-lg shadow-xl hidden group-hover:block min-w-[220px] whitespace-nowrap transition-all duration-300 ease-in-out opacity-0 group-hover:opacity-100 transform group-hover:translate-y-0 translate-y-[-10px] border border-gray-800 overflow-hidden">
+                        <div className="absolute left-0 mt-0.5 bg-black/95 backdrop-blur-sm text-white rounded-lg shadow-xl hidden group-hover:block min-w-[220px] whitespace-nowrap transition-all duration-300 ease-in-out opacity-0 group-hover:opacity-100 transform group-hover:translate-y-0 translate-y-[-10px] overflow-hidden">
                             <Link to="/about/team" className="block px-4 py-2 hover:text-red-500 transition-all duration-300 hover:pl-6 outline-none font-headers uppercase">
                                 Team
                             </Link>
                             <Link to="/about/timeline" className="block px-4 py-2 hover:text-red-500 transition-all duration-300 hover:pl-6 outline-none font-headers uppercase">
                                 Timeline
                             </Link>
+                            <Link to="/faq" className="block px-4 py-2 hover:text-red-500 transition-all duration-300 hover:pl-6 outline-none font-headers uppercase">
+                                FAQs
+                            </Link>
                         </div>
                     </div>
 
-                    <Link to="/faq" className="transition-all duration-300 hover:text-red-500 py-2 px-3 rounded-lg outline-none text-lg font-headers uppercase">
-                        FAQs
-                    </Link>
-
-                    <button
-                        onClick={() => setShowConnectDialog(true)}
-                        className="transition-all duration-300 hover:text-red-500 py-2 px-3 rounded-lg outline-none text-lg font-headers uppercase"
-                    >
-                        Connect
-                    </button>
+                    <div className="relative group">
+                        {/* Connect Dropdown */}
+                        <div className="flex items-center gap-2 cursor-pointer transition-all duration-300 hover:text-red-500 py-2 px-3 rounded-lg outline-none text-lg font-headers uppercase">
+                            Connect <FaChevronDown className="group-hover:rotate-180 transition-transform duration-300" />
+                        </div>
+                        <div className="absolute w-full h-0.5 bg-transparent"></div>
+                        <div className="absolute left-0 mt-0.5 bg-black/95 backdrop-blur-sm text-white rounded-lg shadow-xl hidden group-hover:block min-w-[220px] whitespace-nowrap transition-all duration-300 ease-in-out opacity-0 group-hover:opacity-100 transform group-hover:translate-y-0 translate-y-[-10px] overflow-hidden">
+                            <button
+                                onClick={() => setShowConnectDialog(true)}
+                                className="block w-full text-left px-4 py-2 hover:text-red-500 transition-all duration-300 hover:pl-6 outline-none font-headers uppercase"
+                            >
+                                Socials
+                            </button>
+                            <Link to="/connect/contact" className="block px-4 py-2 hover:text-red-500 transition-all duration-300 hover:pl-6 outline-none font-headers uppercase">
+                                Contact
+                            </Link>
+                            <Link to="/connect/retailers" className="block px-4 py-2 hover:text-red-500 transition-all duration-300 hover:pl-6 outline-none font-headers uppercase">
+                                Retailers
+                            </Link>
+                        </div>
+                    </div>
 
                     <Link
                         to="/controlled-chaos#buy-section"
@@ -174,19 +188,36 @@ function Navbar() {
                                     <Link to="/about/timeline" className="block px-6 py-3 hover:text-red-500 transition-all duration-300 hover:pl-8 outline-none font-headers uppercase">
                                         Timeline
                                     </Link>
+                                    <Link to="/faq" className="block px-6 py-3 hover:text-red-500 transition-all duration-300 hover:pl-8 outline-none font-headers uppercase">
+                                        FAQs
+                                    </Link>
                                 </div>
                             )}
 
-                            <Link to="/faq" className="py-2 px-4 hover:text-red-500 transition-all duration-300 rounded-lg w-[90%] text-center outline-none uppercase">
-                                FAQs
-                            </Link>
-
+                            {/* Connect Dropdown Mobile */}
                             <button
-                                onClick={() => setShowConnectDialog(true)}
-                                className="py-2 px-4 hover:text-red-500 transition-all duration-300 rounded-lg w-[90%] text-center outline-none uppercase"
+                                onClick={() => setConnectDropdown(!connectDropdown)}
+                                className="flex items-center justify-center gap-2 py-2 px-4 hover:text-red-500 transition-all duration-300 
+                                        hover:bg-gray-800/30 rounded-lg w-[90%] outline-none uppercase"
                             >
-                                Connect
+                                Connect <FaChevronDown className={`transition-transform duration-300 ${connectDropdown ? 'rotate-180' : ''}`} />
                             </button>
+                            {connectDropdown && (
+                                <div className="bg-black/95 backdrop-blur-sm text-white py-2 rounded-lg shadow-lg w-[90%] max-w-[300px] border border-gray-800/50 animate-slideDown">
+                                    <button
+                                        onClick={() => setShowConnectDialog(true)}
+                                        className="block w-full text-left px-6 py-3 hover:text-red-500 transition-all duration-300 hover:pl-8 outline-none font-headers uppercase"
+                                    >
+                                        Socials
+                                    </button>
+                                    <Link to="/connect/contact" className="block px-6 py-3 hover:text-red-500 transition-all duration-300 hover:pl-8 outline-none font-headers uppercase">
+                                        Contact
+                                    </Link>
+                                    <Link to="/connect/retailers" className="block px-6 py-3 hover:text-red-500 transition-all duration-300 hover:pl-8 outline-none font-headers uppercase">
+                                        Retailers
+                                    </Link>
+                                </div>
+                            )}
 
                             <Link
                                 to="/controlled-chaos#buy-section"

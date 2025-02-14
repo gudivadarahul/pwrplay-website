@@ -2,7 +2,7 @@ function PromoVideo() {
     return (
         <section className="relative bg-black text-white py-24 px-6 text-center">
             <div className="max-w-5xl mx-auto">
-                <h2 className="text-4xl md:text-5xl font-headers mb-12 fade-in">
+                <h2 className="text-4xl md:text-6xl font-headers mb-12 fade-in">
                     The <span className="text-red-600">Ultimate</span> Party Game
                 </h2>
 

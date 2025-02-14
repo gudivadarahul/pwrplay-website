@@ -111,8 +111,11 @@ function ControlledChaos() {
                     <div className="relative w-full max-w-3xl mx-auto aspect-video">
                         <iframe
                             className="w-full h-full rounded-lg shadow-lg"
-                            src="https://www.youtube.com/embed/YOUR_VIDEO_ID"
-                            title="How to Play Controlled Chaos™"
+                            src="https://www.youtube.com/watch?v=exubwWDXiXY"
+                            title="Controlled Chaos Promo Video"
+                            frameBorder="0"
+                            referrerPolicy="no-referrer"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                             allowFullScreen
                         ></iframe>
                     </div>

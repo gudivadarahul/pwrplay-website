@@ -14,7 +14,7 @@ const faqs = [
 function FAQ() {
     return (
         <div className="p-8 text-white max-w-4xl mx-auto">
-            <h1 className="text-4xl font-extrabold mb-6 text-center">Frequently Annoying Questions</h1>
+            <h1 className="text-4xl font-extrabold mb-6 text-center">Frequently Annoying Questions (a.k.a FAQs)</h1>
             <p className="text-lg opacity-80 text-center mb-12">
                 Got questions? We've got answers. But let's be real—you probably already know how to play!
             </p>
