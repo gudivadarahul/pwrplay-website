@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes,Route } from "react-router-dom";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import BuyNow from "./pages/BuyNow";
@@ -11,17 +11,19 @@ import ControlledChaos from "./pages/ControlledChaos";
 
 function App() {
   return (
-    <div className="bg-black text-white min-h-screen">
+    <div className="flex flex-col min-h-screen bg-black text-white">
       <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/buy" element={<BuyNow />} />
-        <Route path="/terms" element={<Terms />} />
-        <Route path="/privacy" element={<Privacy />} />
-        <Route path="/faq" element={<FAQ />} />
-        <Route path="/controlled-chaos" element={<ControlledChaos />} />
-      </Routes>
+      <main className="flex-grow">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/buy" element={<BuyNow />} />
+          <Route path="/terms" element={<Terms />} />
+          <Route path="/privacy" element={<Privacy />} />
+          <Route path="/faq" element={<FAQ />} />
+          <Route path="/controlled-chaos" element={<ControlledChaos />} />
+        </Routes>
+      </main>
       <Footer />
     </div>
   );

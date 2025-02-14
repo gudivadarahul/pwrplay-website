@@ -21,8 +21,23 @@ export default {
           '0%, 100%': { boxShadow: '0 0 15px rgba(239, 68, 68, 0.5)' },
           '50%': { boxShadow: '0 0 30px rgba(239, 68, 68, 0.8)' }
         }
-      }
+      },
+      fontFamily: {
+        'headers': ['Bebas Neue','sans-serif'],
+        'subheaders': ['Rajdhani','sans-serif'],
+        'body': ['Poppins','sans-serif'],
+      },
+      fontWeight: {
+        'light': 300,
+      },
     }
   },
-  plugins: []
+  plugins: [],
+  safelist: [
+    'perspective-1000',
+    'transform-style-3d',
+    'backface-hidden',
+    'rotate-y-180',
+    'rotate-y-90'
+  ]
 }

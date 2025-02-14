@@ -142,3 +142,95 @@
         transform: translate(calc(100vw + 100px), calc(100vh + 100px));
     }
 }
+
+.static-glow {
+    box-shadow: 0 0 20px rgba(239, 68, 68, 0.7), 0 0 40px rgba(239, 68, 68, 0.4);
+}
+
+@keyframes moveLeftToRight {
+    from {
+        left: -100px;
+    }
+
+    to {
+        left: 100%;
+    }
+}
+
+@keyframes moveRightToLeft {
+    from {
+        left: 100%;
+    }
+
+    to {
+        left: -100px;
+    }
+}
+
+@keyframes moveTopToBottom {
+    from {
+        top: -100px;
+        left: 50%;
+    }
+
+    to {
+        top: 100%;
+        left: 50%;
+    }
+}
+
+@keyframes moveBottomToTop {
+    from {
+        top: 100%;
+        left: 50%;
+    }
+
+    to {
+        top: -100px;
+        left: 50%;
+    }
+}
+
+@keyframes moveDiagonalDownRight {
+    from {
+        left: -100px;
+        top: -100px;
+    }
+
+    to {
+        left: 100%;
+        top: 100%;
+    }
+}
+
+@keyframes moveDiagonalUpRight {
+    from {
+        left: -100px;
+        top: 100%;
+    }
+
+    to {
+        left: 100%;
+        top: -100px;
+    }
+}
+
+.card-move-0 {
+    --rotation: 0deg;
+    animation: moveRightToLeft 15s linear infinite !important;
+}
+
+.card-move-1 {
+    --rotation: 90deg;
+    animation: moveRightToLeft 15s linear infinite reverse !important;
+}
+
+.card-move-2 {
+    --rotation: 180deg;
+    animation: moveRightToLeft 20s linear infinite !important;
+}
+
+.card-move-3 {
+    --rotation: 270deg;
+    animation: moveRightToLeft 18s linear infinite reverse !important;
+}
