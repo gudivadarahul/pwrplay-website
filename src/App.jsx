@@ -8,6 +8,9 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import FAQ from "./components/FAQ";
 import ControlledChaos from "./pages/ControlledChaos";
+import Contact from "./pages/Contact";
+import Retailers from "./pages/Retailers";
+import Timeline from "./pages/Timeline";
 
 function App() {
   return (
@@ -22,6 +25,9 @@ function App() {
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/faq" element={<FAQ />} />
           <Route path="/controlled-chaos" element={<ControlledChaos />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/connect/retailers" element={<Retailers />} />
+          <Route path="/about/timeline" element={<Timeline />} />
         </Routes>
       </main>
       <Footer />

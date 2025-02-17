@@ -3,7 +3,7 @@ import { FaQuoteLeft } from 'react-icons/fa';
 
 const testimonials = [
     {
-        text: "I loved the hitlist deck because it involves everyone in the game! Controlled Chaos is a fun and lighthearted game to play with your friends that is simple and engagin",
+        text: "I loved the hitlist deck because it involves everyone in the game! Controlled Chaos is a fun and lighthearted game to play with your friends that is simple and engaging.",
         author: "J.K."
     },
     {
@@ -15,16 +15,20 @@ const testimonials = [
         author: "C.S."
     },
     {
-        text: "The only time I've ever wanted more chaos in my life",
+        text: "The only time I've ever wanted more chaos in my life.",
         author: "S.C. "
     },
     {
-        text: "Perfect balance of fun and chaos. The card combinations are genius. Can't wait to play again!",
-        author: "Chris P."
+        text: "We spent hours laughing at every card, telling each other hilarious stories from our pasts, and trying to defend ourselves from getting those icks!! This game is a must have in every household.",
+        author: "A.S."
     },
     {
-        text: "Best impulse purchase ever! Every party now ends with 'When are we playing Controlled Chaos again?'",
-        author: "Taylor S."
+        text: "It's perfect to play with friends you've known for years or as an icebreaker with a new group. If you want a game that'll have you ugly laughing and getting absolutely hammered, this is it.",
+        author: "S.P."
+    },
+    {
+        text: "I liked how much the social barrier was just absolutely destroyed within two rounds of playing, and that we just played for hours on end without realizing.",
+        author: "S.G."
     }
 ];
 

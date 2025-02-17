@@ -13,29 +13,37 @@ const faqs = [
 
 function FAQ() {
     return (
-        <div className="p-8 text-white max-w-4xl mx-auto">
-            <h1 className="text-4xl font-extrabold mb-6 text-center">Frequently Annoying Questions (a.k.a FAQs)</h1>
-            <p className="text-lg opacity-80 text-center mb-12">
-                Got questions? We've got answers. But let's be real—you probably already know how to play!
-            </p>
+        <div className="pt-32 px-6 min-h-screen bg-black">
+            <div className="max-w-4xl mx-auto">
+                <h1 className="text-5xl md:text-7xl font-headers mb-6 text-center">
+                <span className="text-red-600">F</span>requent&nbsp; <span className="text-red-600">A</span>nnoying&nbsp; <span className="text-red-600">Q</span>uestions
+                </h1>
+                <p className="text-2xl text-center mb-12 font-body font-medium">
+                    Got questions? We've got answers. But let's be real—you probably already know how to play!
+                </p>
 
-            {/* FAQ List */}
-            <div className="space-y-6">
-                {faqs.map((faq,index) => (
-                    <Disclosure key={index}>
-                        {({ open }) => (
-                            <div className="bg-gray-900 p-4 rounded-lg shadow-lg">
-                                <DisclosureButton className="flex justify-between items-center w-full text-left text-lg font-bold">
-                                    {faq.question}
-                                    {open ? <FaChevronUp /> : <FaChevronDown />}
-                                </DisclosureButton>
-                                <DisclosurePanel className="mt-2 text-gray-300">
-                                    {faq.answer}
-                                </DisclosurePanel>
-                            </div>
-                        )}
-                    </Disclosure>
-                ))}
+                {/* FAQ List */}
+                <div className="space-y-6">
+                    {faqs.map((faq,index) => (
+                        <Disclosure key={index}>
+                            {({ open }) => (
+                                <div className="bg-black p-4 rounded-lg shadow-lg border-5 border-red-600 hover:border-red-600 transition-all duration-300">
+                                    <DisclosureButton className="flex justify-between items-center w-full text-left text-2xl font-headers font-medium">
+                                        {faq.question}
+                                        {open ? (
+                                            <FaChevronUp className="text-red-600" />
+                                        ) : (
+                                            <FaChevronDown className="text-red-600" />
+                                        )}
+                                    </DisclosureButton>
+                                    <DisclosurePanel className="mt-4 text-gray-300 font-body font-medium">
+                                        {faq.answer}
+                                    </DisclosurePanel>
+                                </div>
+                            )}
+                        </Disclosure>
+                    ))}
+                </div>
             </div>
         </div>
     );

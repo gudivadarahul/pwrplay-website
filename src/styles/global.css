@@ -22,3 +22,53 @@ h6 {
 body {
     font-family: 'Poppins', sans-serif;
 }
+
+@keyframes textGlowUp {
+    0% {
+        opacity: 0.4;
+        color: white;
+        text-shadow: none;
+    }
+
+    20% {
+        opacity: 0.7;
+        color: #ff9999;
+        text-shadow: 0 0 10px rgba(255, 68, 68, 0.5);
+    }
+
+    100% {
+        opacity: 1;
+        color: #ff4444;
+        text-shadow: 0 0 20px rgba(255, 68, 68, 1),
+            0 0 30px rgba(255, 68, 68, 1),
+            0 0 40px rgba(255, 68, 68, 1),
+            0 0 50px rgba(255, 68, 68, 0.8),
+            0 0 60px rgba(255, 68, 68, 0.6),
+            0 0 70px rgba(255, 68, 68, 0.4);
+    }
+}
+
+@keyframes textGlowDown {
+    0% {
+        opacity: 1;
+        color: #ff4444;
+        text-shadow: 0 0 20px rgba(255, 68, 68, 1),
+            0 0 30px rgba(255, 68, 68, 1),
+            0 0 40px rgba(255, 68, 68, 1),
+            0 0 50px rgba(255, 68, 68, 0.8),
+            0 0 60px rgba(255, 68, 68, 0.6),
+            0 0 70px rgba(255, 68, 68, 0.4);
+    }
+
+    80% {
+        opacity: 0.7;
+        color: #ff9999;
+        text-shadow: 0 0 10px rgba(255, 68, 68, 0.5);
+    }
+
+    100% {
+        opacity: 0.4;
+        color: white;
+        text-shadow: none;
+    }
+}

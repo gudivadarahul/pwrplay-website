@@ -18,10 +18,10 @@ function JoinTheChaos() {
         <section className="relative bg-black text-white py-24 px-6 text-center overflow-hidden">
             {/* Content Container with z-index to stay above background */}
             <div className="relative z-10 max-w-5xl mx-auto">
-                <h2 className="text-5xl md:text-6xl font-headers mb-6 fade-in">
+                <h2 className="text-5xl md:text-7xl font-headers mb-6 fade-in">
                     Join the <span className="text-red-600">CHAOS</span>
                 </h2>
-                <p className="text-xl opacity-80 max-w-2xl mx-auto mb-12 leading-relaxed slide-up font-body font-light">
+                <p className="text-xl max-w-3xl mx-auto mb-12 leading-relaxed slide-up font-body font-medium">
                     Be the first to hear about exclusive deals, expansions & new games!
                 </p>
 

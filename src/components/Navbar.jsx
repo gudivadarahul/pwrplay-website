@@ -21,7 +21,7 @@ function Navbar() {
             name: 'TikTok',
             icon: <FaTiktok className="text-2xl" />,
             url: 'https://tiktok.com/@your-handle',
-            color: 'hover:text-white'
+            color: 'hover:text-rose-500'
         },
         {
             name: 'LinkedIn',
@@ -79,66 +79,81 @@ function Navbar() {
                 <div className="flex items-center gap-4 ml-auto">
                     <div className="relative group">
                         {/* Games Dropdown */}
-                        <div className="flex items-center gap-2 cursor-pointer transition-all duration-300 hover:text-red-500 py-2 px-3 rounded-lg outline-none text-lg font-headers uppercase">
+                        <h3 className="flex items-center gap-2 cursor-pointer transition-all duration-300 hover:text-red-500 py-2 px-3 rounded-lg outline-none text-3xl font-headers uppercase">
                             Games <FaChevronDown className="group-hover:rotate-180 transition-transform duration-300" />
-                        </div>
-                        {/* Added invisible bridge */}
+                        </h3>
                         <div className="absolute w-full h-0.5 bg-transparent"></div>
                         <div className="absolute -right-4 mt-0.5 bg-black/95 backdrop-blur-sm text-white rounded-lg shadow-xl hidden group-hover:block min-w-[220px] whitespace-nowrap transition-all duration-300 ease-in-out opacity-0 group-hover:opacity-100 transform group-hover:translate-y-0 translate-y-[-10px] overflow-hidden">
-                            <Link to="/controlled-chaos" className="block px-4 py-2 hover:text-red-500 transition-all duration-300 hover:pl-6 outline-none font-headers uppercase">
-                                Controlled Chaos™
-                            </Link>
+                            <h3>
+                                <Link to="/controlled-chaos" className="block px-4 py-2 hover:text-red-500 transition-all duration-300 hover:pl-6 outline-none font-headers text-3xl uppercase">
+                                    Controlled Chaos™
+                                </Link>
+                            </h3>
                         </div>
                     </div>
 
                     <div className="relative group">
                         {/* About Dropdown */}
-                        <div className="flex items-center gap-2 cursor-pointer transition-all duration-300 hover:text-red-500 py-2 px-3 rounded-lg outline-none text-lg font-headers uppercase">
+                        <h3 className="flex items-center gap-2 cursor-pointer transition-all duration-300 hover:text-red-500 py-2 px-3 rounded-lg outline-none text-3xl font-headers uppercase">
                             About <FaChevronDown className="group-hover:rotate-180 transition-transform duration-300" />
-                        </div>
+                        </h3>
                         <div className="absolute w-full h-0.5 bg-transparent"></div>
                         <div className="absolute left-0 mt-0.5 bg-black/95 backdrop-blur-sm text-white rounded-lg shadow-xl hidden group-hover:block min-w-[220px] whitespace-nowrap transition-all duration-300 ease-in-out opacity-0 group-hover:opacity-100 transform group-hover:translate-y-0 translate-y-[-10px] overflow-hidden">
-                            <Link to="/about/team" className="block px-4 py-2 hover:text-red-500 transition-all duration-300 hover:pl-6 outline-none font-headers uppercase">
-                                Team
-                            </Link>
-                            <Link to="/about/timeline" className="block px-4 py-2 hover:text-red-500 transition-all duration-300 hover:pl-6 outline-none font-headers uppercase">
-                                Timeline
-                            </Link>
-                            <Link to="/faq" className="block px-4 py-2 hover:text-red-500 transition-all duration-300 hover:pl-6 outline-none font-headers uppercase">
-                                FAQs
-                            </Link>
+                            <h3>
+                                <Link to="/about" className="block px-4 py-2 hover:text-red-500 transition-all duration-300 hover:pl-6 outline-none font-headers text-3xl uppercase">
+                                    Team
+                                </Link>
+                            </h3>
+                            <h3>
+                                <Link to="/about/timeline" className="block px-4 py-2 hover:text-red-500 transition-all duration-300 hover:pl-6 outline-none font-headers text-3xl uppercase">
+                                    Timeline
+                                </Link>
+                            </h3>
+                            <h3>
+                                <Link to="/faq" className="block px-4 py-2 hover:text-red-500 transition-all duration-300 hover:pl-6 outline-none font-headers text-3xl uppercase">
+                                    FAQs
+                                </Link>
+                            </h3>
                         </div>
                     </div>
 
                     <div className="relative group">
                         {/* Connect Dropdown */}
-                        <div className="flex items-center gap-2 cursor-pointer transition-all duration-300 hover:text-red-500 py-2 px-3 rounded-lg outline-none text-lg font-headers uppercase">
+                        <h3 className="flex items-center gap-2 cursor-pointer transition-all duration-300 hover:text-red-500 py-2 px-3 rounded-lg outline-none text-3xl font-headers uppercase">
                             Connect <FaChevronDown className="group-hover:rotate-180 transition-transform duration-300" />
-                        </div>
+                        </h3>
                         <div className="absolute w-full h-0.5 bg-transparent"></div>
                         <div className="absolute left-0 mt-0.5 bg-black/95 backdrop-blur-sm text-white rounded-lg shadow-xl hidden group-hover:block min-w-[220px] whitespace-nowrap transition-all duration-300 ease-in-out opacity-0 group-hover:opacity-100 transform group-hover:translate-y-0 translate-y-[-10px] overflow-hidden">
-                            <button
-                                onClick={() => setShowConnectDialog(true)}
-                                className="block w-full text-left px-4 py-2 hover:text-red-500 transition-all duration-300 hover:pl-6 outline-none font-headers uppercase"
-                            >
-                                Socials
-                            </button>
-                            <Link to="/connect/contact" className="block px-4 py-2 hover:text-red-500 transition-all duration-300 hover:pl-6 outline-none font-headers uppercase">
-                                Contact
-                            </Link>
-                            <Link to="/connect/retailers" className="block px-4 py-2 hover:text-red-500 transition-all duration-300 hover:pl-6 outline-none font-headers uppercase">
-                                Retailers
-                            </Link>
+                            <h3>
+                                <button
+                                    onClick={() => setShowConnectDialog(true)}
+                                    className="block w-full text-left px-4 py-2 hover:text-red-500 transition-all duration-300 hover:pl-6 outline-none font-headers text-3xl uppercase"
+                                >
+                                    Socials
+                                </button>
+                            </h3>
+                            <h3>
+                                <Link to="/contact" className="block px-4 py-2 hover:text-red-500 transition-all duration-300 hover:pl-6 outline-none font-headers text-3xl uppercase">
+                                    Contact
+                                </Link>
+                            </h3>
+                            <h3>
+                                <Link to="/connect/retailers" className="block px-4 py-2 hover:text-red-500 transition-all duration-300 hover:pl-6 outline-none font-headers text-3xl uppercase">
+                                    Retailers
+                                </Link>
+                            </h3>
                         </div>
                     </div>
 
-                    <Link
-                        to="/controlled-chaos#buy-section"
-                        className="px-6 py-2 bg-red-600 transition-all duration-300 rounded-lg text-lg font-headers
-                                hover:shadow-lg hover:shadow-red-500/20 hover:-translate-y-0.5 outline-none hover:box-shadow-[0_0_20px_rgba(239,68,68,0.6)] uppercase"
-                    >
-                        Shop
-                    </Link>
+                    <h3>
+                        <Link
+                            to="/controlled-chaos#buy-section"
+                            className="px-6 py-2 bg-red-600 transition-all duration-300 rounded-lg text-3xl font-headers
+                                    hover:shadow-lg hover:shadow-red-500/20 hover:-translate-y-0.5 outline-none hover:box-shadow-[0_0_20px_rgba(239,68,68,0.6)] uppercase"
+                        >
+                            Shop
+                        </Link>
+                    </h3>
                 </div>
 
                 {/* Mobile Menu Button */}
@@ -166,9 +181,11 @@ function Navbar() {
                             </button>
                             {gamesDropdown && (
                                 <div className="bg-black/95 backdrop-blur-sm text-white py-2 rounded-lg shadow-lg w-[90%] max-w-[300px] border border-gray-800/50 animate-slideDown">
-                                    <Link to="/controlled-chaos" className="block px-6 py-3 hover:text-red-500 transition-all duration-300 hover:pl-8 outline-none font-headers uppercase">
-                                        Controlled Chaos™
-                                    </Link>
+                                    <h3>
+                                        <Link to="/controlled-chaos" className="block px-6 py-3 hover:text-red-500 transition-all duration-300 hover:pl-8 outline-none font-headers text-3xl uppercase">
+                                            Controlled Chaos™
+                                        </Link>
+                                    </h3>
                                 </div>
                             )}
 
@@ -182,15 +199,21 @@ function Navbar() {
                             </button>
                             {aboutDropdown && (
                                 <div className="bg-black/95 backdrop-blur-sm text-white py-2 rounded-lg shadow-lg w-[90%] max-w-[300px] border border-gray-800/50 animate-slideDown">
-                                    <Link to="/about/team" className="block px-6 py-3 hover:text-red-500 transition-all duration-300 hover:pl-8 outline-none font-headers uppercase">
-                                        Team
-                                    </Link>
-                                    <Link to="/about/timeline" className="block px-6 py-3 hover:text-red-500 transition-all duration-300 hover:pl-8 outline-none font-headers uppercase">
-                                        Timeline
-                                    </Link>
-                                    <Link to="/faq" className="block px-6 py-3 hover:text-red-500 transition-all duration-300 hover:pl-8 outline-none font-headers uppercase">
-                                        FAQs
-                                    </Link>
+                                    <h3>
+                                        <Link to="/about" className="block px-6 py-3 hover:text-red-500 transition-all duration-300 hover:pl-8 outline-none font-headers text-3xl uppercase">
+                                            Team
+                                        </Link>
+                                    </h3>
+                                    <h3>
+                                        <Link to="/about/timeline" className="block px-6 py-3 hover:text-red-500 transition-all duration-300 hover:pl-8 outline-none font-headers text-3xl uppercase">
+                                            Timeline
+                                        </Link>
+                                    </h3>
+                                    <h3>
+                                        <Link to="/faq" className="block px-6 py-3 hover:text-red-500 transition-all duration-300 hover:pl-8 outline-none font-headers text-3xl uppercase">
+                                            FAQs
+                                        </Link>
+                                    </h3>
                                 </div>
                             )}
 
@@ -204,28 +227,36 @@ function Navbar() {
                             </button>
                             {connectDropdown && (
                                 <div className="bg-black/95 backdrop-blur-sm text-white py-2 rounded-lg shadow-lg w-[90%] max-w-[300px] border border-gray-800/50 animate-slideDown">
-                                    <button
-                                        onClick={() => setShowConnectDialog(true)}
-                                        className="block w-full text-left px-6 py-3 hover:text-red-500 transition-all duration-300 hover:pl-8 outline-none font-headers uppercase"
-                                    >
-                                        Socials
-                                    </button>
-                                    <Link to="/connect/contact" className="block px-6 py-3 hover:text-red-500 transition-all duration-300 hover:pl-8 outline-none font-headers uppercase">
-                                        Contact
-                                    </Link>
-                                    <Link to="/connect/retailers" className="block px-6 py-3 hover:text-red-500 transition-all duration-300 hover:pl-8 outline-none font-headers uppercase">
-                                        Retailers
-                                    </Link>
+                                    <h3>
+                                        <button
+                                            onClick={() => setShowConnectDialog(true)}
+                                            className="block w-full text-left px-6 py-3 hover:text-red-500 transition-all duration-300 hover:pl-8 outline-none font-headers text-3xl uppercase"
+                                        >
+                                            Socials
+                                        </button>
+                                    </h3>
+                                    <h3>
+                                        <Link to="/contact" className="block px-6 py-3 hover:text-red-500 transition-all duration-300 hover:pl-8 outline-none font-headers text-3xl uppercase">
+                                            Contact
+                                        </Link>
+                                    </h3>
+                                    <h3>
+                                        <Link to="/connect/retailers" className="block px-6 py-3 hover:text-red-500 transition-all duration-300 hover:pl-8 outline-none font-headers text-3xl uppercase">
+                                            Retailers
+                                        </Link>
+                                    </h3>
                                 </div>
                             )}
 
-                            <Link
-                                to="/controlled-chaos#buy-section"
-                                className="px-6 py-2 bg-red-600 transition-all duration-300 rounded-lg text-lg font-headers
-                                        hover:shadow-lg hover:shadow-red-500/20 hover:-translate-y-0.5 outline-none hover:box-shadow-[0_0_20px_rgba(239,68,68,0.6)] uppercase"
-                            >
-                                Shop
-                            </Link>
+                            <h3>
+                                <Link
+                                    to="/controlled-chaos#buy-section"
+                                    className="px-6 py-2 bg-red-600 transition-all duration-300 rounded-lg text-3xl font-headers
+                                            hover:shadow-lg hover:shadow-red-500/20 hover:-translate-y-0.5 outline-none hover:box-shadow-[0_0_20px_rgba(239,68,68,0.6)] uppercase"
+                                >
+                                    Shop
+                                </Link>
+                            </h3>
                         </div>
                     )
                 }
@@ -242,7 +273,7 @@ function Navbar() {
                     >
                         <div className="bg-red-600 rounded-xl p-8 max-w-md w-[90%] mx-auto">
                             <div className="flex justify-between items-center mb-6">
-                                <h2 className="text-2xl font-bold text-white uppercase">Connect With Us!</h2>
+                                <h2 className="text-4xl font-bold text-white uppercase">Connect With Us!</h2>
                                 <button
                                     onClick={() => setShowConnectDialog(false)}
                                     className="p-2 text-white hover:text-gray-200 transition-colors rounded-lg"

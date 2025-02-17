@@ -1,4 +1,4 @@
-import { FaShuffle,FaPlay,FaTrophy } from "react-icons/fa6";
+import { FaRotate,FaPlay,FaTrophy,FaChampagneGlasses,FaRepeat } from "react-icons/fa6";
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
@@ -40,74 +40,76 @@ function ControlledChaos() {
     },[location]);
 
     return (
-        <div className="pt-24 p-8 text-white min-h-screen bg-black">
+        <div className="pt-40 text-white min-h-screen bg-black">
             {/* Title */}
-            <h1 className="text-5xl md:text-6xl font-headers mb-6 text-center fade-in">
-                Controlled Chaos™
+            <h1 className="text-5xl md:text-6xl font-headers mb-6 text-center fade-in px-8">
+                <img
+                    src="/cc_logo.png"
+                    alt="Controlled Chaos™"
+                    className="max-w-[500px] mx-auto transition-transform duration-300 drop-shadow-[0_0_25px_rgba(239,68,68,1.0)]"
+                />
             </h1>
 
             {/* Main Description */}
-            <div className="max-w-4xl mx-auto space-y-8 mb-16">
-                <p className="text-xl opacity-90 text-center leading-relaxed slide-up font-body font-light">
-                    Tired of the same old games with predictable cards and outcomes?
-                    <span className="text-red-600 font-bold"> So are we!</span> That's why we created Controlled Chaos™—a party game that
-                    guarantees fresh excitement through unpredictable gameplay, endless surprises, and unforgettable moments every time you play.
-                </p>
+            <section className="w-full bg-black py-16 mb-6">
+                <div className="max-w-6xl mx-auto space-y-8 px-8 border-5 border-red-600 rounded-lg p-8">
+                    <p className="text-xl text-center leading-relaxed slide-up font-body text-white font-medium">
+                        Tired of the same old games with predictable cards and outcomes? <span className="font-bold text-red-600">So are we!</span> That's why we created <span className="whitespace-nowrap font-bold text-red-600">Controlled Chaos™</span>—a party game that
+                        guarantees fresh excitement with unpredictable gameplay, endless surprises, and unforgettable moments.
+                    </p>
 
-                <p className="text-xl opacity-90 text-center leading-relaxed slide-up font-body font-light">
-                    But Controlled Chaos™ is more than just laughs and challenges (though there's plenty of that).
-                    It's about <span className="font-bold">forging connections, sharing personal stories, uncovering hilarious truths,</span> and
-                    discovering unexpected sides of your friends. Each spin brings unforgettable moments, sparking the
-                    kind of fun that makes game night the highlight of the week.
-                </p>
+                    <p className="text-xl text-center leading-relaxed slide-up font-body text-white font-medium">
+                        <span className="whitespace-nowrap font-bold text-red-600">Controlled Chaos™</span> is more than just laughs and challenges.
+                        It's about forging connections, sharing stories, and
+                        discovering unexpected sides of your friends. Each spin leads to exciting moments, sparking the
+                        kind of fun that makes game night the highlight of the week.
+                    </p>
 
-                <p className="text-xl opacity-90 text-center leading-relaxed font-body font-light">
-                    Say goodbye to boring game nights.
-                    <span className="text-red-600 font-bold"> Spin. Play. Sip. Repeat. </span>
-                    Join us in reinventing the way we connect—one story, one laugh, and one sip at a time.
-                </p>
-            </div>
+                    <p className="text-xl text-center leading-relaxed font-body text-white font-medium">
+                        Say goodbye to boring game nights.{' '}
+                        <span className="font-bold whitespace-nowrap text-red-600">Spin. Play. Sip. Repeat.</span>{' '}
+                        Join us in reinventing the way we connect - one story, one laugh, and one sip at a time.
+                    </p>
+                </div>
+            </section>
 
             {/* How to Play Section */}
-            <section className="bg-black text-white py-16 px-6 text-center mb-12">
-                <h2 className="text-4xl font-headers mb-6">How to <span className="text-red-600">Play</span></h2>
-                <p className="text-xl opacity-80 mb-12 max-w-2xl mx-auto font-body font-light">
-                    A fast, fun, and unpredictable game for any party! Just shuffle, draw, and play!
+            <section className="bg-black text-white py-8 px-6 text-center mb-12">
+                <h2 className="text-8xl font-headers mb-6">How to <span className="text-red-600">Play</span></h2>
+                <p className="text-2xl mb-12 max-w-2xl mx-auto font-body font-medium">
+                    The ultimate party game - fast, fun, and full of twists!
                 </p>
 
                 {/* Steps Grid */}
-                <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-                    {/* Step 1: Shuffle */}
-                    <div className="bg-black p-6 rounded-lg shadow-lg flex flex-col items-center border-2 border-red-600/20 hover:border-red-600 transition-colors">
-                        <FaShuffle className="text-red-600 text-5xl mb-4" />
-                        <h3 className="text-2xl font-subheaders">Step 1: Shuffle</h3>
-                        <p className="mt-2 opacity-80 font-body font-light">
-                            Mix the deck and place it in the center.
-                        </p>
+                <div className="grid md:grid-cols-4 gap-8 max-w-5xl mx-auto">
+                    {/* Step 1: Spin */}
+                    <div className="bg-black p-6 rounded-lg shadow-lg flex flex-col items-center border-5 border-red-600">
+                        <FaRotate className="text-red-600 text-6xl mb-4" />
+                        <h3 className="text-5xl font-subheaders">SPIN</h3>
                     </div>
 
                     {/* Step 2: Draw & Play */}
-                    <div className="bg-black p-6 rounded-lg shadow-lg flex flex-col items-center border-2 border-red-600/20 hover:border-red-600 transition-colors">
-                        <FaPlay className="text-red-600 text-5xl mb-4" />
-                        <h3 className="text-2xl font-subheaders">Step 2: Draw & Play</h3>
-                        <p className="mt-2 opacity-80 font-body font-light">
-                            Each player takes turns drawing a card and following the instructions.
-                        </p>
+                    <div className="bg-black p-6 rounded-lg shadow-lg flex flex-col items-center border-5 border-red-600">
+                        <FaPlay className="text-red-600 text-6xl mb-4" />
+                        <h3 className="text-5xl font-subheaders">PLAY</h3>
                     </div>
 
-                    {/* Step 3: Win & Celebrate */}
-                    <div className="bg-black p-6 rounded-lg shadow-lg flex flex-col items-center border-2 border-red-600/20 hover:border-red-600 transition-colors">
-                        <FaTrophy className="text-red-600 text-5xl mb-4" />
-                        <h3 className="text-2xl font-subheaders">Step 3: Win & Celebrate</h3>
-                        <p className="mt-2 opacity-80 font-body font-light">
-                            Complete the card challenges, outplay your friends, and embrace the chaos!
-                        </p>
+                    {/* Step 3: Follow Instructions */}
+                    <div className="bg-black p-6 rounded-lg shadow-lg flex flex-col items-center border-5 border-red-600">
+                        <FaChampagneGlasses className="text-red-600 text-6xl mb-4" />
+                        <h3 className="text-5xl font-subheaders">SIP</h3>
+                    </div>
+
+                    {/* Step 4: Win & Celebrate */}
+                    <div className="bg-black p-6 rounded-lg shadow-lg flex flex-col items-center border-5 border-red-600">
+                        <FaRepeat className="text-red-600 text-6xl mb-4" />
+                        <h3 className="text-5xl font-subheaders">REPEAT</h3>
                     </div>
                 </div>
 
                 {/* Optional Video Embed */}
                 <div className="mt-16">
-                    <h3 className="text-2xl font-headers mb-6">Watch How It <span className="text-red-600">Works</span></h3>
+                    <h3 className="text-6xl font-headers mb-6">Watch How It <span className="text-red-600">Works</span></h3>
                     <div className="relative w-full max-w-3xl mx-auto aspect-video">
                         <iframe
                             className="w-full h-full rounded-lg shadow-lg"
@@ -124,19 +126,19 @@ function ControlledChaos() {
 
             {/* What's in the Box */}
             <section className="mb-16">
-                <h2 className="text-4xl font-headers mb-8 text-center">What's <span className="text-red-600">Inside?</span></h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-2xl mx-auto">
-                    <div className="bg-black p-6 rounded-lg border-2 border-red-600/20 hover:border-red-600 transition-colors">
-                        <span className="block font-subheaders">150 Challenge & Strategy Cards</span>
-                    </div>
-                    <div className="bg-black p-6 rounded-lg border-2 border-red-600/20 hover:border-red-600 transition-colors">
-                        <span className="block font-subheaders">Special Drinking Cards</span>
-                    </div>
-                    <div className="bg-black p-6 rounded-lg border-2 border-red-600/20 hover:border-red-600 transition-colors">
-                        <span className="block font-subheaders">Wild Cards for Unpredictable Twists</span>
-                    </div>
-                    <div className="bg-black p-6 rounded-lg border-2 border-red-600/20 hover:border-red-600 transition-colors">
-                        <span className="block font-subheaders">Easy-to-Follow Rulebook</span>
+                <h2 className="text-6xl font-headers mb-8 text-center">What's <span className="text-red-600">Inside?</span></h2>
+                <div className="flex justify-center items-center">
+                    <div className="relative w-64 h-64">
+                        <img
+                            src="/spinner_wo_arrow.png"
+                            alt="Game Spinner Base"
+                            className="w-full h-full object-contain"
+                        />
+                        <img
+                            src="/arrow.png"
+                            alt="Spinner Arrow"
+                            className="absolute top-0 left-0 w-full h-full object-contain origin-center spin-arrow"
+                        />
                     </div>
                 </div>
             </section>
