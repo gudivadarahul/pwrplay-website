@@ -23,31 +23,11 @@ export default {
           '50%': { boxShadow: '0 0 30px rgba(239, 68, 68, 0.8)' }
         },
         float: {
-          '0%, 100%': {
-            transform: 'translate(0, 0)',
-            opacity: 0.2
-          },
-          '25%': {
-            transform: 'translate(10px, -30px)',
-            opacity: 0.3
-          },
-          '50%': {
-            transform: 'translate(-15px, -50px)',
-            opacity: 0.2
-          },
-          '75%': {
-            transform: 'translate(8px, -20px)',
-            opacity: 0.3
-          }
-        },
-        spin: {
-          from: {
-            transform: 'rotate(0deg)',
-          },
-          to: {
-            transform: 'rotate(360deg)',
-          },
-        },
+          '0%, 100%': { transform: 'translate(0, 0)',opacity: 0.2 },
+          '25%': { transform: 'translate(10px, -30px)',opacity: 0.3 },
+          '50%': { transform: 'translate(-15px, -50px)',opacity: 0.2 },
+          '75%': { transform: 'translate(8px, -20px)',opacity: 0.3 }
+        }
       },
       fontFamily: {
         'headers': ['Bebas Neue','sans-serif'],
@@ -63,6 +43,9 @@ export default {
       backgroundImage: {
         'radial-gradient': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+      },
+      screens: {
+        'hd': '1920px',   // Standard desktop (1920x1080)
       },
     }
   },

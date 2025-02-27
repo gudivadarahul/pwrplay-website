@@ -84,15 +84,14 @@ function PromoVideo() {
                 The <span className="text-red-600">Ultimate</span> Party Game
             </h2>
 
-            <div className="relative z-10 max-w-7xl mx-auto flex items-center justify-center">
+            <div className="relative z-10 w-full min-h-screen flex items-center justify-center">
                 {/* Center Video Content */}
-                <div>
-                    <div className="relative aspect-[9/16] w-full max-w-[500px] backdrop-blur-sm bg-black/50 rounded-xl p-3">
+                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                    <div className="relative w-[650px] h-[100vh] backdrop-blur-sm bg-black/50 rounded-xl p-3">
                         <iframe
                             className="w-full h-full rounded-lg shadow-2xl"
                             src="https://www.youtube-nocookie.com/embed/EyTudnuRU_Y"
                             title="Controlled Chaos Promo Video"
-                            frameBorder="0"
                             referrerPolicy="no-referrer"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                             allowFullScreen

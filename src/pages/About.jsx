@@ -39,28 +39,24 @@ function About() {
             </section>
 
             {/* Our Mission */}
-            <section>
-                <h2 className="text-4xl font-headers mb-8">Our Mission</h2>
+            <section className="responsive-container">
+                <h2 className="text-4xl font-headers mb-8 laptop:text-5xl desktop:text-6xl hd:text-7xl">Our Mission</h2>
                 <div className="space-y-8 text-justify">
-                    <p className="text-xl leading-relaxed font-body font-medium">
+                    <p className="responsive-text leading-relaxed font-body font-medium">
                         PWRPLAY Creations was founded in 2023 by friends, Seva Vora, Rohith Gudivada, and Niam Vora, with a
                         <span className="font-bold text-red-600"> bold vision to reinvent the way people connect through unforgettable game nights</span>.
                     </p>
 
-                    <p className="text-xl leading-relaxed font-body font-medium">
+                    <p className="responsive-text leading-relaxed font-body font-medium">
                         Frustrated by predictable games with repetitive mechanics, we set out to create something fresh, dynamic, and packed with energy.
                         Our debut game, <span className="font-bold text-red-600">Controlled Chaos™</span>, is the first step in that journey,
                         designed to bring laughter, surprises, and bold challenges to every party.
                     </p>
 
-                    <p className="text-xl leading-relaxed font-body font-medium">
-                        While we are just getting started, we are dedicated to building
-                        high-quality, original games that break the ice, spark real conversations, and create moments
-                            that people will remember long after the night ends. We can't wait to bring Controlled Chaos™ to players soon.
-                    </p>
-
-                    <p className="text-xl leading-relaxed font-body font-medium italic">
-                        Follow us for updates and be part of the movement as we shake up the game night experience!
+                    <p className="responsive-text leading-relaxed font-body font-medium">
+                        While we are just getting started, we are <span className="font-bold text-red-600">dedicated to building
+                            high-quality, original games</span> that break the ice, spark real conversations, and create moments
+                        that people will remember long after the night ends. We can't wait to bring Controlled Chaos™ to players soon.
                     </p>
                 </div>
             </section>

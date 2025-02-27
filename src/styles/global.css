@@ -1,11 +1,17 @@
 @import 'tailwindcss';
 
+/* Base Styles */
 html {
     scroll-behavior: smooth;
     font-family: 'Poppins', sans-serif;
     font-weight: 300;
 }
 
+body {
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Typography */
 h1,
 h2,
 h3,
@@ -19,10 +25,7 @@ h6 {
     font-family: 'Rajdhani', sans-serif;
 }
 
-body {
-    font-family: 'Poppins', sans-serif;
-}
-
+/* Animations */
 @keyframes textGlowUp {
     0% {
         opacity: 0.4;
@@ -70,5 +73,65 @@ body {
         opacity: 0.4;
         color: white;
         text-shadow: none;
+    }
+}
+
+/* Replace the @apply syntax with direct utility classes */
+.responsive-container {
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+@media (min-width: 1024px) {
+
+    /* laptop breakpoint */
+    .responsive-container {
+        max-width: 960px;
+    }
+}
+
+@media (min-width: 1280px) {
+
+    /* desktop breakpoint */
+    .responsive-container {
+        max-width: 1200px;
+    }
+}
+
+@media (min-width: 1920px) {
+
+    /* hd */
+    .responsive-text {
+        font-size: 1.5rem;
+    }
+}
+
+@media (min-width: 2560px) {
+
+    /* 2k */
+    .responsive-text {
+        font-size: 1.875rem;
+    }
+}
+
+@media (min-width: 3840px) {
+
+    /* 4k */
+    .responsive-text {
+        font-size: 2.25rem;
+    }
+}
+
+@media (min-width: 2560px) {
+    .nav-container {
+        padding-right: 6rem;
+    }
+}
+
+@media (min-width: 3840px) {
+    .nav-container {
+        padding-right: 8rem;
     }
 }

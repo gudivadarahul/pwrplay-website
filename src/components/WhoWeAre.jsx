@@ -1,5 +1,3 @@
-import { FaDice,FaChessKing,FaChessQueen,FaChessKnight,FaChessBishop,FaChessRook,FaChessPawn } from "react-icons/fa6";
-import { GiCardRandom,GiPokerHand,GiCardAceSpades,GiCardJoker,GiCardKingClubs,GiCardQueenDiamonds,GiCardJackHearts } from "react-icons/gi";
 import "../assets/Hero.css";
 import { Link } from "react-router-dom";
 import { useEffect,useRef } from 'react';
