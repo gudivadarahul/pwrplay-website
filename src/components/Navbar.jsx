@@ -109,7 +109,7 @@ const Navbar = () => {
                                     </Link>
                                 </h3>
                                 <h3>
-                                    <Link to="/timeline" className="nav-link">
+                                    <Link to="/about/timeline" className="nav-link">
                                         Timeline
                                     </Link>
                                 </h3>
