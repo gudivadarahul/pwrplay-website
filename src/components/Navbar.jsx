@@ -84,12 +84,14 @@ const Navbar = () => {
                             py-2 px-3 rounded-lg outline-none text-xl lg:text-2xl xl:text-4xl font-headers uppercase">
                             Games <FaChevronDown className="group-hover:rotate-180 transition-transform duration-300" />
                         </h3>
-                        <div className="nav-dropdown">
-                            <h3>
-                                <Link to="/controlled-chaos" className="nav-link">
-                                    Controlled Chaos™
-                                </Link>
-                            </h3>
+                        <div className="nav-dropdown absolute top-[calc(100%-20px)] left-0">
+                            <div className="bg-black/95 backdrop-blur-sm py-2 rounded-lg shadow-lg min-w-[200px]">
+                                <h3>
+                                    <Link to="/controlled-chaos" className="nav-link">
+                                        Controlled Chaos™
+                                    </Link>
+                                </h3>
+                            </div>
                         </div>
                     </div>
 
@@ -99,17 +101,19 @@ const Navbar = () => {
                             py-2 px-3 rounded-lg outline-none text-xl lg:text-2xl xl:text-4xl font-headers uppercase">
                             About <FaChevronDown className="group-hover:rotate-180 transition-transform duration-300" />
                         </h3>
-                        <div className="nav-dropdown">
-                            <h3>
-                                <Link to="/about" className="nav-link">
-                                    Our Story
-                                </Link>
-                            </h3>
-                            <h3>
-                                <Link to="/timeline" className="nav-link">
-                                    Timeline
-                                </Link>
-                            </h3>
+                        <div className="nav-dropdown absolute top-[calc(100%-20px)] left-0">
+                            <div className="bg-black/95 backdrop-blur-sm py-2 rounded-lg shadow-lg min-w-[200px]">
+                                <h3>
+                                    <Link to="/about" className="nav-link">
+                                        Our Story
+                                    </Link>
+                                </h3>
+                                <h3>
+                                    <Link to="/timeline" className="nav-link">
+                                        Timeline
+                                    </Link>
+                                </h3>
+                            </div>
                         </div>
                     </div>
 
@@ -119,17 +123,19 @@ const Navbar = () => {
                             py-2 px-3 rounded-lg outline-none text-xl lg:text-2xl xl:text-4xl font-headers uppercase">
                             Connect <FaChevronDown className="group-hover:rotate-180 transition-transform duration-300" />
                         </h3>
-                        <div className="nav-dropdown">
-                            <h3>
-                                <Link to="/contact" className="nav-link">
-                                    Contact Us
-                                </Link>
-                            </h3>
-                            <h3>
-                                <Link to="/faq" className="nav-link">
-                                    FAQ
-                                </Link>
-                            </h3>
+                        <div className="nav-dropdown absolute top-[calc(100%-20px)] left-0">
+                            <div className="bg-black/95 backdrop-blur-sm py-2 rounded-lg shadow-lg min-w-[200px]">
+                                <h3>
+                                    <Link to="/contact" className="nav-link">
+                                        Contact Us
+                                    </Link>
+                                </h3>
+                                <h3>
+                                    <Link to="/faq" className="nav-link">
+                                        FAQ
+                                    </Link>
+                                </h3>
+                            </div>
                         </div>
                     </div>
 
