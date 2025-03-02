@@ -192,7 +192,7 @@ function WhoWeAre() {
             <div className="relative z-10 max-w-3xl mx-auto">
                 <div className="backdrop-blur-sm bg-white/60 rounded-xl p-6 inline-block">
                     <h2 className="text-5xl md:text-7xl font-headers mb-6 fade-in text-black drop-shadow-lg">
-                        Who We Are
+                        The Vision
                     </h2>
                     <p className="text-2xl max-w-3xl mx-auto mb-2 leading-relaxed slide-up font-body font-semibold">
                         PWRPLAY Creations is on a mission to craft

@@ -27,8 +27,8 @@ function FAQ() {
                     {faqs.map((faq,index) => (
                         <Disclosure key={index}>
                             {({ open }) => (
-                                <div className="bg-black p-4 rounded-lg shadow-lg border-5 border-red-600 hover:border-red-600 transition-all duration-300">
-                                    <DisclosureButton className="flex justify-between items-center w-full text-left text-2xl font-headers font-medium">
+                                <div className="bg-black p-4 rounded-lg shadow-lg border-3 border-red-600 hover:border-red-600 transition-all duration-300">
+                                    <DisclosureButton className="flex justify-between items-center w-full text-left text-3xl font-headers font-medium">
                                         {faq.question}
                                         {open ? (
                                             <FaChevronUp className="text-red-600" />
@@ -36,7 +36,7 @@ function FAQ() {
                                             <FaChevronDown className="text-red-600" />
                                         )}
                                     </DisclosureButton>
-                                    <DisclosurePanel className="mt-4 text-gray-300 font-body font-medium">
+                                    <DisclosurePanel className="mt-4 text-2xl text-gray-300 font-body font-medium">
                                         {faq.answer}
                                     </DisclosurePanel>
                                 </div>

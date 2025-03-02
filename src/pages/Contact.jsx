@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { FaEnvelope,FaPhone,FaLocationDot,FaInstagram,FaTiktok,FaXTwitter,FaFacebook,FaLinkedin,FaSpotify } from 'react-icons/fa6';
+import { FaEnvelope,FaLocationDot,FaInstagram,FaTiktok,FaXTwitter,FaFacebook,FaLinkedin,FaSpotify,FaClock } from 'react-icons/fa6';
 import React from 'react';
 
 function Contact() {
@@ -104,25 +104,31 @@ function Contact() {
                 </div>
 
                 {/* Contact Info Cards */}
-                <div className="grid md:grid-cols-3 gap-8 mb-16">
-                    <div className="bg-black p-8 rounded-xl border-5 border-red-600 transition-all duration-300 text-center">
+                <div className="grid md:grid-cols-3 gap-8 mb-16 relative">
+                <div className="bg-black p-8 rounded-xl transition-all duration-300 text-center">
+                        <FaLocationDot className="text-red-600 text-6xl mx-auto mb-4" />
+                        <h3 className="text-3xl font-subheaders mb-2">Based In</h3>
+                        <p className="font-body font-medium text-base">Toronto, Ontario</p>
+                        <p className="font-body font-medium text-base">Chicago, Illinois</p>
+                    </div>
+
+                    <div className="bg-black p-8 rounded-xl transition-all duration-300 text-center">
                         <FaEnvelope className="text-red-600 text-6xl mx-auto mb-4" />
-                        <h3 className="text-3xl font-subheaders mb-3">Email Us</h3>
+                        <h3 className="text-3xl font-subheaders mb-2">Email Us</h3>
                         <p className="font-body font-medium text-base break-words">
                             contact@pwrplaycreations.com
                         </p>
                     </div>
 
-                    <div className="bg-black p-8 rounded-xl border-5 border-red-600 transition-all duration-300 text-center">
-                        <FaLocationDot className="text-red-600 text-6xl mx-auto mb-4" />
-                        <h3 className="text-3xl font-subheaders mb-3">Based In</h3>
-                        <p className="font-body font-medium text-base">Toronto, Ontario</p>
-                        <p className="font-body font-medium text-base">Chicago, Illinois</p>
-                    </div>
+                    {/* First Divider */}
+                    <div className="hidden md:block absolute left-1/3 top-1/2 -translate-y-1/2 w-0.5 h-3/4 bg-red-600"></div>
 
-                    <div className="bg-black p-8 rounded-xl border-5 border-red-600 transition-all duration-300 text-center">
-                        <FaEnvelope className="text-red-600 text-6xl mx-auto mb-4" />
-                        <h3 className="text-3xl font-subheaders mb-3">Business Hours</h3>
+                    {/* Second Divider */}
+                    <div className="hidden md:block absolute left-2/3 top-1/2 -translate-y-1/2 w-0.5 h-3/4 bg-red-600"></div>
+
+                    <div className="bg-black p-8 rounded-xl transition-all duration-300 text-center">
+                        <FaClock className="text-red-600 text-6xl mx-auto mb-4" />
+                        <h3 className="text-3xl font-subheaders mb-2">Business Hours</h3>
                         <p className="font-body font-medium text-base">Monday - Friday</p>
                         <p className="font-body font-medium text-base">9:00 AM - 5:00 PM EST</p>
                     </div>

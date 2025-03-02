@@ -36,19 +36,6 @@ function TestimonialCard({ index,initialDelay }) {
     const [currentIndex,setCurrentIndex] = useState(index);
     const [isFlipping,setIsFlipping] = useState(false);
     const [displayedContent,setDisplayedContent] = useState(testimonials[index]);
-    const [textSize,setTextSize] = useState('text-lg');
-
-    // Function to determine text size based on content length
-    const getTextSize = (text) => {
-        if (text.length > 150) return 'text-base';
-        if (text.length > 100) return 'text-md';
-        return 'text-lg';
-    };
-
-    useEffect(() => {
-        // Set initial text size
-        setTextSize(getTextSize(displayedContent.text));
-    },[displayedContent]);
 
     useEffect(() => {
         const randomInterval = () => 10000 + Math.random() * 5000; // Random interval between 10-15 seconds
@@ -74,18 +61,16 @@ function TestimonialCard({ index,initialDelay }) {
     },[currentIndex]);
 
     return (
-        <div className="w-full max-w-sm perspective-1000">
+        <div className="w-full max-w-sm h-full perspective-1000">
             <div
-                className={`relative transition-transform duration-1000 transform-style-3d ${isFlipping ? 'rotate-y-90' : ''
-                    }`}
+                className={`relative h-full transition-transform duration-1000 transform-style-3d ${isFlipping ? 'rotate-y-90' : ''}`}
             >
-                <div className="bg-black text-white p-6 rounded-xl shadow-lg border-2 border-red-600/20 
-                    hover:border-red-600 transition-colors h-[300px] flex flex-col">
-                    <FaQuoteLeft className="text-red-600 text-3xl mb-3" />
-                    <p className={`${textSize} mb-3 flex-grow leading-relaxed`}>
+                <div className="bg-black text-white p-6 rounded-xl h-full min-h-[300px] flex flex-col">
+                    <FaQuoteLeft className="text-red-600 text-3xl mb-4 flex-shrink-0" />
+                    <p className="text-lg mb-4 flex-grow leading-relaxed font-medium">
                         {displayedContent.text}
                     </p>
-                    <div className="mt-auto pt-3 border-t border-red-600/20">
+                    <div className="pt-3 border-t border-red-600">
                         <p className="font-bold text-xl text-red-600">
                             {displayedContent.author}
                         </p>
@@ -100,11 +85,11 @@ function Testimonials() {
     return (
         <section className="relative bg-white text-black py-24 px-6">
             <div className="max-w-7xl mx-auto">
-                <h2 className="text-4xl md:text-5xl font-bold text-center mb-16 fade-in">
+                <h2 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-center mb-16">
                     The Reviews Are In — <span className="text-red-600">Players Love It!</span>
                 </h2>
 
-                <div className="flex justify-center gap-8 overflow-hidden">
+                <div className="grid grid-cols-1 md:grid-cols-3 justify-items-center gap-8 overflow-hidden">
                     {[0,1,2].map((index) => (
                         <TestimonialCard
                             key={`card-${index}`}
