@@ -11,12 +11,12 @@ const testimonials = [
         author: "V.S."
     },
     {
-        text: " It was so fun getting to talk about topics that friends usually forget to talk about and the endless laughs that ensue are so fun.",
+        text: "It was so fun getting to talk about topics that friends usually forget to talk about and the endless laughs that ensue are so fun.",
         author: "C.S."
     },
     {
         text: "The only time I've ever wanted more chaos in my life.",
-        author: "S.C. "
+        author: "S.C."
     },
     {
         text: "We spent hours laughing at every card, telling each other hilarious stories from our pasts, and trying to defend ourselves from getting those icks!! This game is a must have in every household.",
@@ -29,8 +29,31 @@ const testimonials = [
     {
         text: "I liked how much the social barrier was just absolutely destroyed within two rounds of playing, and that we just played for hours on end without realizing.",
         author: "S.G."
+    },
+    {
+        text: "Playing Controlled Chaos was an absolute blast! The fast-paced, creative challenges, and unexpected surprises made the game fun to play with family and friends!",
+        author: "A.S."
+    },
+    {
+        text: "My favorite part when playing this game was when we stick-an-ick'd one of our friends a few times in a row, and she had to drink sooo much. You never know what's gonna happen when the Chaos starts!",
+        author: "K.G."
+    },
+    {
+        text: "This drinking card game has been one of the most fun ones I've ever played! The prompts are all so unique and I highly recommend playing with your friends. The stick an Ick questions were my personal favorite. Can guarantee that you'll be laughing the entire time!",
+        author: "R.S."
+    },
+    {
+        text: "Chaos is the ultimate party game! It gets everyone involved, keeps the energy high, and guarantees nonstop laughter. The Outlast deck was my favorite—it brought out our competitive sides and every round was unpredictable. If you want a drinking game that's fun, fast-paced, and unforgettable, Chaos is a must-try!",
+        author: "R.S."
+    },
+    {
+        text: "Had a great time playing Chaos with my group over new years. Definitely a really interactive game that plays into inside jokes with my friends. Love the idea of stick an ick because of the playful banter. Would highly recommend to those who prefer a more social game!",
+        author: "K.S."
     }
 ];
+
+// Add this at the top level, outside of any component
+const usedIndices = new Set();
 
 function TestimonialCard({ index,initialDelay }) {
     const [currentIndex,setCurrentIndex] = useState(index);
@@ -38,14 +61,33 @@ function TestimonialCard({ index,initialDelay }) {
     const [displayedContent,setDisplayedContent] = useState(testimonials[index]);
 
     useEffect(() => {
-        const randomInterval = () => 10000 + Math.random() * 5000; // Random interval between 10-15 seconds
+        // Add initial index to used indices
+        usedIndices.add(index);
+
+        const getNextUniqueIndex = (currentIdx) => {
+            let nextIdx;
+            do {
+                nextIdx = Math.floor(Math.random() * testimonials.length);
+            } while (usedIndices.has(nextIdx));
+            return nextIdx;
+        };
+
+        const randomInterval = () => 10000 + Math.random() * 5000;
 
         const timer = setInterval(() => {
             setIsFlipping(true);
 
             // Update content right before the flip completes
             setTimeout(() => {
-                const nextIndex = (currentIndex + 1) % testimonials.length;
+                // Remove current index from used set
+                usedIndices.delete(currentIndex);
+
+                // Get next unique index
+                const nextIndex = getNextUniqueIndex(currentIndex);
+
+                // Add new index to used set
+                usedIndices.add(nextIndex);
+
                 setCurrentIndex(nextIndex);
                 setDisplayedContent(testimonials[nextIndex]);
             },900);
@@ -57,7 +99,11 @@ function TestimonialCard({ index,initialDelay }) {
 
         },randomInterval());
 
-        return () => clearInterval(timer);
+        // Cleanup function
+        return () => {
+            clearInterval(timer);
+            usedIndices.delete(currentIndex);
+        };
     },[currentIndex]);
 
     return (
@@ -70,7 +116,8 @@ function TestimonialCard({ index,initialDelay }) {
                     <p className="text-lg mb-4 flex-grow leading-relaxed font-medium">
                         {displayedContent.text}
                     </p>
-                    <div className="pt-3 border-t border-red-600">
+                    <hr className="border-red-600 border-t-2 mb-4" />
+                    <div>
                         <p className="font-bold text-xl text-red-600">
                             {displayedContent.author}
                         </p>
