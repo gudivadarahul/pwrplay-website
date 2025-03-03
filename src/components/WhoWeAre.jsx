@@ -1,5 +1,5 @@
 import "../assets/Hero.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect,useRef } from 'react';
 import Matter from 'matter-js';
 
@@ -31,6 +31,7 @@ const backgroundIcons = Array(40).fill(null).map((_,index) => {  // Increased to
 function WhoWeAre() {
     const sceneRef = useRef(null);
     const engineRef = useRef(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const engine = Matter.Engine.create({
@@ -184,6 +185,10 @@ function WhoWeAre() {
         };
     },[]);
 
+    const handleNavigation = () => {
+        navigate('/about', { replace: true });
+    };
+
     return (
         <section className="relative bg-white text-black py-24 px-6 text-center overflow-hidden">
             <div ref={sceneRef} className="absolute inset-0" />
@@ -207,6 +212,7 @@ function WhoWeAre() {
                     <div className="button-fade">
                         <Link
                             to="/about"
+                            state={{ fromWhoWeAre: true }}
                             className="inline-block px-8 py-4 bg-red-600 text-white transition-all duration-300 rounded-lg text-xl font-subheaders font-bold
                             hover:scale-105 transform"
                         >

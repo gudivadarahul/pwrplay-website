@@ -1,6 +1,31 @@
+import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+
 function About() {
+    const location = useLocation();
+
+    useEffect(() => {
+        window.scrollTo({
+            top: 0,
+            left: 0,
+            behavior: 'instant'
+        });
+    }, [location]);
+
     return (
-        <div className="pt-32 px-6 min-h-screen bg-black">
+        <div className="relative pt-32 px-6 min-h-screen bg-black">
+            {/* Logo in top-left */}
+            <div className="absolute -top-8 sm:-top-10 md:-top-12 lg:-top-14 xl:-top-16 -left-2 sm:-left-3 z-[100]">
+                <Link to="/">
+                    <img
+                        src="/pwrplay-logo.png"
+                        alt="PWRPLAY Logo"
+                        className="w-48 sm:w-56 md:w-64 lg:w-72 xl:w-80 h-auto cursor-pointer"
+                    />
+                </Link>
+            </div>
+
             <div className="max-w-6xl mx-auto">
                 {/* Title */}
                 <div className="text-center mb-16">

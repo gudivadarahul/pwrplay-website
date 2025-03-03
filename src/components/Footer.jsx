@@ -27,7 +27,7 @@ function Footer() {
             </div>
 
             <p className="text-base opacity-80 font-body font-medium">
-                {new Date().getFullYear()} PWRPLAY Creations. All rights reserved.
+                {new Date().getFullYear()} PWRPLAY Creations, Inc. All rights reserved.
             </p>
 
             {/* Legal Links */}

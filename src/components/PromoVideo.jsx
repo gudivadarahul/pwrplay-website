@@ -29,7 +29,7 @@ function PromoVideo() {
     },[]);
 
     return (
-        <section className="relative bg-black text-white py-24 px-6 text-center overflow-hidden">
+        <section className="relative bg-black text-white py-16 px-6 text-center overflow-hidden">
             {/* Background Text Pattern */}
             <div className="absolute inset-0 overflow-hidden whitespace-nowrap leading-loose"
                 style={{
@@ -67,7 +67,7 @@ function PromoVideo() {
             </div>
 
             {/* Main Content */}
-            <h2 className="relative z-10 text-6xl md:text-7xl lg:text-7xl xl:text-8xl font-headers whitespace-nowrap bg-black px-8 rounded-lg inline-block">
+            <h2 className="relative z-10 text-2xl md:text-4xl lg:text-6xl xl:text-6xl font-headers whitespace-nowrap bg-black px-8 rounded-lg inline-block mt-24">
                 The <span className="text-red-600">Ultimate</span> Party Game
             </h2>
 

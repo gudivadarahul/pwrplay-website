@@ -9,7 +9,7 @@ function JoinTheChaos() {
 
         // Simulating email submission (Replace this with actual backend/API call)
         setTimeout(() => {
-            setMessage("Thanks for joining the chaos! 🎉");
+            setMessage("Thanks for joining our community!");
             setEmail("");
         },1000);
     };
@@ -19,7 +19,7 @@ function JoinTheChaos() {
             {/* Content Container with z-index to stay above background */}
             <div className="relative z-10 max-w-5xl mx-auto">
                 <h2 className="text-5xl md:text-7xl font-headers mb-6 fade-in">
-                    Join the <span className="text-red-600">CHAOS</span>
+                    Join the <span className="text-red-600">pwrplay</span> community
                 </h2>
                 <p className="text-xl max-w-3xl mx-auto mb-12 leading-relaxed slide-up font-body font-medium">
                     Be the first to hear about exclusive deals, expansions & new games!
@@ -35,7 +35,10 @@ function JoinTheChaos() {
                         required
                         className="px-6 py-4 w-80 rounded-lg text-white text-lg bg-transparent 
                         border-2 border-red-600 placeholder-white/70 focus:outline-none 
-                        focus:border-red-500 focus:ring-2 focus:ring-red-500/50 transition-all"
+                        focus:border-red-500 focus:ring-2 focus:ring-red-500/50 transition-all
+                        [-webkit-text-fill-color:white] [&:-webkit-autofill]:bg-black 
+                        [&:-webkit-autofill]:text-white [&:-webkit-autofill]:shadow-[0_0_0_30px_black_inset] 
+                        [&:-webkit-autofill]:[-webkit-text-fill-color:white]"
                     />
                     <button
                         type="submit"
@@ -48,7 +51,7 @@ function JoinTheChaos() {
 
                 {/* Success Message */}
                 {message && (
-                    <p className="mt-6 text-green-400 text-xl font-bold slide-up">
+                    <p className="mt-6 text-red-600 text-xl font-bold slide-up">
                         {message}
                     </p>
                 )}

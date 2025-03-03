@@ -1,39 +1,54 @@
 import { useEffect,useState } from 'react';
 import { motion } from 'framer-motion';
 import Tilt from 'react-parallax-tilt';
-import { FaDice,FaRocket,FaChartLine,FaTrophy, FaGear } from 'react-icons/fa6';
+import { FaDice,FaRocket,FaChartLine,FaTrophy, FaGear, FaBoxOpen, FaBullhorn } from 'react-icons/fa6';
+import { Link } from 'react-router-dom';
 
 function Timeline() {
     const [activeIndex,setActiveIndex] = useState(0);
 
     const timelineEvents = [
         {
-            date: "Summer 2023",
-            title: "The Beginning",
-            description: "Three friends with a shared vision came together to revolutionize game night. PWRPLAY Creations was born!",
+            date: "November 2023",
+            title: "The Big Idea",
+            description: "Three friends. One bold vision. In November 2023, we set out to create the ultimate party game—something fresh, hilarious, and guaranteed to bring people together. Thus, Controlled Chaos™ was born.",
             icon: <FaDice className="text-3xl" />,
-            stats: "3 Founders, 1 Vision"
+            stats: "3 Founders | 1 Game-Changing Idea"
         },
         {
-            date: "Fall 2023",
-            title: "Controlled Chaos™ Development",
-            description: "Countless playtests, refinements, and laughs later, our first game took shape.",
+            date: "October 2024",
+            title: "Design, Playtest, Repeat",
+            description: " For nearly a year, we poured our energy into perfecting Controlled Chaos™. From designing the mechanics to countless playtests, every detail was fine-tuned for the ultimate experience.",
             icon: <FaGear className="text-3xl" />,
-            stats: "100+ Playtests"
+            stats: "100+ Playtests | 4 Decks | 1 Insanely Fun Game"
         },
         {
-            date: "Spring 2024",
-            title: "Launch Phase",
-            description: "Website launch, social media presence established, and growing community engagement.",
+            date: "November 2024",
+            title: "Making It Official",
+            description: "PwrPlay Creations Inc. was officially incorporated, turning our vision into reality and setting the stage for production.",
             icon: <FaRocket className="text-3xl" />,
-            stats: "6 Social Platforms"
+            stats: "Officially Incorporated | The Chaos Gets Real"
         },
         {
-            date: "2024 & Beyond",
-            title: "Future Milestones",
-            description: "Expanding our game lineup, reaching new markets, and continuing to innovate the party game experience.",
+            date: "January 2025",
+            title: "Protecting the Brand",
+            description: "We took the next step—filing trademarks for Controlled Chaos™ in Canada and the USA, ensuring our game remains uniquely ours.",
             icon: <FaChartLine className="text-3xl" />,
-            stats: "Infinite Possibilities"
+            stats: "Trademark Secured | Expanding Our Reach"
+        },
+        {
+            date: "February 2025",
+            title: "First Official Prototype Arrives",
+            description: "A major milestone! After months of development and manufacturer negotiations, our first official prototype of Controlled Chaos™ arrived. Seeing the game in its final form for the first time was a surreal moment.",
+            icon: <FaBoxOpen className="text-3xl" />,
+            stats: "1st Prototype in Hand | The Vision Comes to Life"
+        },
+        {
+            date: "March 2025",
+            title: "Building the Chaos Community",
+            description: "With trademarks secured and prototypes tested, we launched our website and built a thriving online community. Our focus is now on marketing, brand awareness, and gearing up for the next big step.",
+            icon: <FaBullhorn className="text-3xl" />,
+            stats: "6 Social Platforms | Website Launches"
         }
     ];
 
@@ -46,6 +61,17 @@ function Timeline() {
 
     return (
         <div className="relative pt-32 px-6 min-h-screen bg-black">
+            {/* Logo in top-left */}
+            <div className="absolute -top-8 sm:-top-10 md:-top-12 lg:-top-14 xl:-top-16 -left-2 sm:-left-3 z-[100]">
+                <Link to="/">
+                    <img
+                        src="/pwrplay-logo.png"
+                        alt="PWRPLAY Logo"
+                        className="w-48 sm:w-56 md:w-64 lg:w-72 xl:w-80 h-auto cursor-pointer"
+                    />
+                </Link>
+            </div>
+
             <div className="relative z-10 max-w-6xl mx-auto">
                 {/* Header Section */}
                 <div className="text-center mb-16">
@@ -53,7 +79,7 @@ function Timeline() {
                         Our <span className="text-red-600">Journey</span>
                     </h1>
                     <p className="text-3xl font-body font-medium max-w-5xl mx-auto">
-                        Follow our path as we revolutionize game night experiences.
+                    Follow our journey as we revolutionize game nights.
                     </p>
                 </div>
 
@@ -100,7 +126,7 @@ function Timeline() {
                                             </p>
                                         </div>
                                         <div className="pt-3 border-t border-red-600">
-                                            <div className="text-xl text-red-600 font-bold">
+                                            <div className="text-xl text-red-600 font-medium">
                                                 {event.stats}
                                             </div>
                                         </div>

@@ -257,3 +257,19 @@
 .spin-arrow {
     animation: spinArrow 4s linear infinite;
 }
+
+/* Add these new styles */
+.card-flip {
+    perspective: 1000px;
+    transform-style: preserve-3d;
+    transition: transform 0.5s;
+}
+
+.card-flip.flipped {
+    transform: rotateY(180deg);
+}
+
+#spinner-arrow {
+    transform-origin: center;
+    transition: transform 3s cubic-bezier(0.2, 0.8, 0.3, 1);
+}

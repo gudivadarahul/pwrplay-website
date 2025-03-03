@@ -1,6 +1,6 @@
 import { FaRotate,FaPlay,FaTrophy,FaChampagneGlasses,FaRepeat } from "react-icons/fa6";
-import { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useEffect, useState, useRef } from 'react';
+import { useLocation, Link } from 'react-router-dom';
 
 function ControlledChaos() {
     const location = useLocation();
@@ -39,31 +39,146 @@ function ControlledChaos() {
         }
     },[location]);
 
+    useEffect(() => {
+        const arrow = document.getElementById('spinner-arrow');
+        const purpleCard = document.getElementById('purple-card');
+        const redCard = document.getElementById('red-card');
+        const orangeCard = document.getElementById('orange-card');
+        const blueCard = document.getElementById('blue-card');
+        let isAnimating = true;
+
+        // Define the color configurations
+        const colorConfigs = [
+            { degree: 135, card: purpleCard, name: 'purple' },
+            { degree: 225, card: redCard, name: 'red' },
+            { degree: 315, card: orangeCard, name: 'orange' },
+            { degree: 45, card: blueCard, name: 'blue' }
+        ];
+
+        const animateSpinSequence = async () => {
+            while (isAnimating) {
+                // Reset all cards
+                colorConfigs.forEach(config => {
+                    config.card.style.transform = '';
+                });
+
+                // Randomly select a color
+                const randomColor = colorConfigs[Math.floor(Math.random() * colorConfigs.length)];
+
+                // Reset arrow position to 0 before starting new spin
+                arrow.style.transition = 'none';
+                arrow.style.transform = 'rotate(0deg)';
+                arrow.offsetHeight;
+
+                // Spin to selected color
+                arrow.style.transition = 'transform 3s cubic-bezier(0.2, 0.8, 0.3, 1)';
+                const totalRotation = 720 + randomColor.degree; // Two full rotations plus landing degree
+                arrow.style.transform = `rotate(${totalRotation}deg)`;
+
+                // Wait for spin to complete
+                await new Promise(resolve => setTimeout(resolve, 3000));
+
+                // Flip selected card
+                randomColor.card.style.transform = 'rotateY(180deg)';
+
+                // Wait while card is shown
+                await new Promise(resolve => setTimeout(resolve, 3000));
+
+                // Unflip card
+                randomColor.card.style.transform = '';
+
+                // Pause before next sequence
+                await new Promise(resolve => setTimeout(resolve, 1000));
+            }
+        };
+
+        animateSpinSequence();
+
+        return () => {
+            isAnimating = false;
+        };
+    }, []);
+
     return (
         <div className="pt-40 text-white min-h-screen bg-black">
+            {/* Logo in top-left */}
+            <div className="absolute -top-8 sm:-top-10 md:-top-12 lg:-top-14 xl:-top-16 -left-2 sm:-left-3 z-[100]">
+                <Link to="/">
+                    <img
+                        src="/pwrplay-logo.png"
+                        alt="PWRPLAY Logo"
+                        className="w-48 sm:w-56 md:w-64 lg:w-72 xl:w-80 h-auto cursor-pointer"
+                    />
+                </Link>
+            </div>
+
             {/* Title */}
-            <h1 className="text-5xl md:text-6xl font-headers mb-6 text-center fade-in px-8">
+            <h1 className="text-5xl md:text-6xl font-headers text-center fade-in px-8">
                 <img
                     src="/cc_logo.png"
                     alt="Controlled Chaos™"
-                    className="max-w-[800px] mx-auto"
+                    className="max-w-[800px] mx-auto mb-64"
                 />
             </h1>
 
             {/* What's in the Box */}
             <section className="mb-16">
                 <div className="flex justify-center items-center">
-                    <div className="relative w-64 h-64">
-                        <img
-                            src="/spinner_wo_arrow.png"
-                            alt="Game Spinner Base"
-                            className="w-full h-full object-contain"
-                        />
-                        <img
-                            src="/arrow.png"
-                            alt="Spinner Arrow"
-                            className="absolute top-0 left-0 w-full h-full object-contain origin-center spin-arrow"
-                        />
+                    <div className="relative w-[800px] h-[800px] flex items-center justify-center">
+                        {/* Top Left Card (Blue) */}
+                        <div className="absolute top-[15%] left-[15%] w-80 h-80 transform -translate-x-1/2 -translate-y-1/2">
+                            <img
+                                src="/card-back-1.png"
+                                alt="Blue Card"
+                                className="w-full h-full object-contain transition-transform duration-500"
+                                id="blue-card"
+                            />
+                        </div>
+                        
+                        {/* Top Right Card (Purple) */}
+                        <div className="absolute top-[15%] right-[15%] w-80 h-80 transform translate-x-1/2 -translate-y-1/2">
+                            <img
+                                src="/card-back-4.png"
+                                alt="Purple Card"
+                                className="w-full h-full object-contain transition-transform duration-500"
+                                id="purple-card"
+                            />
+                        </div>
+                        
+                        {/* Bottom Left Card (Orange) */}
+                        <div className="absolute bottom-[15%] left-[15%] w-80 h-80 transform -translate-x-1/2 translate-y-1/2">
+                            <img
+                                src="/card-back-2.png"
+                                alt="Orange Card"
+                                className="w-full h-full object-contain transition-transform duration-500"
+                                id="orange-card"
+                            />
+                        </div>
+                        
+                        {/* Bottom Right Card (Red) */}
+                        <div className="absolute bottom-[15%] right-[15%] w-80 h-80 transform translate-x-1/2 translate-y-1/2">
+                            <img
+                                src="/card-back-3.png"
+                                alt="Red Card"
+                                className="w-full h-full object-contain transition-transform duration-500"
+                                id="red-card"
+                            />
+                        </div>
+                        
+                        {/* Center Spinner */}
+                        <div className="relative w-96 h-96">
+                            <img
+                                src="/spinner_wo_arrow.png"
+                                alt="Game Spinner Base"
+                                className="w-full h-full object-contain"
+                            />
+                            <img
+                                src="/arrow.png"
+                                alt="Spinner Arrow"
+                                className="absolute top-0 left-0 w-full h-full object-contain origin-center"
+                                id="spinner-arrow"
+                            />
+                        </div>
                     </div>
                 </div>
             </section>
@@ -105,11 +220,10 @@ function ControlledChaos() {
 
                 {/* Optional Video Embed */}
                 <div className="mt-16">
-                    <h3 className="text-7xl font-headers mb-6">watch how to <span className="text-red-600">play</span></h3>
                     <div className="relative w-full max-w-3xl mx-auto aspect-video">
                         <iframe
                             className="w-full h-full rounded-lg shadow-lg"
-                            src="https://www.youtube.com/watch?v=exubwWDXiXY"
+                            src="https://www.youtube.com/embed/RbkMqOEyfOE"
                             title="Controlled Chaos Promo Video"
                             frameBorder="0"
                             referrerPolicy="no-referrer"

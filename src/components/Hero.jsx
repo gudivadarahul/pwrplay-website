@@ -43,15 +43,12 @@ function Hero() {
         <div className="md:w-3/5 mt-12 sm:mt-14 md:mt-0 slide-up flex flex-col items-center justify-center">
           <div className="relative w-full">
             <img
-              src="/box-top-view.png"
+              src="/box-top-view1.png"
               alt="Controlled Chaos™ Party Game"
               className="w-[140%] sm:w-[150%] md:w-[160%] max-w-none object-contain transition-transform duration-300 
               -ml-12 sm:-ml-16 md:-ml-20 lg:-ml-24"
             />
           </div>
-          {/* <h3 className="text-7xl mt-8 font-subheaders font-semibold text-center ml-24 !font-[Rajdhani]">
-            <span className="text-red-600">COMING SOON!</span>
-          </h3> */}
         </div>
       </div>
     </section>

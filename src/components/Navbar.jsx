@@ -60,6 +60,13 @@ const Navbar = () => {
         return () => window.removeEventListener('scroll',handleScroll);
     },[]);
 
+    const handleNavClick = (path) => {
+        if (window.location.pathname === path) {
+            window.location.reload();
+        }
+        setIsOpen(false); // Close mobile menu if open
+    };
+
     return (
         <nav className={`fixed w-full z-40 transition-colors duration-300 ${isScrolled ? 'bg-black py-2' : 'bg-transparent py-2 border-b-2 border-transparent'
             }`}>
@@ -67,7 +74,7 @@ const Navbar = () => {
                 {/* Left side - Logo */}
                 <div className={`transition-all duration-500  ${isScrolled ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'
                     }`}>
-                    <Link to="/" className="block h-12 sm:h-14 md:h-16 lg:h-18 xl:h-20 overflow-hidden">
+                    <Link to="/" onClick={() => handleNavClick('/')} className="block h-12 sm:h-14 md:h-16 lg:h-18 xl:h-20 overflow-hidden">
                         <img
                             src="/pwrplay-logo.png"
                             alt="PWRPLAY Logo"
@@ -87,7 +94,7 @@ const Navbar = () => {
                         <div className="nav-dropdown absolute top-[calc(100%-20px)] left-0">
                             <div className="bg-black/95 backdrop-blur-sm py-2 rounded-lg shadow-lg min-w-[200px]">
                                 <h3>
-                                    <Link to="/controlled-chaos" className="nav-link">
+                                    <Link to="/controlled-chaos" onClick={() => handleNavClick('/controlled-chaos')} className="nav-link">
                                         Controlled Chaos™
                                     </Link>
                                 </h3>
@@ -104,12 +111,12 @@ const Navbar = () => {
                         <div className="nav-dropdown absolute top-[calc(100%-20px)] left-0">
                             <div className="bg-black/95 backdrop-blur-sm py-2 rounded-lg shadow-lg min-w-[200px]">
                                 <h3>
-                                    <Link to="/about" className="nav-link">
+                                    <Link to="/about" onClick={() => handleNavClick('/about')} className="nav-link">
                                         Our Story
                                     </Link>
                                 </h3>
                                 <h3>
-                                    <Link to="/about/timeline" className="nav-link">
+                                    <Link to="/about/timeline" onClick={() => handleNavClick('/about/timeline')} className="nav-link">
                                         Timeline
                                     </Link>
                                 </h3>
@@ -126,12 +133,12 @@ const Navbar = () => {
                         <div className="nav-dropdown absolute top-[calc(100%-20px)] left-0">
                             <div className="bg-black/95 backdrop-blur-sm py-2 rounded-lg shadow-lg min-w-[200px]">
                                 <h3>
-                                    <Link to="/contact" className="nav-link">
+                                    <Link to="/contact" onClick={() => handleNavClick('/contact')} className="nav-link">
                                         Contact Us
                                     </Link>
                                 </h3>
                                 <h3>
-                                    <Link to="/faq" className="nav-link">
+                                    <Link to="/faq" onClick={() => handleNavClick('/faq')} className="nav-link">
                                         FAQ
                                     </Link>
                                 </h3>
@@ -142,6 +149,7 @@ const Navbar = () => {
                     <h3>
                         <Link
                             to="/controlled-chaos#buy-section"
+                            onClick={() => handleNavClick('/controlled-chaos#buy-section')}
                             className="px-4 py-2 bg-red-600 rounded-lg 
                                 text-xl lg:text-2xl xl:text-4xl font-headers 
                                 uppercase"
@@ -165,7 +173,7 @@ const Navbar = () => {
             {isOpen && (
                 <div className="absolute top-[72px] left-0 w-full bg-black/95 backdrop-blur-sm 
                     text-white flex flex-col items-center py-6 space-y-4 shadow-xl animate-fadeIn lg:hidden">
-                    <Link to="/" className="py-2 px-4 hover:text-red-500 transition-all duration-300 rounded-lg w-[90%] text-center outline-none uppercase">
+                    <Link to="/" onClick={() => handleNavClick('/')} className="py-2 px-4 hover:text-red-500 transition-all duration-300 rounded-lg w-[90%] text-center outline-none uppercase">
                         Home
                     </Link>
                     <button
@@ -178,7 +186,7 @@ const Navbar = () => {
                     {gamesDropdown && (
                         <div className="bg-black/95 backdrop-blur-sm text-white py-2 rounded-lg shadow-lg w-[90%] max-w-[300px] border border-gray-800/50 animate-slideDown">
                             <h3>
-                                <Link to="/controlled-chaos" className="block px-6 py-3 hover:text-red-500 transition-all duration-300 hover:pl-8 outline-none font-headers text-3xl uppercase">
+                                <Link to="/controlled-chaos" onClick={() => handleNavClick('/controlled-chaos')} className="block px-6 py-3 hover:text-red-500 transition-all duration-300 hover:pl-8 outline-none font-headers text-3xl uppercase">
                                     Controlled Chaos™
                                 </Link>
                             </h3>
@@ -196,17 +204,17 @@ const Navbar = () => {
                     {aboutDropdown && (
                         <div className="bg-black/95 backdrop-blur-sm text-white py-2 rounded-lg shadow-lg w-[90%] max-w-[300px] border border-gray-800/50 animate-slideDown">
                             <h3>
-                                <Link to="/about" className="block px-6 py-3 hover:text-red-500 transition-all duration-300 hover:pl-8 outline-none font-headers text-3xl uppercase">
+                                <Link to="/about" onClick={() => handleNavClick('/about')} className="block px-6 py-3 hover:text-red-500 transition-all duration-300 hover:pl-8 outline-none font-headers text-3xl uppercase">
                                     Team
                                 </Link>
                             </h3>
                             <h3>
-                                <Link to="/about/timeline" className="block px-6 py-3 hover:text-red-500 transition-all duration-300 hover:pl-8 outline-none font-headers text-3xl uppercase">
+                                <Link to="/about/timeline" onClick={() => handleNavClick('/about/timeline')} className="block px-6 py-3 hover:text-red-500 transition-all duration-300 hover:pl-8 outline-none font-headers text-3xl uppercase">
                                     Timeline
                                 </Link>
                             </h3>
                             <h3>
-                                <Link to="/faq" className="block px-6 py-3 hover:text-red-500 transition-all duration-300 hover:pl-8 outline-none font-headers text-3xl uppercase">
+                                <Link to="/faq" onClick={() => handleNavClick('/faq')} className="block px-6 py-3 hover:text-red-500 transition-all duration-300 hover:pl-8 outline-none font-headers text-3xl uppercase">
                                     FAQs
                                 </Link>
                             </h3>
@@ -232,12 +240,12 @@ const Navbar = () => {
                                 </button>
                             </h3>
                             <h3>
-                                <Link to="/contact" className="block px-6 py-3 hover:text-red-500 transition-all duration-300 hover:pl-8 outline-none font-headers text-3xl uppercase">
+                                <Link to="/contact" onClick={() => handleNavClick('/contact')} className="block px-6 py-3 hover:text-red-500 transition-all duration-300 hover:pl-8 outline-none font-headers text-3xl uppercase">
                                     Contact
                                 </Link>
                             </h3>
                             <h3>
-                                <Link to="/connect/retailers" className="block px-6 py-3 hover:text-red-500 transition-all duration-300 hover:pl-8 outline-none font-headers text-3xl uppercase">
+                                <Link to="/connect/retailers" onClick={() => handleNavClick('/connect/retailers')} className="block px-6 py-3 hover:text-red-500 transition-all duration-300 hover:pl-8 outline-none font-headers text-3xl uppercase">
                                     Retailers
                                 </Link>
                             </h3>
@@ -247,6 +255,7 @@ const Navbar = () => {
                     <h3>
                         <Link
                             to="/controlled-chaos#buy-section"
+                            onClick={() => handleNavClick('/controlled-chaos#buy-section')}
                             className="px-6 py-2 bg-red-600 transition-all duration-300 rounded-lg text-3xl font-headers
                                     hover:shadow-lg hover:shadow-red-500/20 hover:-translate-y-0.5 outline-none hover:box-shadow-[0_0_20px_rgba(239,68,68,0.6)] uppercase"
                         >
