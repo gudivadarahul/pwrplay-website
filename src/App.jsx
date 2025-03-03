@@ -12,6 +12,7 @@ import ControlledChaos from "./pages/ControlledChaos";
 import Contact from "./pages/Contact";
 import Retailers from "./pages/Retailers";
 import Timeline from "./pages/Timeline";
+import Ambassador from "./pages/Ambassador";
 
 function App() {
   useEffect(() => {
@@ -36,6 +37,7 @@ function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/connect/retailers" element={<Retailers />} />
           <Route path="/about/timeline" element={<Timeline />} />
+          <Route path="/ambassador" element={<Ambassador />} />
         </Routes>
       </main>
       <Footer />

@@ -142,6 +142,11 @@ const Navbar = () => {
                                         FAQ
                                     </Link>
                                 </h3>
+                                <h3>
+                                    <Link to="/ambassador" onClick={() => handleNavClick('/ambassador')} className="nav-link">
+                                        Ambassador Program
+                                    </Link>
+                                </h3>
                             </div>
                         </div>
                     </div>
@@ -247,6 +252,11 @@ const Navbar = () => {
                             <h3>
                                 <Link to="/connect/retailers" onClick={() => handleNavClick('/connect/retailers')} className="block px-6 py-3 hover:text-red-500 transition-all duration-300 hover:pl-8 outline-none font-headers text-3xl uppercase">
                                     Retailers
+                                </Link>
+                            </h3>
+                            <h3>
+                                <Link to="/ambassador" onClick={() => handleNavClick('/ambassador')} className="block px-6 py-3 hover:text-red-500 transition-all duration-300 hover:pl-8 outline-none font-headers text-3xl uppercase">
+                                    Ambassador Program
                                 </Link>
                             </h3>
                         </div>
