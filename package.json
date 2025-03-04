@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@headlessui/react": "^2.2.0",
+    "@mailchimp/mailchimp_marketing": "^3.0.80",
     "@react-spring/parallax": "^9.7.5",
     "@types/matter-js": "^0.19.8",
     "framer-motion": "^12.4.3",

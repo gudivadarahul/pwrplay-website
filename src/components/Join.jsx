@@ -3,15 +3,35 @@ import { useState } from "react";
 function JoinTheChaos() {
     const [email,setEmail] = useState("");
     const [message,setMessage] = useState("");
+    const [loading, setLoading] = useState(false);
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
+        setMessage("");
 
-        // Simulating email submission (Replace this with actual backend/API call)
-        setTimeout(() => {
-            setMessage("Thanks for joining our community!");
-            setEmail("");
-        },1000);
+        try {
+            const response = await fetch('/api/subscribe', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email }),
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                setMessage("Thanks for joining our community! Please check your email to confirm your subscription.");
+                setEmail("");
+            } else {
+                setMessage(data.error || "Something went wrong. Please try again.");
+            }
+        } catch (error) {
+            setMessage("Something went wrong. Please try again.");
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -42,10 +62,12 @@ function JoinTheChaos() {
                     />
                     <button
                         type="submit"
+                        disabled={loading}
                         className="px-6 py-4 bg-red-600 transition-all duration-300 rounded-lg text-lg font-bold
-                            hover:shadow-lg hover:shadow-red-500/20 hover:-translate-y-0.5 outline-none"
+                            hover:shadow-lg hover:shadow-red-500/20 hover:-translate-y-0.5 outline-none
+                            disabled:opacity-70 disabled:cursor-not-allowed"
                     >
-                        Sign Up
+                        {loading ? "Signing up..." : "Sign Up"}
                     </button>
                 </form>
 
