@@ -1,10 +1,12 @@
 import { useEffect,useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import Tilt from 'react-parallax-tilt';
-import { FaDice,FaRocket,FaChartLine,FaTrophy, FaGear, FaBoxOpen, FaBullhorn } from 'react-icons/fa6';
+import { FaDice,FaRocket,FaChartLine,FaTrophy,FaGear,FaBoxOpen,FaBullhorn } from 'react-icons/fa6';
 import { Link } from 'react-router-dom';
 
 function Timeline() {
+    const location = useLocation();
     const [activeIndex,setActiveIndex] = useState(0);
 
     const timelineEvents = [
@@ -59,6 +61,14 @@ function Timeline() {
         return () => clearInterval(interval);
     },[]);
 
+    useEffect(() => {
+        window.scrollTo({
+            top: 0,
+            left: 0,
+            behavior: 'instant'
+        });
+    },[location]);
+
     return (
         <div className="relative pt-32 px-6 min-h-screen bg-black">
             {/* Logo in top-left */}
@@ -79,7 +89,7 @@ function Timeline() {
                         Our <span className="text-red-600">Journey</span>
                     </h1>
                     <p className="text-3xl font-body font-medium max-w-5xl mx-auto">
-                    Follow our journey as we revolutionize game nights.
+                        Follow our journey as we revolutionize game nights.
                     </p>
                 </div>
 

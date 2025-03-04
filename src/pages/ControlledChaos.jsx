@@ -1,6 +1,6 @@
 import { FaRotate,FaPlay,FaTrophy,FaChampagneGlasses,FaRepeat } from "react-icons/fa6";
-import { useEffect, useState, useRef } from 'react';
-import { useLocation, Link } from 'react-router-dom';
+import { useEffect,useState,useRef } from 'react';
+import { useLocation,Link } from 'react-router-dom';
 
 function ControlledChaos() {
     const location = useLocation();
@@ -36,8 +36,76 @@ function ControlledChaos() {
 
                 requestAnimationFrame(animation);
             }
+        } else {
+            window.scrollTo({
+                top: 0,
+                left: 0,
+                behavior: 'instant'
+            });
         }
     },[location]);
+
+    useEffect(() => {
+        // Initial animation for cards spreading out
+        const cards = ['blue-card','purple-card','orange-card','red-card'].map(
+            id => document.getElementById(id).parentElement
+        );
+        const spinner = document.getElementById('spinner-container');
+
+        // Set initial styles for cards (stacked in center)
+        cards.forEach(card => {
+            card.style.transition = 'none';
+            card.style.transform = 'translate(-50%, -50%)'; // Center the cards
+            card.style.top = '50%';
+            card.style.left = '50%';
+            card.style.right = 'auto';
+            card.style.bottom = 'auto';
+        });
+
+        // Hide spinner initially
+        if (spinner) {
+            spinner.style.opacity = '0';
+        }
+
+        // Force reflow
+        cards[0].offsetHeight;
+
+        // Add transition and trigger spread animation
+        setTimeout(() => {
+            cards.forEach(card => {
+                card.style.transition = 'all 1s cubic-bezier(0.4, 0, 0.2, 1)';
+            });
+
+            // Spread cards to their positions
+            cards[0].style.transform = 'translate(-50%, -50%)'; // Blue (top-left)
+            cards[0].style.top = '15%';
+            cards[0].style.left = '15%';
+
+            cards[1].style.transform = 'translate(50%, -50%)'; // Purple (top-right)
+            cards[1].style.top = '15%';
+            cards[1].style.left = 'auto';
+            cards[1].style.right = '15%';
+
+            cards[2].style.transform = 'translate(-50%, 50%)'; // Orange (bottom-left)
+            cards[2].style.top = 'auto';
+            cards[2].style.bottom = '15%';
+            cards[2].style.left = '15%';
+
+            cards[3].style.transform = 'translate(50%, 50%)'; // Red (bottom-right)
+            cards[3].style.top = 'auto';
+            cards[3].style.bottom = '15%';
+            cards[3].style.left = 'auto';
+            cards[3].style.right = '15%';
+
+            // Fade in spinner after cards spread
+            setTimeout(() => {
+                if (spinner) {
+                    spinner.style.transition = 'opacity 1s ease-in';
+                    spinner.style.opacity = '1';
+                }
+            },1000); // Wait for cards to spread before showing spinner
+        },500); // Small delay before starting animation
+    },[]); // This effect runs once on mount
 
     useEffect(() => {
         const arrow = document.getElementById('spinner-arrow');
@@ -47,23 +115,25 @@ function ControlledChaos() {
         const blueCard = document.getElementById('blue-card');
         let isAnimating = true;
 
-        // Define the color configurations
-        const colorConfigs = [
-            { degree: 135, card: purpleCard, name: 'purple' },
-            { degree: 225, card: redCard, name: 'red' },
-            { degree: 315, card: orangeCard, name: 'orange' },
-            { degree: 45, card: blueCard, name: 'blue' }
+        // Define the color sequence
+        const colorSequence = [
+            { degree: 135,card: purpleCard,name: 'purple' },
+            { degree: 225,card: redCard,name: 'red' },
+            { degree: 315,card: orangeCard,name: 'orange' },
+            { degree: 45,card: blueCard,name: 'blue' }
         ];
+
+        let currentIndex = 0;
 
         const animateSpinSequence = async () => {
             while (isAnimating) {
                 // Reset all cards
-                colorConfigs.forEach(config => {
+                colorSequence.forEach(config => {
                     config.card.style.transform = '';
                 });
 
-                // Randomly select a color
-                const randomColor = colorConfigs[Math.floor(Math.random() * colorConfigs.length)];
+                // Get current color in sequence
+                const currentColor = colorSequence[currentIndex];
 
                 // Reset arrow position to 0 before starting new spin
                 arrow.style.transition = 'none';
@@ -72,23 +142,26 @@ function ControlledChaos() {
 
                 // Spin to selected color
                 arrow.style.transition = 'transform 3s cubic-bezier(0.2, 0.8, 0.3, 1)';
-                const totalRotation = 720 + randomColor.degree; // Two full rotations plus landing degree
+                const totalRotation = 720 + currentColor.degree; // Two full rotations plus landing degree
                 arrow.style.transform = `rotate(${totalRotation}deg)`;
 
                 // Wait for spin to complete
-                await new Promise(resolve => setTimeout(resolve, 3000));
+                await new Promise(resolve => setTimeout(resolve,3000));
 
                 // Flip selected card
-                randomColor.card.style.transform = 'rotateY(180deg)';
+                currentColor.card.style.transform = 'rotateY(180deg)';
 
                 // Wait while card is shown
-                await new Promise(resolve => setTimeout(resolve, 3000));
+                await new Promise(resolve => setTimeout(resolve,6000));
 
                 // Unflip card
-                randomColor.card.style.transform = '';
+                currentColor.card.style.transform = '';
+
+                // Move to next color in sequence
+                currentIndex = (currentIndex + 1) % colorSequence.length;
 
                 // Pause before next sequence
-                await new Promise(resolve => setTimeout(resolve, 1000));
+                await new Promise(resolve => setTimeout(resolve,1000));
             }
         };
 
@@ -97,7 +170,7 @@ function ControlledChaos() {
         return () => {
             isAnimating = false;
         };
-    }, []);
+    },[]);
 
     return (
         <div className="pt-40 text-white min-h-screen bg-black">
@@ -117,56 +190,80 @@ function ControlledChaos() {
                 <img
                     src="/cc_logo.png"
                     alt="Controlled Chaos™"
-                    className="max-w-[800px] mx-auto mb-64"
+                    className="max-w-[600px] mx-auto mb-24"
                 />
             </h1>
 
             {/* What's in the Box */}
-            <section className="mb-16">
-                <div className="flex justify-center items-center">
-                    <div className="relative w-[800px] h-[800px] flex items-center justify-center">
+            <section className="min-h-[calc(100vh-160px)] -mb-80">
+                <div className="flex justify-center items-center h-full">
+                    <div className="relative w-[700px] h-[700px] flex items-center justify-center">
                         {/* Top Left Card (Blue) */}
-                        <div className="absolute top-[15%] left-[15%] w-80 h-80 transform -translate-x-1/2 -translate-y-1/2">
-                            <img
-                                src="/card-back-1.png"
-                                alt="Blue Card"
-                                className="w-full h-full object-contain transition-transform duration-500"
-                                id="blue-card"
-                            />
+                        <div className="absolute pointer-events-none w-72 h-72 perspective-1000">
+                            <div className="relative w-full h-full transition-transform duration-500 transform-style-preserve-3d" id="blue-card">
+                                <img
+                                    src="/card-back-1.png"
+                                    alt="Blue Card Front"
+                                    className="w-full h-full object-contain absolute backface-hidden"
+                                />
+                                <img
+                                    src="/blue_card_rules.png"
+                                    alt="Blue Card Back"
+                                    className="w-full h-full object-contain absolute backface-hidden rotate-y-180"
+                                />
+                            </div>
                         </div>
-                        
+
                         {/* Top Right Card (Purple) */}
-                        <div className="absolute top-[15%] right-[15%] w-80 h-80 transform translate-x-1/2 -translate-y-1/2">
-                            <img
-                                src="/card-back-4.png"
-                                alt="Purple Card"
-                                className="w-full h-full object-contain transition-transform duration-500"
-                                id="purple-card"
-                            />
+                        <div className="absolute pointer-events-none w-72 h-72 perspective-1000">
+                            <div className="relative w-full h-full transition-transform duration-500 transform-style-preserve-3d" id="purple-card">
+                                <img
+                                    src="/card-back-4.png"
+                                    alt="Purple Card Front"
+                                    className="w-full h-full object-contain absolute backface-hidden"
+                                />
+                                <img
+                                    src="/purple_card_rules.png"
+                                    alt="Purple Card Back"
+                                    className="w-full h-full object-contain absolute backface-hidden rotate-y-180"
+                                />
+                            </div>
                         </div>
-                        
+
                         {/* Bottom Left Card (Orange) */}
-                        <div className="absolute bottom-[15%] left-[15%] w-80 h-80 transform -translate-x-1/2 translate-y-1/2">
-                            <img
-                                src="/card-back-2.png"
-                                alt="Orange Card"
-                                className="w-full h-full object-contain transition-transform duration-500"
-                                id="orange-card"
-                            />
+                        <div className="absolute pointer-events-none w-72 h-72 perspective-1000">
+                            <div className="relative w-full h-full transition-transform duration-500 transform-style-preserve-3d" id="orange-card">
+                                <img
+                                    src="/card-back-2.png"
+                                    alt="Orange Card Front"
+                                    className="w-full h-full object-contain absolute backface-hidden"
+                                />
+                                <img
+                                    src="/orange_card_rules.png"
+                                    alt="Orange Card Back"
+                                    className="w-full h-full object-contain absolute backface-hidden rotate-y-180"
+                                />
+                            </div>
                         </div>
-                        
+
                         {/* Bottom Right Card (Red) */}
-                        <div className="absolute bottom-[15%] right-[15%] w-80 h-80 transform translate-x-1/2 translate-y-1/2">
-                            <img
-                                src="/card-back-3.png"
-                                alt="Red Card"
-                                className="w-full h-full object-contain transition-transform duration-500"
-                                id="red-card"
-                            />
+                        <div className="absolute pointer-events-none w-72 h-72 perspective-1000">
+                            <div className="relative w-full h-full transition-transform duration-500 transform-style-preserve-3d" id="red-card">
+                                <img
+                                    src="/card-back-3.png"
+                                    alt="Red Card Front"
+                                    className="w-full h-full object-contain absolute backface-hidden"
+                                />
+                                <img
+                                    src="/red_card_rules.png"
+                                    alt="Red Card Back"
+                                    className="w-full h-full object-contain absolute backface-hidden rotate-y-180"
+                                />
+                            </div>
                         </div>
-                        
-                        {/* Center Spinner */}
-                        <div className="relative w-96 h-96">
+
+                        {/* Center Spinner - Add id and initial opacity-0 */}
+                        <div id="spinner-container" className="relative w-80 h-80">
                             <img
                                 src="/spinner_wo_arrow.png"
                                 alt="Game Spinner Base"
@@ -182,7 +279,6 @@ function ControlledChaos() {
                     </div>
                 </div>
             </section>
-
 
             {/* How to Play Section */}
             <section className="bg-black text-white py-8 px-6 text-center mb-12">

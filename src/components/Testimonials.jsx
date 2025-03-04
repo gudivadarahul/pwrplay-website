@@ -19,11 +19,11 @@ const testimonials = [
         author: "S.C."
     },
     {
-        text: "We spent hours laughing at every card, telling each other hilarious stories from our pasts, and trying to defend ourselves from getting those icks!! This game is a must have in every household.",
+        text: "We spent hours laughing at every card, telling each other hilarious stories from our pasts, and trying to defend ourselves from getting those icks!!",
         author: "A.S."
     },
     {
-        text: "It's perfect to play with friends you've known for years or as an icebreaker with a new group. If you want a game that'll have you ugly laughing and getting absolutely hammered, this is it.",
+        text: "It's perfect to play with friends you've known for years or as an icebreaker with a new group. If you want a game that'll have you ugly laughing!",
         author: "S.P."
     },
     {
@@ -31,23 +31,23 @@ const testimonials = [
         author: "S.G."
     },
     {
-        text: "Playing Controlled Chaos was an absolute blast! The fast-paced, creative challenges, and unexpected surprises made the game fun to play with family and friends!",
+        text: "Playing Controlled Chaos was an absolute blast! The fast-paced, creative challenges, and unexpected surprises made the game fun to play!",
         author: "A.S."
     },
     {
-        text: "My favorite part when playing this game was when we stick-an-ick'd one of our friends a few times in a row, and she had to drink sooo much. You never know what's gonna happen when the Chaos starts!",
+        text: "My favorite part was when we stick-an-ick'd one of our friends a few times in a row. You never know what's gonna happen when the Chaos starts!",
         author: "K.G."
     },
     {
-        text: "This drinking card game has been one of the most fun ones I've ever played! The prompts are all so unique and I highly recommend playing with your friends. The stick an Ick questions were my personal favorite. Can guarantee that you'll be laughing the entire time!",
+        text: "This game has been one of the most fun ones I've ever played! The prompts are unique and the stick an Ick questions were my personal favorite!",
         author: "R.S."
     },
     {
-        text: "Chaos is the ultimate party game! It gets everyone involved, keeps the energy high, and guarantees nonstop laughter. The Outlast deck was my favorite—it brought out our competitive sides and every round was unpredictable. If you want a drinking game that's fun, fast-paced, and unforgettable, Chaos is a must-try!",
+        text: "Chaos is the ultimate party game! It gets everyone involved, keeps the energy high, and guarantees nonstop laughter. The Outlast deck was my favorite!",
         author: "R.S."
     },
     {
-        text: "Had a great time playing Chaos with my group over new years. Definitely a really interactive game that plays into inside jokes with my friends. Love the idea of stick an ick because of the playful banter. Would highly recommend to those who prefer a more social game!",
+        text: "Had a great time playing Chaos with my group. Definitely an interactive game that plays into inside jokes. Love the idea of stick an ick!",
         author: "K.S."
     }
 ];

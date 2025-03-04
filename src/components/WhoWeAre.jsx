@@ -1,5 +1,5 @@
 import "../assets/Hero.css";
-import { Link, useNavigate } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import { useEffect,useRef } from 'react';
 import Matter from 'matter-js';
 
@@ -16,8 +16,8 @@ const getRandomDirection = () => {
 };
 
 // Increase number of cards even more for better effect
-const backgroundIcons = Array(40).fill(null).map((_,index) => {  // Increased to 40
-    const sectionSize = 100 / 40;
+const backgroundIcons = Array(80).fill(null).map((_,index) => {  // Increased from 40 to 80
+    const sectionSize = 100 / 80;  // Adjusted for new count
     const sectionStart = index * sectionSize;
 
     return {
@@ -186,7 +186,7 @@ function WhoWeAre() {
     },[]);
 
     const handleNavigation = () => {
-        navigate('/about', { replace: true });
+        navigate('/about',{ replace: true });
     };
 
     return (

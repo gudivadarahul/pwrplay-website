@@ -1,9 +1,19 @@
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import { FaEnvelope,FaLocationDot,FaInstagram,FaTiktok,FaXTwitter,FaFacebook,FaLinkedin,FaSpotify,FaClock } from 'react-icons/fa6';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link,useLocation } from 'react-router-dom';
 
 function Contact() {
+    const location = useLocation();
+
+    useEffect(() => {
+        window.scrollTo({
+            top: 0,
+            left: 0,
+            behavior: 'instant'
+        });
+    },[location]);
+
     const [formData,setFormData] = useState({
         name: '',
         email: '',
@@ -16,7 +26,7 @@ function Contact() {
         submitted: false
     });
 
-    const [isSubmitted, setIsSubmitted] = useState(false);
+    const [isSubmitted,setIsSubmitted] = useState(false);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -120,7 +130,7 @@ function Contact() {
 
                 {/* Contact Info Cards */}
                 <div className="grid md:grid-cols-3 gap-8 mb-16 relative">
-                <div className="bg-black p-8 rounded-xl transition-all duration-300 text-center">
+                    <div className="bg-black p-8 rounded-xl transition-all duration-300 text-center">
                         <FaLocationDot className="text-red-600 text-6xl mx-auto mb-4" />
                         <h3 className="text-3xl font-subheaders mb-2">Based In</h3>
                         <p className="font-body font-medium text-base">Toronto, Ontario</p>

@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Disclosure,DisclosureButton,DisclosurePanel } from "@headlessui/react";
 import { FaChevronDown,FaChevronUp } from "react-icons/fa";
 import { Link } from "react-router-dom";
@@ -74,6 +76,16 @@ const faqs = [
 ];
 
 function FAQ() {
+    const location = useLocation();
+
+    useEffect(() => {
+        window.scrollTo({
+            top: 0,
+            left: 0,
+            behavior: 'instant'
+        });
+    },[location]);
+
     return (
         <div className="pt-32 px-6 min-h-screen bg-black">
             {/* Logo in top-left */}
@@ -89,7 +101,7 @@ function FAQ() {
 
             <div className="max-w-4xl mx-auto">
                 <h1 className="text-5xl md:text-7xl font-headers mb-6 text-center">
-                <span className="text-red-600">F</span>requent&nbsp; <span className="text-red-600">A</span>nnoying&nbsp; <span className="text-red-600">Q</span>uestions
+                    <span className="text-red-600">F</span>requent&nbsp; <span className="text-red-600">A</span>nnoying&nbsp; <span className="text-red-600">Q</span>uestions
                 </h1>
                 <p className="text-2xl text-center mb-12 font-body font-medium">
                     Have questions? We've got the answers.

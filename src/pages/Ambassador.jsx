@@ -1,8 +1,18 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useState,useEffect } from 'react';
+import { useLocation,Link } from 'react-router-dom';
 
 function Ambassador() {
-    const [formData, setFormData] = useState({
+    const location = useLocation();
+
+    useEffect(() => {
+        window.scrollTo({
+            top: 0,
+            left: 0,
+            behavior: 'instant'
+        });
+    },[location]);
+
+    const [formData,setFormData] = useState({
         name: '',
         phone: '',
         email: '',
@@ -15,11 +25,11 @@ function Ambassador() {
         payment: ''
     });
 
-    const [isSubmitted, setIsSubmitted] = useState(false);
+    const [isSubmitted,setIsSubmitted] = useState(false);
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log('Form submitted:', formData);
+        console.log('Form submitted:',formData);
         setIsSubmitted(true);
     };
 
@@ -50,7 +60,7 @@ function Ambassador() {
                         Join Our <span className="text-red-600">Ambassador</span> Program
                     </h1>
                     <p className="text-2xl max-w-3xl mx-auto font-body font-medium">
-                        Be part of something special! 
+                        Be part of something special!
                         <br />
                         Join our community of creators and game enthusiasts.
                     </p>
@@ -81,40 +91,40 @@ function Ambassador() {
                         {!isSubmitted ? (
                             <form onSubmit={handleSubmit} className="space-y-6">
                                 <div>
-                                    <label htmlFor="name" className="block mb-2 font-body font-bold text-red-600">Name</label>
+                                    <label htmlFor="name" className="block mb-2 font-body font-bold text-red-600 text-xl">Name</label>
                                     <input
                                         type="text"
                                         id="name"
                                         name="name"
                                         value={formData.name}
                                         onChange={handleChange}
-                                        className="w-full px-4 py-3 bg-black text-white border-2 border-white rounded-lg focus:border-red-600 focus:outline-none transition-colors"
+                                        className="w-full px-4 py-3 bg-black text-white border-2 border-white rounded-lg focus:border-red-600 focus:outline-none transition-colors [-webkit-text-fill-color:white] [&:-webkit-autofill]:bg-black [&:-webkit-autofill]:text-white [&:-webkit-autofill]:shadow-[0_0_0_30px_black_inset] [&:-webkit-autofill]:[-webkit-text-fill-color:white]"
                                         required
                                     />
                                 </div>
 
                                 <div className="grid md:grid-cols-2 gap-6">
                                     <div>
-                                        <label htmlFor="phone" className="block mb-2 font-body font-bold text-red-600">Phone</label>
+                                        <label htmlFor="phone" className="block mb-2 font-body font-bold text-red-600 text-xl">Phone</label>
                                         <input
                                             type="tel"
                                             id="phone"
                                             name="phone"
                                             value={formData.phone}
                                             onChange={handleChange}
-                                            className="w-full px-4 py-3 bg-black text-white border-2 border-white rounded-lg focus:border-red-600 focus:outline-none transition-colors"
+                                            className="w-full px-4 py-3 bg-black text-white border-2 border-white rounded-lg focus:border-red-600 focus:outline-none transition-colors [-webkit-text-fill-color:white] [&:-webkit-autofill]:bg-black [&:-webkit-autofill]:text-white [&:-webkit-autofill]:shadow-[0_0_0_30px_black_inset] [&:-webkit-autofill]:[-webkit-text-fill-color:white]"
                                             required
                                         />
                                     </div>
                                     <div>
-                                        <label htmlFor="email" className="block mb-2 font-body font-bold text-red-600">Email</label>
+                                        <label htmlFor="email" className="block mb-2 font-body font-bold text-red-600 text-xl">Email</label>
                                         <input
                                             type="email"
                                             id="email"
                                             name="email"
                                             value={formData.email}
                                             onChange={handleChange}
-                                            className="w-full px-4 py-3 bg-black text-white border-2 border-white rounded-lg focus:border-red-600 focus:outline-none transition-colors"
+                                            className="w-full px-4 py-3 bg-black text-white border-2 border-white rounded-lg focus:border-red-600 focus:outline-none transition-colors [-webkit-text-fill-color:white] [&:-webkit-autofill]:bg-black [&:-webkit-autofill]:text-white [&:-webkit-autofill]:shadow-[0_0_0_30px_black_inset] [&:-webkit-autofill]:[-webkit-text-fill-color:white]"
                                             required
                                         />
                                     </div>
@@ -122,57 +132,57 @@ function Ambassador() {
 
                                 <div className="grid md:grid-cols-2 gap-6">
                                     <div>
-                                        <label htmlFor="tiktok" className="block mb-2 font-body font-bold text-red-600">@TikTok Name</label>
+                                        <label htmlFor="tiktok" className="block mb-2 font-body font-bold text-red-600 text-xl">@TikTok Name</label>
                                         <input
                                             type="text"
                                             id="tiktok"
                                             name="tiktok"
                                             value={formData.tiktok}
                                             onChange={handleChange}
-                                            className="w-full px-4 py-3 bg-black text-white border-2 border-white rounded-lg focus:border-red-600 focus:outline-none transition-colors"
+                                            className="w-full px-4 py-3 bg-black text-white border-2 border-white rounded-lg focus:border-red-600 focus:outline-none transition-colors [-webkit-text-fill-color:white] [&:-webkit-autofill]:bg-black [&:-webkit-autofill]:text-white [&:-webkit-autofill]:shadow-[0_0_0_30px_black_inset] [&:-webkit-autofill]:[-webkit-text-fill-color:white]"
                                         />
                                     </div>
                                     <div>
-                                        <label htmlFor="instagram" className="block mb-2 font-body font-bold text-red-600">@Instagram</label>
+                                        <label htmlFor="instagram" className="block mb-2 font-body font-bold text-red-600 text-xl">@Instagram</label>
                                         <input
                                             type="text"
                                             id="instagram"
                                             name="instagram"
                                             value={formData.instagram}
                                             onChange={handleChange}
-                                            className="w-full px-4 py-3 bg-black text-white border-2 border-white rounded-lg focus:border-red-600 focus:outline-none transition-colors"
+                                            className="w-full px-4 py-3 bg-black text-white border-2 border-white rounded-lg focus:border-red-600 focus:outline-none transition-colors [-webkit-text-fill-color:white] [&:-webkit-autofill]:bg-black [&:-webkit-autofill]:text-white [&:-webkit-autofill]:shadow-[0_0_0_30px_black_inset] [&:-webkit-autofill]:[-webkit-text-fill-color:white]"
                                         />
                                     </div>
                                 </div>
 
                                 <div>
-                                    <label htmlFor="followers" className="block mb-2 font-body font-bold text-red-600">Total Followers</label>
+                                    <label htmlFor="followers" className="block mb-2 font-body font-bold text-red-600 text-xl">Total Followers</label>
                                     <input
                                         type="number"
                                         id="followers"
                                         name="followers"
                                         value={formData.followers}
                                         onChange={handleChange}
-                                        className="w-full px-4 py-3 bg-black text-white border-2 border-white rounded-lg focus:border-red-600 focus:outline-none transition-colors"
+                                        className="w-full px-4 py-3 bg-black text-white border-2 border-white rounded-lg focus:border-red-600 focus:outline-none transition-colors [-webkit-text-fill-color:white] [&:-webkit-autofill]:bg-black [&:-webkit-autofill]:text-white [&:-webkit-autofill]:shadow-[0_0_0_30px_black_inset] [&:-webkit-autofill]:[-webkit-text-fill-color:white] [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                                     />
                                 </div>
 
                                 <div>
-                                    <label className="block mb-2 font-body font-bold text-red-600">I want to be a</label>
+                                    <label className="block mb-2 font-body font-bold text-red-600 text-xl">I want to be a</label>
                                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                        {['Content Creator', 'Game Tester', 'Both'].map((option) => (
+                                        {['Content Creator','Game Tester','Both'].map((option) => (
                                             <div key={option} className="relative">
                                                 <input
                                                     type="radio"
-                                                    id={option.toLowerCase().replace(' ', '-')}
+                                                    id={option.toLowerCase().replace(' ','-')}
                                                     name="role"
                                                     value={option}
                                                     onChange={handleChange}
-                                                    className="peer absolute opacity-0"
+                                                    className="peer absolute opacity-0 [-webkit-text-fill-color:white] [&:-webkit-autofill]:bg-black [&:-webkit-autofill]:text-white [&:-webkit-autofill]:shadow-[0_0_0_30px_black_inset] [&:-webkit-autofill]:[-webkit-text-fill-color:white]"
                                                     required
                                                 />
                                                 <label
-                                                    htmlFor={option.toLowerCase().replace(' ', '-')}
+                                                    htmlFor={option.toLowerCase().replace(' ','-')}
                                                     className="block w-full p-4 text-center border-2 border-white rounded-lg cursor-pointer
                                                     transition-all duration-300 font-body
                                                     peer-checked:border-red-600 peer-checked:text-red-600
@@ -186,9 +196,9 @@ function Ambassador() {
                                 </div>
 
                                 <div>
-                                    <label className="block mb-2 font-body font-bold text-red-600">Do you have an Amazon Prime account?</label>
+                                    <label className="block mb-2 font-body font-bold text-red-600 text-xl">Do you have an Amazon Prime account?</label>
                                     <div className="grid grid-cols-2 gap-4">
-                                        {['Yes', 'No'].map((option) => (
+                                        {['Yes','No'].map((option) => (
                                             <div key={option} className="relative">
                                                 <input
                                                     type="radio"
@@ -196,7 +206,7 @@ function Ambassador() {
                                                     name="prime"
                                                     value={option}
                                                     onChange={handleChange}
-                                                    className="peer absolute opacity-0"
+                                                    className="peer absolute opacity-0 [-webkit-text-fill-color:white] [&:-webkit-autofill]:bg-black [&:-webkit-autofill]:text-white [&:-webkit-autofill]:shadow-[0_0_0_30px_black_inset] [&:-webkit-autofill]:[-webkit-text-fill-color:white]"
                                                     required
                                                 />
                                                 <label
@@ -214,21 +224,21 @@ function Ambassador() {
                                 </div>
 
                                 <div>
-                                    <label htmlFor="gameNight" className="block mb-2 font-body font-bold text-red-600">When can you schedule your next game night?</label>
+                                    <label htmlFor="gameNight" className="block mb-2 font-body font-bold text-red-600 text-xl">When can you schedule your next game night?</label>
                                     <input
                                         type="date"
                                         id="gameNight"
                                         name="gameNight"
                                         value={formData.gameNight}
                                         onChange={handleChange}
-                                        className="w-full px-4 py-3 bg-black text-white border-2 border-white rounded-lg focus:border-red-600 focus:outline-none transition-colors"
+                                        className="w-full px-4 py-3 bg-black text-white border-2 border-white rounded-lg focus:border-red-600 focus:outline-none transition-colors [-webkit-text-fill-color:white] [&:-webkit-autofill]:bg-black [&:-webkit-autofill]:text-white [&:-webkit-autofill]:shadow-[0_0_0_30px_black_inset] [&:-webkit-autofill]:[-webkit-text-fill-color:white]"
                                     />
                                 </div>
 
                                 <div>
-                                    <label className="block mb-2 font-body font-bold text-red-600">Which of the following do you have?</label>
-                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                        {['Zelle', 'Paypal', 'Venmo'].map((option) => (
+                                    <label className="block mb-2 font-body font-bold text-red-600 text-xl">Perferred Payment Method</label>
+                                    <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                                        {['Zelle','Paypal','Venmo','e-Transfer'].map((option) => (
                                             <div key={option} className="relative">
                                                 <input
                                                     type="radio"
@@ -236,7 +246,7 @@ function Ambassador() {
                                                     name="payment"
                                                     value={option}
                                                     onChange={handleChange}
-                                                    className="peer absolute opacity-0"
+                                                    className="peer absolute opacity-0 [-webkit-text-fill-color:white] [&:-webkit-autofill]:bg-black [&:-webkit-autofill]:text-white [&:-webkit-autofill]:shadow-[0_0_0_30px_black_inset] [&:-webkit-autofill]:[-webkit-text-fill-color:white]"
                                                     required
                                                 />
                                                 <label

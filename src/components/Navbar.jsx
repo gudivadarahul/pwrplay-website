@@ -138,13 +138,18 @@ const Navbar = () => {
                                     </Link>
                                 </h3>
                                 <h3>
-                                    <Link to="/faq" onClick={() => handleNavClick('/faq')} className="nav-link">
-                                        FAQ
+                                    <Link to="/ambassador" onClick={() => handleNavClick('/ambassador')} className="nav-link">
+                                        Ambassador Program
                                     </Link>
                                 </h3>
                                 <h3>
-                                    <Link to="/ambassador" onClick={() => handleNavClick('/ambassador')} className="nav-link">
-                                        Ambassador Program
+                                    <Link to="/connect/retailers" onClick={() => handleNavClick('/connect/retailers')} className="nav-link">
+                                        Retailers
+                                    </Link>
+                                </h3>
+                                <h3>
+                                    <Link to="/faq" onClick={() => handleNavClick('/faq')} className="nav-link">
+                                        FAQ
                                     </Link>
                                 </h3>
                             </div>
@@ -237,16 +242,13 @@ const Navbar = () => {
                     {connectDropdown && (
                         <div className="bg-black/95 backdrop-blur-sm text-white py-2 rounded-lg shadow-lg w-[90%] max-w-[300px] border border-gray-800/50 animate-slideDown">
                             <h3>
-                                <button
-                                    onClick={() => setShowConnectDialog(true)}
-                                    className="block w-full text-left px-6 py-3 hover:text-red-500 transition-all duration-300 hover:pl-8 outline-none font-headers text-3xl uppercase"
-                                >
-                                    Socials
-                                </button>
+                                <Link to="/contact" onClick={() => handleNavClick('/contact')} className="block px-6 py-3 hover:text-red-500 transition-all duration-300 hover:pl-8 outline-none font-headers text-3xl uppercase">
+                                    Contact Us
+                                </Link>
                             </h3>
                             <h3>
-                                <Link to="/contact" onClick={() => handleNavClick('/contact')} className="block px-6 py-3 hover:text-red-500 transition-all duration-300 hover:pl-8 outline-none font-headers text-3xl uppercase">
-                                    Contact
+                                <Link to="/ambassador" onClick={() => handleNavClick('/ambassador')} className="block px-6 py-3 hover:text-red-500 transition-all duration-300 hover:pl-8 outline-none font-headers text-3xl uppercase">
+                                    Ambassador Program
                                 </Link>
                             </h3>
                             <h3>
@@ -255,8 +257,8 @@ const Navbar = () => {
                                 </Link>
                             </h3>
                             <h3>
-                                <Link to="/ambassador" onClick={() => handleNavClick('/ambassador')} className="block px-6 py-3 hover:text-red-500 transition-all duration-300 hover:pl-8 outline-none font-headers text-3xl uppercase">
-                                    Ambassador Program
+                                <Link to="/faq" onClick={() => handleNavClick('/faq')} className="block px-6 py-3 hover:text-red-500 transition-all duration-300 hover:pl-8 outline-none font-headers text-3xl uppercase">
+                                    FAQ
                                 </Link>
                             </h3>
                         </div>

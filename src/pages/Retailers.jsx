@@ -1,6 +1,17 @@
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
+import { useLocation,Link } from 'react-router-dom';
 
 function Retailers() {
+    const location = useLocation();
+
+    useEffect(() => {
+        window.scrollTo({
+            top: 0,
+            left: 0,
+            behavior: 'instant'
+        });
+    },[location]);
+
     const [formData,setFormData] = useState({
         name: '',
         email: '',
@@ -29,6 +40,16 @@ function Retailers() {
 
     return (
         <div className="pt-32 px-6 min-h-screen bg-black text-white">
+            <div className="absolute -top-8 sm:-top-10 md:-top-12 lg:-top-14 xl:-top-16 -left-2 sm:-left-3 z-[100]">
+                <Link to="/">
+                    <img
+                        src="/pwrplay-logo.png"
+                        alt="PWRPLAY Logo"
+                        className="w-48 sm:w-56 md:w-64 lg:w-72 xl:w-80 h-auto cursor-pointer"
+                    />
+                </Link>
+            </div>
+
             <div className="max-w-3xl mx-auto">
                 <div className="text-center mb-12">
                     <h1 className="text-5xl md:text-6xl font-headers mb-6">
@@ -53,7 +74,7 @@ function Retailers() {
                                 placeholder="First name Last name"
                                 value={formData.name}
                                 onChange={handleChange}
-                                className="w-full px-4 py-3 bg-black/50 border-2 border-red-600 rounded-lg focus:border-red-600 focus:outline-none transition-colors"
+                                className="w-full px-4 py-3 bg-black/50 border-2 border-red-600 rounded-lg focus:border-red-600 focus:outline-none transition-colors [-webkit-text-fill-color:white] [&:-webkit-autofill]:bg-black [&:-webkit-autofill]:text-white [&:-webkit-autofill]:shadow-[0_0_0_30px_black_inset] [&:-webkit-autofill]:[-webkit-text-fill-color:white]"
                                 required
                             />
                         </div>
