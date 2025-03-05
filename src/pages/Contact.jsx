@@ -2,6 +2,7 @@ import { useState,useEffect } from 'react';
 import { FaEnvelope,FaLocationDot,FaInstagram,FaTiktok,FaXTwitter,FaFacebook,FaLinkedin,FaSpotify,FaClock } from 'react-icons/fa6';
 import React from 'react';
 import { Link,useLocation } from 'react-router-dom';
+import JoinTheChaos from '../components/Join';
 
 function Contact() {
     const location = useLocation();
@@ -21,26 +22,42 @@ function Contact() {
         message: ''
     });
 
-    const [newsletter,setNewsletter] = useState({
-        email: '',
-        submitted: false
-    });
-
     const [isSubmitted,setIsSubmitted] = useState(false);
+    const [loading,setLoading] = useState(false);
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // Handle form submission logic here
-        console.log('Form submitted:',formData);
-        setIsSubmitted(true);
-    };
+        console.log('Sending data:',formData);
+        setLoading(true);
+        try {
+            const response = await fetch('http://localhost:3001/api/contact',{
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    email: formData.email,
+                    name: formData.name,
+                    subject: formData.subject,
+                    message: formData.message
+                })
+            });
 
-    const handleNewsletterSubmit = (e) => {
-        e.preventDefault();
-        setNewsletter(prev => ({ ...prev,submitted: true }));
-        setTimeout(() => {
-            setNewsletter({ email: '',submitted: false });
-        },3000);
+            const data = await response.json();
+            console.log('Response:',data);
+
+            if (data.success) {
+                setIsSubmitted(true);
+                setFormData({ name: '',email: '',subject: '',message: '' });
+            } else {
+                alert(data.error || 'Failed to send message. Please try again.');
+            }
+        } catch (error) {
+            console.error('Error:',error);
+            alert('Failed to send message. Please try again.');
+        } finally {
+            setLoading(false);
+        }
     };
 
     const handleChange = (e) => {
@@ -222,10 +239,12 @@ function Contact() {
                                 </div>
                                 <button
                                     type="submit"
+                                    disabled={loading}
                                     className="w-full bg-red-600 text-white px-8 py-4 rounded-lg text-lg font-bold 
-                                    hover:shadow-lg hover:shadow-red-500/20 hover:-translate-y-0.5 transition-all duration-300"
+                                    hover:shadow-lg hover:shadow-red-500/20 hover:-translate-y-0.5 
+                                    transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                                 >
-                                    Send Message
+                                    {loading ? "Sending..." : "Send Message"}
                                 </button>
                             </form>
                         ) : (
@@ -238,37 +257,10 @@ function Contact() {
                             </div>
                         )}
                     </div>
-
-                    {/* Newsletter Section */}
-                    <div className="bg-black/50 p-8 rounded-xl border-3 border-red-600 mb-16">
-                        <h2 className="text-6xl font-headers mb-4 text-center">Join the <span className="text-red-600">pwrplay</span> community</h2>
-                        <p className="text-center mb-6 font-body font-semibold">
-                            Stay updated with our latest games, events, and exclusive offers!
-                        </p>
-                        <form onSubmit={handleNewsletterSubmit} className="flex flex-col sm:flex-row gap-4">
-                            <input
-                                type="email"
-                                value={newsletter.email}
-                                onChange={(e) => setNewsletter(prev => ({ ...prev,email: e.target.value }))}
-                                placeholder="Enter your email"
-                                className="flex-grow px-4 py-3 bg-black text-white border-2 border-white rounded-lg focus:border-red-600 focus:outline-none transition-colors placeholder:font-medium [-webkit-text-fill-color:white] [&:-webkit-autofill]:bg-black [&:-webkit-autofill]:text-white [&:-webkit-autofill]:shadow-[0_0_0_30px_black_inset] [&:-webkit-autofill]:[-webkit-text-fill-color:white]"
-                                required
-                            />
-                            <button
-                                type="submit"
-                                className="bg-red-600 text-white px-8 py-3 rounded-lg font-bold 
-                                hover:shadow-lg hover:shadow-red-500/20 hover:-translate-y-0.5 transition-all duration-300 whitespace-nowrap"
-                            >
-                                Subscribe
-                            </button>
-                        </form>
-                        {newsletter.submitted && (
-                            <p className="text-red-600 text-center text-xl mt-4 font-body font-medium">
-                                Thanks for joining our community!
-                            </p>
-                        )}
-                    </div>
                 </div>
+
+                {/* Newsletter Section */}
+                <JoinTheChaos />
 
                 {/* Social Media Links - Mobile/Tablet */}
                 <div className="lg:hidden flex flex-wrap justify-center gap-4 mt-8 mb-16">
