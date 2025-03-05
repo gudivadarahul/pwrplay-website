@@ -12,18 +12,28 @@ function PromoVideo() {
         { row: 12,group: 4 },
         { row: 3,group: 9 },
         { row: 7,group: 5 },
-        { row: 16,group: 7 }
+        { row: 16,group: 7 },
+        { row: 2,group: 11 },
+        { row: 13,group: 1 },
+        { row: 19,group: 8 },
+        { row: 6,group: 3 },
+        { row: 11,group: 7 },
+        { row: 4,group: 5 },
+        { row: 14,group: 2 },
+        { row: 17,group: 9 },
+        { row: 1,group: 4 },
+        { row: 9,group: 11 }
     ]);
 
     // Update glowing position periodically
     useEffect(() => {
         const interval = setInterval(() => {
-            const newPositions = Array(10).fill(null).map(() => ({
+            const newPositions = Array(20).fill(null).map(() => ({
                 row: Math.floor(Math.random() * 20),
                 group: Math.floor(Math.random() * 12)
             }));
             setGlowingPositions(newPositions);
-        },6000); // Match the animation duration
+        },4000); // Slightly longer than the animation duration
 
         return () => clearInterval(interval);
     },[]);
@@ -47,7 +57,11 @@ function PromoVideo() {
                         {Array(12).fill(null).map((_,groupIndex) => (
                             <span
                                 key={`${rowIndex}-${groupIndex}`}
-                                className="inline-block font-semibold opacity-30"
+                                className={`inline-block font-semibold ${glowingPositions.some(pos =>
+                                    pos.row === rowIndex &&
+                                    pos.group === groupIndex
+                                ) ? "" : "opacity-20"
+                                    }`}
                                 style={{
                                     padding: 'clamp(4px, 1vw, 8px)',
                                 }}
@@ -67,7 +81,7 @@ function PromoVideo() {
             </div>
 
             {/* Main Content */}
-            <h2 className="relative z-10 text-2xl md:text-4xl lg:text-6xl xl:text-6xl font-headers whitespace-nowrap bg-black px-8 rounded-lg inline-block mt-24">
+            <h2 className="relative z-10 text-3xl md:text-5xl lg:text-7xl xl:text-8xl font-headers whitespace-nowrap bg-black px-8 rounded-lg inline-block mt-20">
                 The <span className="text-red-600">Ultimate</span> Party Game
             </h2>
 

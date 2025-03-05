@@ -47,7 +47,7 @@ const testimonials = [
         author: "R.S."
     },
     {
-        text: "Had a great time playing Chaos with my group. Definitely an interactive game that plays into inside jokes. Love the idea of stick an ick!",
+        text: "Had a great time playing Controlled Chaos with my group. Definitely an interactive game that plays into inside jokes. Love the idea of stick an ick!",
         author: "K.S."
     }
 ];
@@ -77,7 +77,7 @@ function TestimonialCard({ index,initialDelay }) {
         const timer = setInterval(() => {
             setIsFlipping(true);
 
-            // Update content right before the flip completes
+            // Wait for card to be fully flipped before changing content
             setTimeout(() => {
                 // Remove current index from used set
                 usedIndices.delete(currentIndex);
@@ -90,7 +90,7 @@ function TestimonialCard({ index,initialDelay }) {
 
                 setCurrentIndex(nextIndex);
                 setDisplayedContent(testimonials[nextIndex]);
-            },900);
+            },500); // Half of the flip animation duration
 
             // Complete flip
             setTimeout(() => {
@@ -107,11 +107,11 @@ function TestimonialCard({ index,initialDelay }) {
     },[currentIndex]);
 
     return (
-        <div className="w-full max-w-sm h-full perspective-1000">
+        <div className="w-full max-w-sm h-full perspective-1000 py-4">
             <div
-                className={`relative h-full transition-transform duration-1000 transform-style-3d ${isFlipping ? 'rotate-y-90' : ''}`}
+                className={`relative h-full transition-transform duration-1000 transform-style-3d ${isFlipping ? 'rotate-y-180' : ''}`}
             >
-                <div className="bg-black text-white p-6 rounded-xl h-full min-h-[300px] flex flex-col">
+                <div className="bg-black text-white p-6 rounded-xl h-full min-h-[300px] flex flex-col backface-hidden">
                     <FaQuoteLeft className="text-red-600 text-3xl mb-4 flex-shrink-0" />
                     <p className="text-lg mb-4 flex-grow leading-relaxed font-medium">
                         {displayedContent.text}
@@ -132,7 +132,7 @@ function Testimonials() {
     return (
         <section className="relative bg-white text-black py-24 px-6">
             <div className="max-w-7xl mx-auto">
-                <h2 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-center mb-16">
+                <h2 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-center mb-8">
                     The Reviews Are In — <span className="text-red-600">Players Love It!</span>
                 </h2>
 

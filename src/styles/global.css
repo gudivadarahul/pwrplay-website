@@ -27,35 +27,34 @@ h6 {
 
 @keyframes textGlowSequence {
     0% {
-        opacity: 1;
+        opacity: 0.2;
         color: white;
         text-shadow: none;
     }
 
     30% {
-        opacity: 3.33;
-        /* This will result in 0.3 * 3.33 ≈ 1 */
+        opacity: 1;
         color: #ff4444;
         text-shadow: 0 0 20px rgba(255, 68, 68, 0.8),
             0 0 30px rgba(255, 68, 68, 0.6);
     }
 
     70% {
-        opacity: 3.33;
+        opacity: 1;
         color: #ff4444;
         text-shadow: 0 0 20px rgba(255, 68, 68, 0.8),
             0 0 30px rgba(255, 68, 68, 0.6);
     }
 
     100% {
-        opacity: 1;
+        opacity: 0.2;
         color: white;
         text-shadow: none;
     }
 }
 
 .glow-text {
-    animation: textGlowSequence 6s ease-in-out infinite;
+    animation: textGlowSequence 4s ease-in-out infinite;
 }
 
 /* Replace the @apply syntax with direct utility classes */

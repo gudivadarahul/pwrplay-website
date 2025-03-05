@@ -67,7 +67,7 @@ function WhoWeAre() {
                         }
                     },
                     friction: 0,
-                    frictionAir: 0.001,
+                    frictionAir: 0,
                     frictionStatic: 0,
                     restitution: 0.9,
                     density: 0.001,
@@ -75,7 +75,10 @@ function WhoWeAre() {
                     mass: 1,
                     inertia: Infinity,
                     angularVelocity: 0,
-                    slop: 0
+                    slop: 0,
+                    collisionFilter: {
+                        group: -1
+                    }
                 }
             );
         });
@@ -105,56 +108,39 @@ function WhoWeAre() {
         engine.world.gravity.y = 0;
         engine.world.gravity.x = 0;
 
-        // Set initial velocities with slower speed
+        // Set random directions but constant speed for all cards
+        const constantSpeed = 1;
         cards.forEach(card => {
-            const speed = 1.5;
-            const angle = Math.random() * Math.PI * 2;
+            const randomAngle = Math.random() * Math.PI * 2;
             Matter.Body.setVelocity(card,{
-                x: Math.cos(angle) * speed,
-                y: Math.sin(angle) * speed
+                x: Math.cos(randomAngle) * constantSpeed,
+                y: Math.sin(randomAngle) * constantSpeed
             });
         });
 
-        // Handle collisions with reduced speed
-        Matter.Events.on(engine,'collisionStart',(event) => {
-            event.pairs.forEach((pair) => {
-                const bodyA = pair.bodyA;
-                const bodyB = pair.bodyB;
-
-                if (!bodyA.isStatic && !bodyB.isStatic) {
-                    const normal = pair.collision.normal;
-                    const speed = 1.5;
-                    Matter.Body.setVelocity(bodyA,{
-                        x: bodyA.velocity.x + normal.x * speed,
-                        y: bodyA.velocity.y + normal.y * speed
-                    });
-                    Matter.Body.setVelocity(bodyB,{
-                        x: bodyB.velocity.x - normal.x * speed,
-                        y: bodyB.velocity.y - normal.y * speed
-                    });
-                }
-            });
-        });
-
-        // Maintain minimum velocity at a slower speed
+        // Add smoother wrap-around effect for cards
         Matter.Events.on(engine,'afterUpdate',() => {
             cards.forEach(card => {
-                const velocity = Matter.Vector.magnitude(card.velocity);
-                const minSpeed = 1;
-                const maxSpeed = 2;
+                const buffer = cardSize * 3; // Increased buffer zone for smoother transition
+                const position = card.position;
+                let newPosition = { ...position };
 
-                if (velocity < minSpeed) {
-                    const angle = Math.atan2(card.velocity.y,card.velocity.x);
-                    Matter.Body.setVelocity(card,{
-                        x: Math.cos(angle) * minSpeed,
-                        y: Math.sin(angle) * minSpeed
-                    });
-                } else if (velocity > maxSpeed) {
-                    const angle = Math.atan2(card.velocity.y,card.velocity.x);
-                    Matter.Body.setVelocity(card,{
-                        x: Math.cos(angle) * maxSpeed,
-                        y: Math.sin(angle) * maxSpeed
-                    });
+                // Wrap horizontally
+                if (position.x < -buffer) {
+                    newPosition.x = window.innerWidth + buffer;
+                } else if (position.x > window.innerWidth + buffer) {
+                    newPosition.x = -buffer;
+                }
+
+                // Wrap vertically
+                if (position.y < -buffer) {
+                    newPosition.y = window.innerHeight + buffer;
+                } else if (position.y > window.innerHeight + buffer) {
+                    newPosition.y = -buffer;
+                }
+
+                if (newPosition.x !== position.x || newPosition.y !== position.y) {
+                    Matter.Body.setPosition(card,newPosition);
                 }
             });
         });

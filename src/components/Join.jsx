@@ -67,10 +67,10 @@ function JoinTheChaos() {
     };
 
     return (
-        <div className="max-w-2xl mx-auto mt-24">
+        <div className="max-w-3xl mx-auto mt-24">
             <div className="bg-black/50 p-8 rounded-xl border-3 border-red-600">
-                <h2 className="text-4xl font-headers mb-6 text-center">
-                    Join the <span className="text-red-600">pwrplay</span> community
+                <h2 className="text-4xl font-headers text-center">
+                    Join the <span className="text-red-600 leading-relaxed align-baseline">pwrplay</span> community
                 </h2>
                 <p className="text-xl mb-8 text-center font-body font-medium">
                     Be the first to hear about exclusive deals, expansions & new games!

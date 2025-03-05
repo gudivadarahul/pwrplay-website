@@ -27,7 +27,7 @@ function Timeline() {
         {
             date: "November 2024",
             title: "Making It Official",
-            description: "PwrPlay Creations Inc. was officially incorporated, turning our vision into reality and setting the stage for production.",
+            description: "PWRPLAY Creations Inc. was officially incorporated, turning our vision into reality and setting the stage for production.",
             icon: <FaRocket className="text-3xl" />,
             stats: "Officially Incorporated | The Chaos Gets Real"
         },
