@@ -90,13 +90,9 @@ function Terms() {
                     <p className="opacity-80 text-lg text-justify">
                         Subject to your compliance with these Legal Terms, including the "PROHIBITED ACTIVITIES" section below, we grant you a non-exclusive, non-transferable, revocable license to:
                     </p>
-                    <ul className="list-disc list-inside opacity-80 text-lg ml-4 text-justify">
-                        <li>access the Services; and</li>
-                        <li>download or print a copy of any portion of the Content to which you have properly gained access,</li>
+                    <ul className="list-disc list-inside opacity-80 text-lg text-justify">
+                        <li>access the Services; download or print a copy of any portion of the Content to which you have properly gained access, solely for your personal, non-commercial use or internal business purpose.</li>
                     </ul>
-                    <p className="opacity-80 text-lg text-justify mt-4">
-                        solely for your personal, non-commercial use or internal business purpose.
-                    </p>
                     <p className="opacity-80 text-lg text-justify">
                         Except as set out in this section or elsewhere in our Legal Terms, no part of the Services and no Content or Marks may be copied, reproduced, aggregated, republished, uploaded, posted, publicly displayed, encoded, translated, transmitted, distributed, sold, licensed, or otherwise exploited for any commercial purpose whatsoever, without our express prior written permission.
                     </p>

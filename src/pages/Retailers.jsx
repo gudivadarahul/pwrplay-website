@@ -87,7 +87,7 @@ function Retailers() {
     };
 
     return (
-        <div className="pt-80 px-6 min-h-screen bg-black text-white">
+        <div className="pt-32 px-6 min-h-screen bg-black text-white">
             <div className="absolute -top-8 sm:-top-10 md:-top-12 lg:-top-14 xl:-top-16 -left-2 sm:-left-3 z-[100]">
                 <Link to="/">
                     <img
@@ -99,21 +99,32 @@ function Retailers() {
             </div>
 
             <div className="max-w-3xl mx-auto">
+                <div className="text-center mb-16">
+                    <h1 className="text-5xl md:text-7xl font-headers mb-6">
+                        Become a <span className="text-red-600">Retailer</span>
+                    </h1>
+                    <p className="text-2xl max-w-3xl mx-auto font-body font-medium">
+                        Join our network of retailers and bring the excitement of
+                        <br />
+                        PWRPLAY games to your customers!
+                    </p>
+                </div>
+
                 <div className="bg-black/50 p-8 rounded-xl border-3 border-red-600 mb-16">
                     <h2 className="text-6xl font-headers mb-8 text-center">Apply Now</h2>
                     {!isSubmitted ? (
                         <form onSubmit={handleSubmit} className="space-y-6">
                             <div className="space-y-4">
                                 <div>
-                                    <label htmlFor="name" className="block mb-2 font-body font-bold text-xl">Your Name</label>
+                                    <label htmlFor="name" className="block mb-2 font-body font-bold text-xl">Name</label>
                                     <input
                                         type="text"
                                         id="name"
                                         name="name"
-                                        placeholder="First name Last name"
+                                        placeholder="First Name, Last Name"
                                         value={formData.name}
                                         onChange={handleChange}
-                                        className="w-full px-4 py-3 bg-black/50 border-2 border-red-600 rounded-lg focus:border-red-600 focus:outline-none transition-colors [-webkit-text-fill-color:white] [&:-webkit-autofill]:bg-black [&:-webkit-autofill]:text-white [&:-webkit-autofill]:shadow-[0_0_0_30px_black_inset] [&:-webkit-autofill]:[-webkit-text-fill-color:white]"
+                                        className="w-full px-4 py-3 bg-black/50 border-2 border-red-600 rounded-lg focus:border-red-600 focus:outline-none transition-colors text-white"
                                         required
                                     />
                                 </div>
@@ -183,7 +194,7 @@ function Retailers() {
                                         placeholder="#"
                                         value={formData.locationCount}
                                         onChange={handleChange}
-                                        className="w-full px-4 py-3 bg-black/50 border-2 border-red-600 rounded-lg focus:border-red-600 focus:outline-none transition-colors"
+                                        className="w-full px-4 py-3 bg-black/50 border-2 border-red-600 rounded-lg focus:border-red-600 focus:outline-none transition-colors [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                                         required
                                     />
                                 </div>
@@ -215,18 +226,31 @@ function Retailers() {
                                     />
                                 </div>
 
-                                <div className="flex items-start gap-3">
-                                    <input
-                                        type="checkbox"
-                                        id="agreeToTerms"
-                                        name="agreeToTerms"
-                                        checked={formData.agreeToTerms}
-                                        onChange={handleChange}
-                                        className="mt-1.5"
-                                        required
-                                    />
+                                <div className="flex items-center gap-3">
+                                    <div className="relative flex items-center flex-shrink-0">
+                                        <input
+                                            type="checkbox"
+                                            id="agreeToTerms"
+                                            name="agreeToTerms"
+                                            checked={formData.agreeToTerms}
+                                            onChange={handleChange}
+                                            className="peer appearance-none h-5 w-5 border-2 border-red-600 rounded bg-black/50 checked:bg-red-600 
+                                            hover:border-red-500 focus:outline-none focus:ring-2 focus:ring-red-500/30 transition-all duration-200"
+                                            required
+                                        />
+                                        <svg
+                                            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-3 h-3 pointer-events-none 
+                                            text-white opacity-0 peer-checked:opacity-100 transition-opacity duration-200"
+                                            viewBox="0 0 17 12"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            strokeWidth="3"
+                                        >
+                                            <path d="M1 5.5L6 10.5L15.5 1" />
+                                        </svg>
+                                    </div>
                                     <label htmlFor="agreeToTerms" className="font-body font-light">
-                                        Product ordered will be sold exclusively at retailer's store(s) and/or retailer's website. No sales to third party sellers are permitted
+                                    The product ordered will be sold exclusively at the retailer's store(s) and/or on the retailer's website. Sales to third-party sellers are not permitted.
                                     </label>
                                 </div>
                             </div>

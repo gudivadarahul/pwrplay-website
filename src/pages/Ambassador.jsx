@@ -132,7 +132,7 @@ function Ambassador() {
 
                                 <div className="grid md:grid-cols-2 gap-6">
                                     <div>
-                                        <label htmlFor="tiktok" className="block mb-2 font-body font-bold text-red-600 text-xl">@TikTok Name</label>
+                                        <label htmlFor="tiktok" className="block mb-2 font-body font-bold text-red-600 text-xl">@TikTok</label>
                                         <input
                                             type="text"
                                             id="tiktok"
@@ -196,7 +196,7 @@ function Ambassador() {
                                 </div>
 
                                 <div>
-                                    <label className="block mb-2 font-body font-bold text-red-600 text-xl">Do you have an Amazon Prime account?</label>
+                                    <label className="block mb-2 font-body font-bold text-red-600 text-xl">Do you have an Amazon account?</label>
                                     <div className="grid grid-cols-2 gap-4">
                                         {['Yes','No'].map((option) => (
                                             <div key={option} className="relative">

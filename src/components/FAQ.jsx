@@ -58,10 +58,6 @@ const faqs = [
         answer: "Not quite—this game is meant for adults (21+ recommended). But if your family thrives on roasting each other, high-energy competition, and hilarious dares, then maybe…"
     },
     {
-        question: "When will my order ship?",
-        answer: "Once Controlled Chaos™ officially launches, we'll have shipping details available, including estimated delivery times and tracking options."
-    },
-    {
         question: "Do you ship internationally?",
         answer: "For now, we'll be focusing on Canada and the USA, but we plan to expand to other regions soon!"
     },
@@ -71,7 +67,7 @@ const faqs = [
     },
     {
         question: "Other Questions?",
-        answer: "If you have any other questions, feel free to reach out to us on social media\n[@PWRPLAYOfficial] or via email [contact@pwrplaycreations.com].\nWe love hearing from our community!"
+        answer: "If you have any other questions, feel free to reach out to us on social media [@pwrplayofficial] or via email [contact@pwrplaycreations.com].\nWe love hearing from our community!"
     }
 ];
 
