@@ -68,19 +68,36 @@ const Navbar = () => {
     };
 
     return (
-        <nav className={`fixed w-full z-40 transition-colors duration-300 ${isScrolled ? 'bg-black py-2' : 'bg-transparent py-2 border-b-2 border-transparent'
-            }`}>
-            <div className="max-w-8xl pr-6 flex justify-between items-center">
+        <nav className={`fixed w-full z-[200] transition-colors duration-300 h-20 ${isScrolled
+                ? 'bg-black lg:border-b-0'
+                : 'bg-transparent lg:border-b-2 lg:border-transparent'
+            } border-b-2 border-red-600`}>
+            <div className="max-w-8xl pr-6 flex justify-between items-center h-full">
                 {/* Left side - Logo */}
-                <div className={`transition-all duration-500  ${isScrolled ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'
-                    }`}>
-                    <Link to="/" onClick={() => handleNavClick('/')} className="block h-12 sm:h-14 md:h-16 lg:h-18 xl:h-20 overflow-hidden">
-                        <img
-                            src="/pwrplay-logo.png"
-                            alt="PWRPLAY Logo"
-                            className="h-16 sm:h-18 md:h-20 lg:h-24 xl:h-45 w-auto object-contain -mt-10"
-                        />
-                    </Link>
+                <div className="flex items-center -ml-2">
+                    {/* Mobile Logo */}
+                    <div className={`block lg:hidden transition-all duration-500 absolute -top-4 ${isScrolled ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-10'
+                        }`}>
+                        <Link to="/" onClick={() => handleNavClick('/')} className="block">
+                            <img
+                                src="/pwrplay-logo.png"
+                                alt="PWRPLAY Logo"
+                                className="h-30 sm:h-34 w-auto"
+                            />
+                        </Link>
+                    </div>
+
+                    {/* Desktop Logo */}
+                    <div className={`hidden lg:block transition-all duration-500 ${isScrolled ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'
+                        }`}>
+                        <Link to="/" onClick={() => handleNavClick('/')} className="block h-16 lg:h-18 xl:h-20 overflow-hidden">
+                            <img
+                                src="/pwrplay-logo.png"
+                                alt="PWRPLAY Logo"
+                                className="h-20 lg:h-24 xl:h-45 w-auto object-contain -mt-10"
+                            />
+                        </Link>
+                    </div>
                 </div>
 
                 {/* Center/Right side - Navigation */}

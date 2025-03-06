@@ -176,22 +176,22 @@ function WhoWeAre() {
     };
 
     return (
-        <section className="relative bg-white text-black py-24 px-6 text-center overflow-hidden">
+        <section className="relative bg-white text-black h-[60vh] md:h-[100vh] px-6 text-center overflow-hidden">
             <div ref={sceneRef} className="absolute inset-0" />
 
             {/* Content */}
-            <div className="relative z-10 max-w-3xl mx-auto">
-                <div className="backdrop-blur-sm bg-white/60 rounded-xl p-6 inline-block">
-                    <h2 className="text-5xl md:text-7xl font-headers mb-6 fade-in text-black drop-shadow-lg">
+            <div className="relative z-10 max-w-3xl mx-auto h-full flex items-center justify-center">
+                <div className="backdrop-blur-sm bg-white/60 rounded-xl p-3 sm:p-4 inline-block">
+                    <h2 className="text-3xl sm:text-4xl md:text-5xl font-headers mb-2 sm:mb-3 fade-in text-black drop-shadow-lg">
                         The Vision
                     </h2>
-                    <p className="text-2xl max-w-3xl mx-auto mb-2 leading-relaxed slide-up font-body font-semibold">
+                    <p className="text-lg sm:text-xl max-w-3xl mx-auto mb-1 leading-relaxed slide-up font-body font-semibold">
                         PWRPLAY Creations is on a mission to craft
                     </p>
-                    <p className="text-2xl max-w-3xl mx-auto mb-2 leading-relaxed slide-up font-body font-semibold">
+                    <p className="text-lg sm:text-xl max-w-3xl mx-auto mb-1 leading-relaxed slide-up font-body font-semibold">
                         high-energy party games.
                     </p>
-                    <p className="text-2xl max-w-3xl mx-auto mb-8 leading-relaxed slide-up font-body font-semibold">
+                    <p className="text-lg sm:text-xl max-w-3xl mx-auto mb-3 sm:mb-4 leading-relaxed slide-up font-body font-semibold">
                         <span className="font-bold text-red-600">Controlled Chaos™</span> is just the beginning.
                     </p>
 
@@ -199,7 +199,7 @@ function WhoWeAre() {
                         <Link
                             to="/about"
                             state={{ fromWhoWeAre: true }}
-                            className="inline-block px-8 py-4 bg-red-600 text-white transition-all duration-300 rounded-lg text-xl font-subheaders font-bold
+                            className="inline-block px-4 py-2 bg-red-600 text-white transition-all duration-300 rounded-lg text-base sm:text-lg font-subheaders font-bold
                             hover:scale-105 transform"
                         >
                             Get to Know Us
