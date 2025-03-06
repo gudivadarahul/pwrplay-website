@@ -15,16 +15,9 @@ const getRandomDirection = () => {
     return directions[Math.floor(Math.random() * directions.length)];
 };
 
-// Create responsive card count based on screen width
-const getCardCount = () => {
-    if (window.innerWidth < 768) { // mobile devices
-        return 30;
-    }
-    return 80; // desktop
-};
-
-const backgroundIcons = Array(getCardCount()).fill(null).map((_,index) => {
-    const sectionSize = 100 / getCardCount();  // Adjusted for dynamic count
+// Increase number of cards even more for better effect
+const backgroundIcons = Array(80).fill(null).map((_,index) => {  // Increased from 40 to 80
+    const sectionSize = 100 / 80;  // Adjusted for new count
     const sectionStart = index * sectionSize;
 
     return {
@@ -52,7 +45,7 @@ function WhoWeAre() {
             engine: engine,
             options: {
                 width: window.innerWidth,
-                height: window.innerHeight,
+                height: window.innerWidth <= 768 ? window.innerHeight * 0.5 : window.innerHeight,
                 wireframes: false,
                 background: 'transparent',
                 pixelRatio: 'auto'
@@ -161,51 +154,8 @@ function WhoWeAre() {
 
         const handleResize = () => {
             render.canvas.width = window.innerWidth;
-            render.canvas.height = window.innerHeight;
+            render.canvas.height = window.innerWidth <= 768 ? window.innerHeight * 0.5 : window.innerHeight;
             Matter.Render.setPixelRatio(render,window.devicePixelRatio);
-
-            // Clear existing bodies and reinitialize with new card count
-            Matter.World.clear(engine.world);
-            const newCards = Array(getCardCount()).fill(null).map((_,index) => {
-                return Matter.Bodies.circle(
-                    (backgroundIcons[index].startPosition / 100) * window.innerWidth,
-                    Math.random() * window.innerHeight,
-                    cardSize / 2,
-                    {
-                        render: {
-                            sprite: {
-                                texture: `/card-back-${(index % 4) + 1}.png`,
-                                xScale: 0.06,
-                                yScale: 0.06
-                            }
-                        },
-                        friction: 0,
-                        frictionAir: 0,
-                        frictionStatic: 0,
-                        restitution: 0.9,
-                        density: 0.001,
-                        angle: backgroundIcons[index].rotation * Math.PI / 180,
-                        mass: 1,
-                        inertia: Infinity,
-                        angularVelocity: 0,
-                        slop: 0,
-                        collisionFilter: {
-                            group: -1
-                        }
-                    }
-                );
-            });
-
-            Matter.World.add(engine.world,[...newCards,...walls]);
-
-            // Reset velocities for new cards
-            newCards.forEach(card => {
-                const randomAngle = Math.random() * Math.PI * 2;
-                Matter.Body.setVelocity(card,{
-                    x: Math.cos(randomAngle) * constantSpeed,
-                    y: Math.sin(randomAngle) * constantSpeed
-                });
-            });
         };
 
         window.addEventListener('resize',handleResize);
@@ -226,22 +176,22 @@ function WhoWeAre() {
     };
 
     return (
-        <section className="relative bg-white text-black h-[50vh] md:h-[100vh] px-6 text-center overflow-hidden">
-            <div ref={sceneRef} className="absolute inset-0" />
+        <section className="relative bg-white text-black md:py-24 flex md:block items-center px-6 text-center overflow-hidden h-[50vh] md:h-full">
+            <div ref={sceneRef} className="absolute inset-0 h-[50vh] md:h-full" />
 
             {/* Content */}
-            <div className="relative z-10 max-w-3xl mx-auto h-full flex items-center justify-center">
-                <div className="backdrop-blur-sm bg-white/60 rounded-xl p-3 sm:p-4 inline-block">
-                    <h2 className="text-3xl sm:text-4xl md:text-5xl font-headers mb-2 sm:mb-3 fade-in text-black drop-shadow-lg">
+            <div className="relative z-10 max-w-3xl mx-auto">
+                <div className="backdrop-blur-sm bg-white/60 rounded-xl p-2 md:p-6 inline-block">
+                    <h2 className="text-3xl md:text-7xl font-headers mb-2 md:mb-6 fade-in text-black drop-shadow-lg">
                         The Vision
                     </h2>
-                    <p className="text-lg sm:text-xl max-w-3xl mx-auto mb-1 leading-relaxed slide-up font-body font-semibold">
+                    <p className="text-sm md:text-2xl max-w-3xl mx-auto mb-1 md:mb-2 leading-relaxed slide-up font-body font-semibold">
                         PWRPLAY Creations is on a mission to craft
                     </p>
-                    <p className="text-lg sm:text-xl max-w-3xl mx-auto mb-1 leading-relaxed slide-up font-body font-semibold">
+                    <p className="text-sm md:text-2xl max-w-3xl mx-auto mb-1 md:mb-2 leading-relaxed slide-up font-body font-semibold">
                         high-energy party games.
                     </p>
-                    <p className="text-lg sm:text-xl max-w-3xl mx-auto mb-3 sm:mb-4 leading-relaxed slide-up font-body font-semibold">
+                    <p className="text-sm md:text-2xl max-w-3xl mx-auto mb-3 md:mb-8 leading-relaxed slide-up font-body font-semibold">
                         <span className="font-bold text-red-600">Controlled Chaos™</span> is just the beginning.
                     </p>
 
@@ -249,7 +199,7 @@ function WhoWeAre() {
                         <Link
                             to="/about"
                             state={{ fromWhoWeAre: true }}
-                            className="inline-block px-4 py-2 bg-red-600 text-white transition-all duration-300 rounded-lg text-base sm:text-lg font-subheaders font-bold
+                            className="inline-block px-3 md:px-8 py-1.5 md:py-4 bg-red-600 text-white transition-all duration-300 rounded-lg text-sm md:text-xl font-subheaders font-bold
                             hover:scale-105 transform"
                         >
                             Get to Know Us
