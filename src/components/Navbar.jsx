@@ -53,7 +53,7 @@ const Navbar = () => {
     useEffect(() => {
         const handleScroll = () => {
             const scrollPosition = window.scrollY;
-            setIsScrolled(scrollPosition > 100);
+            setIsScrolled(scrollPosition > 50);
         };
 
         window.addEventListener('scroll',handleScroll);
@@ -69,9 +69,9 @@ const Navbar = () => {
 
     return (
         <nav className={`fixed w-full z-[200] transition-colors duration-300 h-20 ${isScrolled
-                ? 'bg-black lg:border-b-0'
-                : 'bg-transparent lg:border-b-2 lg:border-transparent'
-            } border-b-2 border-red-600`}>
+                ? 'bg-black lg:border-b-0 border-b-2 border-red-600'
+                : 'bg-transparent border-b-0 lg:border-b-2 lg:border-transparent'
+            }`}>
             <div className="max-w-8xl pr-6 flex justify-between items-center h-full">
                 {/* Left side - Logo */}
                 <div className="flex items-center -ml-2">

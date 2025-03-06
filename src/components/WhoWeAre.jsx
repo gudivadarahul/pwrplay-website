@@ -16,8 +16,8 @@ const getRandomDirection = () => {
 };
 
 // Increase number of cards even more for better effect
-const backgroundIcons = Array(80).fill(null).map((_,index) => {  // Increased from 40 to 80
-    const sectionSize = 100 / 80;  // Adjusted for new count
+const backgroundIcons = Array(window.innerWidth <= 768 ? 40 : 80).fill(null).map((_,index) => {  // Reduced from 80 to 40 on mobile
+    const sectionSize = window.innerWidth <= 768 ? 100 / 40 : 100 / 80;  // Adjusted for mobile count
     const sectionStart = index * sectionSize;
 
     return {
@@ -52,7 +52,7 @@ function WhoWeAre() {
             }
         });
 
-        const cardSize = 12;
+        const cardSize = window.innerWidth <= 768 ? 8 : 12;
         const cards = backgroundIcons.map((icon,index) => {
             return Matter.Bodies.circle(
                 (icon.startPosition / 100) * window.innerWidth,
@@ -62,8 +62,8 @@ function WhoWeAre() {
                     render: {
                         sprite: {
                             texture: `/card-back-${(index % 4) + 1}.png`,
-                            xScale: 0.06,
-                            yScale: 0.06
+                            xScale: window.innerWidth <= 768 ? 0.04 : 0.06,
+                            yScale: window.innerWidth <= 768 ? 0.04 : 0.06
                         }
                     },
                     friction: 0,
@@ -109,7 +109,7 @@ function WhoWeAre() {
         engine.world.gravity.x = 0;
 
         // Set random directions but constant speed for all cards
-        const constantSpeed = 1;
+        const constantSpeed = window.innerWidth <= 768 ? 0.6 : 1; // Slower speed on mobile
         cards.forEach(card => {
             const randomAngle = Math.random() * Math.PI * 2;
             Matter.Body.setVelocity(card,{
@@ -176,11 +176,11 @@ function WhoWeAre() {
     };
 
     return (
-        <section className="relative bg-white text-black md:py-24 flex md:block items-center px-6 text-center overflow-hidden h-[50vh] md:h-full">
+        <section className="relative bg-white text-black md:py-24 flex md:block items-center px-6 text-center md:overflow-hidden h-[50vh] md:h-full -mb-12">
             <div ref={sceneRef} className="absolute inset-0 h-[50vh] md:h-full" />
 
             {/* Content */}
-            <div className="relative z-10 max-w-3xl mx-auto">
+            <div className="relative z-10 max-w-3xl mx-auto -mt-12 md:mt-0">
                 <div className="backdrop-blur-sm bg-white/60 rounded-xl p-2 md:p-6 inline-block">
                     <h2 className="text-3xl md:text-7xl font-headers mb-2 md:mb-6 fade-in text-black drop-shadow-lg">
                         The Vision
