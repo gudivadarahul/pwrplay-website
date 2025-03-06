@@ -15,9 +15,16 @@ const getRandomDirection = () => {
     return directions[Math.floor(Math.random() * directions.length)];
 };
 
-// Increase number of cards even more for better effect
-const backgroundIcons = Array(80).fill(null).map((_,index) => {  // Increased from 40 to 80
-    const sectionSize = 100 / 80;  // Adjusted for new count
+// Create responsive card count based on screen width
+const getCardCount = () => {
+    if (window.innerWidth < 768) { // mobile devices
+        return 30;
+    }
+    return 80; // desktop
+};
+
+const backgroundIcons = Array(getCardCount()).fill(null).map((_,index) => {
+    const sectionSize = 100 / getCardCount();  // Adjusted for dynamic count
     const sectionStart = index * sectionSize;
 
     return {
@@ -156,6 +163,49 @@ function WhoWeAre() {
             render.canvas.width = window.innerWidth;
             render.canvas.height = window.innerHeight;
             Matter.Render.setPixelRatio(render,window.devicePixelRatio);
+
+            // Clear existing bodies and reinitialize with new card count
+            Matter.World.clear(engine.world);
+            const newCards = Array(getCardCount()).fill(null).map((_,index) => {
+                return Matter.Bodies.circle(
+                    (backgroundIcons[index].startPosition / 100) * window.innerWidth,
+                    Math.random() * window.innerHeight,
+                    cardSize / 2,
+                    {
+                        render: {
+                            sprite: {
+                                texture: `/card-back-${(index % 4) + 1}.png`,
+                                xScale: 0.06,
+                                yScale: 0.06
+                            }
+                        },
+                        friction: 0,
+                        frictionAir: 0,
+                        frictionStatic: 0,
+                        restitution: 0.9,
+                        density: 0.001,
+                        angle: backgroundIcons[index].rotation * Math.PI / 180,
+                        mass: 1,
+                        inertia: Infinity,
+                        angularVelocity: 0,
+                        slop: 0,
+                        collisionFilter: {
+                            group: -1
+                        }
+                    }
+                );
+            });
+
+            Matter.World.add(engine.world,[...newCards,...walls]);
+
+            // Reset velocities for new cards
+            newCards.forEach(card => {
+                const randomAngle = Math.random() * Math.PI * 2;
+                Matter.Body.setVelocity(card,{
+                    x: Math.cos(randomAngle) * constantSpeed,
+                    y: Math.sin(randomAngle) * constantSpeed
+                });
+            });
         };
 
         window.addEventListener('resize',handleResize);
@@ -176,7 +226,7 @@ function WhoWeAre() {
     };
 
     return (
-        <section className="relative bg-white text-black h-[60vh] md:h-[100vh] px-6 text-center overflow-hidden">
+        <section className="relative bg-white text-black h-[50vh] md:h-[100vh] px-6 text-center overflow-hidden">
             <div ref={sceneRef} className="absolute inset-0" />
 
             {/* Content */}

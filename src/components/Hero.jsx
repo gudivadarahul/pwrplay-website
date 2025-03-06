@@ -3,7 +3,7 @@ import "../assets/Hero.css";
 
 function Hero() {
   return (
-    <section className="relative bg-black text-white h-[40vh] md:h-screen flex items-center px-4 sm:px-6 text-center overflow-hidden">
+    <section className="relative bg-black text-white h-[50vh] md:h-screen flex items-center px-4 sm:px-6 text-center overflow-hidden">
       {/* Logo in top-left */}
       <div className="absolute -top-8 sm:-top-10 md:-top-12 lg:-top-14 xl:-top-16 -left-2 sm:-left-3 z-[30]">
         <img
