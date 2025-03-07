@@ -11,7 +11,7 @@ function Timeline() {
 
     const timelineEvents = [
         {
-            date: "November 2023",
+            date: "October 2023",
             title: "The Big Idea",
             description: "Three friends. One bold vision. In November 2023, we set out to create the ultimate party game—something fresh, hilarious, and guaranteed to bring people together. Thus, Controlled Chaos™ was born.",
             icon: <FaDice className="text-3xl" />,
@@ -70,32 +70,32 @@ function Timeline() {
     },[location]);
 
     return (
-        <div className="relative pt-32 px-6 min-h-screen bg-black">
+        <div className="relative pt-24 sm:pt-32 px-4 sm:px-6 min-h-screen bg-black">
             {/* Logo in top-left */}
-            <div className="absolute -top-8 sm:-top-10 md:-top-12 lg:-top-14 xl:-top-16 -left-2 sm:-left-3 z-[100]">
+            <div className="absolute -top-6 sm:-top-8 md:-top-12 lg:-top-14 xl:-top-16 -left-2 sm:-left-3 z-[100]">
                 <Link to="/">
                     <img
                         src="/pwrplay-logo.png"
                         alt="PWRPLAY Logo"
-                        className="w-48 sm:w-56 md:w-64 lg:w-72 xl:w-80 h-auto cursor-pointer"
+                        className="w-40 sm:w-48 md:w-64 lg:w-72 xl:w-80 h-auto cursor-pointer"
                     />
                 </Link>
             </div>
 
             <div className="relative z-10 max-w-6xl mx-auto">
                 {/* Header Section */}
-                <div className="text-center mb-16">
-                    <h1 className="text-5xl md:text-8xl font-headers mb-6">
+                <div className="text-center mb-12 sm:mb-16">
+                    <h1 className="text-4xl sm:text-5xl md:text-8xl font-headers mb-4 sm:mb-6">
                         Our <span className="text-red-600">Journey</span>
                     </h1>
-                    <p className="text-3xl font-body font-medium max-w-5xl mx-auto">
+                    <p className="text-xl sm:text-2xl md:text-3xl font-body font-medium max-w-5xl mx-auto">
                         Follow our journey as we revolutionize game nights.
                     </p>
                 </div>
 
                 {/* Timeline Section */}
-                <div className="relative mt-20">
-                    <div className="absolute w-1.5 h-full bg-red-600 left-1/2 transform -translate-x-1/2" />
+                <div className="relative mt-12 sm:mt-20">
+                    <div className="absolute w-1 sm:w-1.5 h-full bg-red-600 left-1/2 transform -translate-x-1/2" />
 
                     {timelineEvents.map((event,index) => (
                         <motion.div
@@ -103,40 +103,45 @@ function Timeline() {
                             initial={{ opacity: 0,y: 50 }}
                             animate={{ opacity: 1,y: 0 }}
                             transition={{ delay: index * 0.2 }}
-                            className="relative mb-32 flex justify-center"
+                            className="relative mb-16 sm:mb-32 flex justify-center"
                         >
-                            <div className="inline-block max-w-xl">
+                            <div className="inline-block w-[90%] sm:max-w-xl">
                                 <Tilt
-                                    tiltMaxAngleX={15}
-                                    tiltMaxAngleY={15}
+                                    tiltMaxAngleX={10}
+                                    tiltMaxAngleY={10}
                                     perspective={1000}
                                     scale={1.02}
                                     transitionSpeed={1000}
                                     gyroscope={false}
                                 >
                                     <motion.div
-                                        whileHover={{ scale: 1.05 }}
-                                        className="bg-black p-8 rounded-xl border-3 border-white hover:border-red-600 
+                                        whileHover={{ scale: 1.03 }}
+                                        className="bg-black p-4 sm:p-8 rounded-xl border-2 sm:border-3 border-white hover:border-red-600 
                                         group transition-all duration-300 shadow-lg hover:shadow-red-500/20"
                                     >
-                                        <div className="flex justify-between items-center mb-4">
-                                            <h3 className="text-3xl font-bold text-red-600">
+                                        <div className="flex justify-between items-start mb-4">
+                                            <h3 className="text-2xl sm:text-3xl font-bold text-red-600">
                                                 {event.title}
                                             </h3>
-                                            <span className="text-2xl text-white font-bold">
-                                                {event.date}
-                                            </span>
+                                            <div className="text-right ml-4">
+                                                <div className="text-xl sm:text-2xl text-white font-bold">
+                                                    {event.date.split(" ")[0]}
+                                                </div>
+                                                <div className="text-lg sm:text-xl text-white/80">
+                                                    {event.date.split(" ")[1]}
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div className="flex items-center gap-6 mb-6">
-                                            <div className="text-6xl text-red-600">
+                                        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6 mb-6">
+                                            <div className="text-4xl sm:text-6xl text-red-600">
                                                 {event.icon}
                                             </div>
-                                            <p className="text-xl text-white/80">
+                                            <p className="text-lg sm:text-xl text-white/80">
                                                 {event.description}
                                             </p>
                                         </div>
                                         <div className="pt-3 border-t border-red-600">
-                                            <div className="text-xl text-red-600 font-medium">
+                                            <div className="text-base sm:text-xl text-red-600 font-medium">
                                                 {event.stats}
                                             </div>
                                         </div>
@@ -148,8 +153,8 @@ function Timeline() {
                 </div>
 
                 {/* Footer Quote */}
-                <div className="text-center mt-16 mb-32">
-                    <p className="text-4xl font-bold font-headers italic">
+                <div className="text-center mt-12 sm:mt-16 mb-20 sm:mb-32">
+                    <p className="text-2xl sm:text-4xl font-bold font-headers italic px-4">
                         This is just the beginning of our <span className="text-red-600">game-changing</span> journey
                     </p>
                 </div>
