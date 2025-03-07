@@ -36,23 +36,38 @@ function About() {
 
                 {/* Meet the Team */}
                 <section className="mb-8">
-                    <div className="grid grid-cols-3 md:grid-cols-3 gap-2 md:gap-8">
+                    <div className="flex flex-col space-y-4 md:space-y-8">
                         {/* Founder 1 */}
-                        <div className="bg-black p-2 md:p-8 text-center">
-                            <h3 className="text-lg md:text-5xl font-headers text-red-600 mb-1 md:mb-2">Seva Vora</h3>
-                            <p className="text-sm md:text-3xl mb-2 md:mb-4 font-body font-medium">President</p>
+                        <div className="grid grid-cols-[1fr_auto_1fr] items-center max-w-3xl mx-auto w-full">
+                            <div className="text-right">
+                                <span className="text-lg md:text-5xl font-headers font-medium text-red-600">Seva Vora</span>
+                            </div>
+                            <span className="text-lg md:text-5xl font-headers mx-2 md:mx-4">|</span>
+                            <div className="text-left">
+                                <span className="font-body font-medium text-base md:text-3xl">President</span>
+                            </div>
                         </div>
 
                         {/* Founder 2 */}
-                        <div className="bg-black p-2 md:p-8 text-center">
-                            <h3 className="text-lg md:text-5xl font-headers text-red-600 mb-1 md:mb-2">Rohith Gudivada</h3>
-                            <p className="text-sm md:text-3xl mb-2 md:mb-4 font-body font-medium">Operations Director</p>
+                        <div className="grid grid-cols-[1fr_auto_1fr] items-center max-w-3xl mx-auto w-full">
+                            <div className="text-right">
+                                <span className="text-lg md:text-5xl font-headers font-medium text-red-600">Rohith Gudivada</span>
+                            </div>
+                            <span className="text-lg md:text-5xl font-headers mx-2 md:mx-4">|</span>
+                            <div className="text-left">
+                                <span className="font-body font-medium text-base md:text-3xl">Operations Director</span>
+                            </div>
                         </div>
 
                         {/* Founder 3 */}
-                        <div className="bg-black p-2 md:p-8 text-center">
-                            <h3 className="text-lg md:text-5xl font-headers text-red-600 mb-1 md:mb-2">Niam Vora</h3>
-                            <p className="text-sm md:text-3xl mb-2 md:mb-4 font-body font-medium">Creative Director</p>
+                        <div className="grid grid-cols-[1fr_auto_1fr] items-center max-w-3xl mx-auto w-full">
+                            <div className="text-right">
+                                <span className="text-lg md:text-5xl font-headers font-medium text-red-600">Niam Vora</span>
+                            </div>
+                            <span className="text-lg md:text-5xl font-headers mx-2 md:mx-4">|</span>
+                            <div className="text-left">
+                                <span className="font-body font-medium text-base md:text-3xl">Creative Director</span>
+                            </div>
                         </div>
                     </div>
 
