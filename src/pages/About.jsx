@@ -28,36 +28,36 @@ function About() {
 
             <div className="max-w-6xl mx-auto">
                 {/* Title */}
-                <div className="text-center mb-16">
+                <div className="text-center mb-8">
                     <h1 className="text-5xl md:text-8xl font-headers mb-6">
                         Meet the <span className="text-red-600">Founders</span>
                     </h1>
                 </div>
 
                 {/* Meet the Team */}
-                <section className="mb-16">
+                <section className="mb-8">
                     <div className="grid grid-cols-3 md:grid-cols-3 gap-2 md:gap-8">
                         {/* Founder 1 */}
-                        <div className="bg-black p-2 md:p-8 rounded-xl border-3 border-red-600 transition-all duration-300 text-center">
-                            <h3 className="text-base md:text-5xl font-headers text-red-600 mb-1 md:mb-2">Seva Vora</h3>
-                            <p className="text-xs md:text-2xl mb-2 md:mb-4 font-body font-medium">President</p>
+                        <div className="bg-black p-2 md:p-8 text-center">
+                            <h3 className="text-lg md:text-5xl font-headers text-red-600 mb-1 md:mb-2">Seva Vora</h3>
+                            <p className="text-sm md:text-3xl mb-2 md:mb-4 font-body font-medium">President</p>
                         </div>
 
                         {/* Founder 2 */}
-                        <div className="bg-black p-2 md:p-8 rounded-xl border-3 border-red-600 transition-all duration-300 text-center">
-                            <h3 className="text-base md:text-5xl font-headers text-red-600 mb-1 md:mb-2">Rohith Gudivada</h3>
-                            <p className="text-xs md:text-2xl mb-2 md:mb-4 font-body font-medium">Director of Operations</p>
+                        <div className="bg-black p-2 md:p-8 text-center">
+                            <h3 className="text-lg md:text-5xl font-headers text-red-600 mb-1 md:mb-2">Rohith Gudivada</h3>
+                            <p className="text-sm md:text-3xl mb-2 md:mb-4 font-body font-medium">Operations Director</p>
                         </div>
 
                         {/* Founder 3 */}
-                        <div className="bg-black p-2 md:p-8 rounded-xl border-3 border-red-600 transition-all duration-300 text-center">
-                            <h3 className="text-base md:text-5xl font-headers text-red-600 mb-1 md:mb-2">Niam Vora</h3>
-                            <p className="text-xs md:text-2xl mb-2 md:mb-4 font-body font-medium">Creative Director</p>
+                        <div className="bg-black p-2 md:p-8 text-center">
+                            <h3 className="text-lg md:text-5xl font-headers text-red-600 mb-1 md:mb-2">Niam Vora</h3>
+                            <p className="text-sm md:text-3xl mb-2 md:mb-4 font-body font-medium">Creative Director</p>
                         </div>
                     </div>
 
                     {/* Founders' Group Image */}
-                    <div className="mt-12">
+                    <div className="mt-8">
                         <img
                             src="founders.jpg"
                             alt="Founders"
@@ -72,18 +72,18 @@ function About() {
                         Our <span className="text-red-600">Mission</span>
                     </h2>
                     <div className="space-y-8">
-                        <p className="responsive-text leading-relaxed font-body font-medium text-2xl text-justify">
+                        <p className="responsive-text leading-relaxed font-body font-medium text-base md:text-2xl md:text-justify">
                             PWRPLAY Creations was founded in 2023 by friends, Seva Vora, Rohith Gudivada, and Niam Vora, with a
                             bold vision to <span className="text-red-600 leading-relaxed align-baseline"> reinvent the way people connect </span> through unforgettable game nights.
                         </p>
 
-                        <p className="responsive-text leading-relaxed font-body font-medium text-2xl text-justify">
+                        <p className="responsive-text leading-relaxed font-body font-medium text-base md:text-2xl md:text-justify">
                             Frustrated by predictable games with repetitive mechanics, we set out to create something fresh, dynamic, and packed with energy. <span className="text-red-600 leading-relaxed align-baseline">
                                 Our debut game, Controlled Chaos™</span>, is the first step in that journey,
                             designed to bring laughter, surprises, and bold challenges to every party.
                         </p>
 
-                        <p className="responsive-text leading-relaxed font-body font-medium text-2xl text-justify">
+                        <p className="responsive-text leading-relaxed font-body font-medium text-base md:text-2xl md:text-justify">
                             While we are just getting started, we are dedicated to building <span className="text-red-600 leading-relaxed align-baseline">
                                 high-quality, original games</span> that break the ice, spark real conversations, and create moments
                             that people will remember long after the night ends. We can't wait to bring Controlled Chaos™ to players soon.
