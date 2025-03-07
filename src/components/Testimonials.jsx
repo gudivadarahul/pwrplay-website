@@ -55,13 +55,68 @@ const testimonials = [
 // Add this at the top level, outside of any component
 const usedIndices = new Set();
 
-function TestimonialCard({ index,initialDelay }) {
+function TestimonialCard({ index,initialDelay }) { 
     const [currentIndex,setCurrentIndex] = useState(index);
     const [isFlipping,setIsFlipping] = useState(false);
     const [displayedContent,setDisplayedContent] = useState(testimonials[index]);
+    const [nextContent,setNextContent] = useState(null);
+    const [isMobile,setIsMobile] = useState(window.innerWidth < 768);
+    const [touchStart,setTouchStart] = useState(null);
+    const [touchEnd,setTouchEnd] = useState(null);
+    const [isSliding,setIsSliding] = useState(false);
+
+    const minSwipeDistance = 50;
+
+    const onTouchStart = (e) => {
+        setTouchEnd(null);
+        setTouchStart(e.targetTouches[0].clientX);
+    };
+
+    const onTouchMove = (e) => {
+        setTouchEnd(e.targetTouches[0].clientX);
+    };
+
+    const onTouchEnd = () => {
+        if (!touchStart || !touchEnd) return;
+
+        const distance = touchStart - touchEnd;
+        const isLeftSwipe = distance > minSwipeDistance;
+        const isRightSwipe = distance < -minSwipeDistance;
+
+        if (isLeftSwipe) {
+            const getNextUniqueIndex = (currentIdx) => {
+                let nextIdx;
+                do {
+                    nextIdx = Math.floor(Math.random() * testimonials.length);
+                } while (usedIndices.has(nextIdx));
+                return nextIdx;
+            };
+
+            const nextIndex = getNextUniqueIndex(currentIndex);
+            setNextContent(testimonials[nextIndex]);
+            setIsSliding(true);
+
+            setTimeout(() => {
+                usedIndices.delete(currentIndex);
+                usedIndices.add(nextIndex);
+                setCurrentIndex(nextIndex);
+                setDisplayedContent(testimonials[nextIndex]);
+                setIsSliding(false);
+                setNextContent(null);
+            },500);
+        }
+    };
 
     useEffect(() => {
-        // Add initial index to used indices
+        const handleResize = () => {
+            setIsMobile(window.innerWidth < 768);
+        };
+
+        window.addEventListener('resize',handleResize);
+        return () => window.removeEventListener('resize',handleResize);
+    },[]);
+
+    useEffect(() => {
         usedIndices.add(index);
 
         const getNextUniqueIndex = (currentIdx) => {
@@ -72,44 +127,89 @@ function TestimonialCard({ index,initialDelay }) {
             return nextIdx;
         };
 
-        const randomInterval = () => 10000 + Math.random() * 5000;
-
         const timer = setInterval(() => {
-            setIsFlipping(true);
-
-            // Wait for card to be fully flipped before changing content
-            setTimeout(() => {
-                // Remove current index from used set
-                usedIndices.delete(currentIndex);
-
-                // Get next unique index
+            if (isMobile) {
                 const nextIndex = getNextUniqueIndex(currentIndex);
-
-                // Add new index to used set
+                usedIndices.delete(currentIndex);
                 usedIndices.add(nextIndex);
-
                 setCurrentIndex(nextIndex);
                 setDisplayedContent(testimonials[nextIndex]);
-            },500); // Half of the flip animation duration
+            } else {
+                setIsFlipping(true);
 
-            // Complete flip
-            setTimeout(() => {
-                setIsFlipping(false);
-            },1000);
+                setTimeout(() => {
+                    usedIndices.delete(currentIndex);
+                    const nextIndex = getNextUniqueIndex(currentIndex);
+                    usedIndices.add(nextIndex);
+                    setCurrentIndex(nextIndex);
+                    setDisplayedContent(testimonials[nextIndex]);
+                },500);
 
-        },randomInterval());
+                setTimeout(() => {
+                    setIsFlipping(false);
+                },1000);
+            }
+        },isMobile ? 8000 : (10000 + Math.random() * 5000));
 
-        // Cleanup function
         return () => {
             clearInterval(timer);
             usedIndices.delete(currentIndex);
         };
-    },[currentIndex]);
+    },[currentIndex,isMobile]);
+
+    if (isMobile) {
+        return (
+            <div
+                className="w-full h-[400px] relative overflow-hidden"
+                onTouchStart={onTouchStart}
+                onTouchMove={onTouchMove}
+                onTouchEnd={onTouchEnd}
+            >
+                {/* Current card */}
+                <div className="absolute inset-0 w-full">
+                    <div className="bg-black text-white p-6 rounded-xl h-full flex flex-col mx-4">
+                        <FaQuoteLeft className="text-red-600 text-3xl mb-4 flex-shrink-0" />
+                        <p className="text-lg mb-4 flex-grow leading-relaxed font-medium">
+                            {displayedContent.text}
+                        </p>
+                        <hr className="border-red-600 border-t-2 mb-4" />
+                        <div>
+                            <p className="font-bold text-xl text-red-600">
+                                {displayedContent.author}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Sliding card */}
+                {nextContent && (
+                    <div
+                        className={`absolute inset-0 w-full transition-transform duration-500 ease-in-out transform ${isSliding ? 'translate-x-0' : 'translate-x-[200%]'
+                            }`}
+                    >
+                        <div className="bg-black text-white p-6 rounded-xl h-full flex flex-col mx-4">
+                            <FaQuoteLeft className="text-red-600 text-3xl mb-4 flex-shrink-0" />
+                            <p className="text-lg mb-4 flex-grow leading-relaxed font-medium">
+                                {nextContent.text}
+                            </p>
+                            <hr className="border-red-600 border-t-2 mb-4" />
+                            <div>
+                                <p className="font-bold text-xl text-red-600">
+                                    {nextContent.author}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                )}
+            </div>
+        );
+    }
 
     return (
         <div className="w-full max-w-sm h-full perspective-1000 py-4">
             <div
-                className={`relative h-full transition-transform duration-1000 transform-style-3d ${isFlipping ? 'rotate-y-180' : ''}`}
+                className={`relative h-full transition-transform duration-1000 transform-style-3d ${isFlipping ? 'rotate-y-180' : ''
+                    }`}
             >
                 <div className="bg-black text-white p-6 rounded-xl h-full min-h-[300px] flex flex-col backface-hidden">
                     <FaQuoteLeft className="text-red-600 text-3xl mb-4 flex-shrink-0" />
@@ -129,6 +229,17 @@ function TestimonialCard({ index,initialDelay }) {
 }
 
 function Testimonials() {
+    const [isMobile,setIsMobile] = useState(window.innerWidth < 768);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth < 768);
+        };
+
+        window.addEventListener('resize',handleResize);
+        return () => window.removeEventListener('resize',handleResize);
+    },[]);
+
     return (
         <section className="relative bg-white text-black py-24 px-6">
             <div className="max-w-7xl mx-auto">
@@ -137,13 +248,17 @@ function Testimonials() {
                 </h2>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 justify-items-center gap-8 overflow-hidden">
-                    {[0,1,2].map((index) => (
-                        <TestimonialCard
-                            key={`card-${index}`}
-                            index={index}
-                            initialDelay={index * 1000}
-                        />
-                    ))}
+                    {isMobile ? (
+                        <TestimonialCard key="mobile-card" index={0} initialDelay={0} />
+                    ) : (
+                        [0,1,2].map((index) => (
+                            <TestimonialCard
+                                key={`card-${index}`}
+                                index={index}
+                                initialDelay={index * 1000}
+                            />
+                        ))
+                    )}
                 </div>
             </div>
         </section>

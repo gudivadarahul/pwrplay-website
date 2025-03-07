@@ -11,7 +11,7 @@ function About() {
             left: 0,
             behavior: 'instant'
         });
-    }, [location]);
+    },[location]);
 
     return (
         <div className="relative pt-32 px-6 min-h-screen bg-black">
@@ -36,23 +36,23 @@ function About() {
 
                 {/* Meet the Team */}
                 <section className="mb-16">
-                    <div className="grid md:grid-cols-3 gap-8">
+                    <div className="grid grid-cols-3 md:grid-cols-3 gap-2 md:gap-8">
                         {/* Founder 1 */}
-                        <div className="bg-black p-8 rounded-xl border-3 border-red-600 transition-all duration-300 text-center">
-                            <h3 className="text-5xl font-headers text-red-600 mb-2">Seva Vora</h3>
-                            <p className="text-2xl mb-4 font-body font-medium">President</p>
+                        <div className="bg-black p-2 md:p-8 rounded-xl border-3 border-red-600 transition-all duration-300 text-center">
+                            <h3 className="text-base md:text-5xl font-headers text-red-600 mb-1 md:mb-2">Seva Vora</h3>
+                            <p className="text-xs md:text-2xl mb-2 md:mb-4 font-body font-medium">President</p>
                         </div>
 
                         {/* Founder 2 */}
-                        <div className="bg-black p-8 rounded-xl border-3 border-red-600 transition-all duration-300 text-center">
-                            <h3 className="text-5xl font-headers text-red-600 mb-2">Rohith Gudivada</h3>
-                            <p className="text-2xl mb-4 font-body font-medium">Director of Operations</p>
+                        <div className="bg-black p-2 md:p-8 rounded-xl border-3 border-red-600 transition-all duration-300 text-center">
+                            <h3 className="text-base md:text-5xl font-headers text-red-600 mb-1 md:mb-2">Rohith Gudivada</h3>
+                            <p className="text-xs md:text-2xl mb-2 md:mb-4 font-body font-medium">Director of Operations</p>
                         </div>
 
                         {/* Founder 3 */}
-                        <div className="bg-black p-8 rounded-xl border-3 border-red-600 transition-all duration-300 text-center">
-                            <h3 className="text-5xl font-headers text-red-600 mb-2">Niam Vora</h3>
-                            <p className="text-2xl mb-4 font-body font-medium">Creative Director</p>
+                        <div className="bg-black p-2 md:p-8 rounded-xl border-3 border-red-600 transition-all duration-300 text-center">
+                            <h3 className="text-base md:text-5xl font-headers text-red-600 mb-1 md:mb-2">Niam Vora</h3>
+                            <p className="text-xs md:text-2xl mb-2 md:mb-4 font-body font-medium">Creative Director</p>
                         </div>
                     </div>
 
