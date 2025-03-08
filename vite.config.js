@@ -3,9 +3,14 @@ import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
-  plugins: [react(),tailwindcss()],
+  plugins: [react(), tailwindcss()],
   server: {
-    port: 5173,
+    host: '0.0.0.0',  // Allows external access (for iPhone & ngrok)
+    port: 5173,       // Keeps the port consistent
+    strictPort: true, // Ensures Vite always runs on 5173
+    hmr: {
+      clientPort: 443, // Fixes HMR issues when using ngrok
+    },
     proxy: {
       '/api': {
         target: 'http://localhost:3001',
@@ -13,5 +18,8 @@ export default defineConfig({
         secure: false,
       },
     },
+    allowedHosts: [
+      '.ngrok-free.app', // Allows ngrok URLs to access Vite
+    ],
   },
 });

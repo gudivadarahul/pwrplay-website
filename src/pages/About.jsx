@@ -14,7 +14,7 @@ function About() {
     },[location]);
 
     return (
-        <div className="relative pt-32 px-6 min-h-screen bg-black">
+        <div className="relative pt-24 sm:pt-32 px-6 min-h-screen bg-black">
             {/* Logo in top-left */}
             <div className="absolute -top-8 sm:-top-10 md:-top-12 lg:-top-14 xl:-top-16 -left-2 sm:-left-3 z-[100]">
                 <Link to="/">
@@ -28,14 +28,14 @@ function About() {
 
             <div className="max-w-6xl mx-auto">
                 {/* Title */}
-                <div className="text-center mb-8">
-                    <h1 className="text-5xl md:text-8xl font-headers mb-6">
+                <div className="text-center mb-4 sm:mb-8">
+                    <h1 className="text-5xl md:text-8xl font-headers mb-4 sm:mb-6">
                         Meet the <span className="text-red-600">Founders</span>
                     </h1>
                 </div>
 
                 {/* Meet the Team */}
-                <section className="mb-8">
+                <section className="mb-4 sm:mb-8">
                     <div className="flex flex-col space-y-4 md:space-y-8">
                         {/* Founder 1 */}
                         <div className="grid grid-cols-[1fr_auto_1fr] items-center max-w-3xl mx-auto w-full">
@@ -72,17 +72,17 @@ function About() {
                     </div>
 
                     {/* Founders' Group Image */}
-                    <div className="mt-8">
+                    <div className="mt-4 sm:mt-8">
                         <img
                             src="founders.jpg"
                             alt="Founders"
-                            className="rounded-xl w-full max-w-2xl mx-auto shadow-lg"
+                            className="rounded-xl w-full max-w-[90%] sm:max-w-2xl mx-auto shadow-lg"
                         />
                     </div>
                 </section>
 
                 {/* Our Mission */}
-                <section className="mb-16">
+                <section className="mb-8 sm:mb-16">
                     <h2 className="text-4xl font-headers mb-8 lg:text-5xl xl:text-6xl 2xl:text-7xl">
                         Our <span className="text-red-600">Mission</span>
                     </h2>

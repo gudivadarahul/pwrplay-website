@@ -83,7 +83,7 @@ function FAQ() {
     },[location]);
 
     return (
-        <div className="pt-32 px-6 min-h-screen bg-black">
+        <div className="pt-30 sm:pt-32 px-6 min-h-screen bg-black">
             {/* Logo in top-left */}
             <div className="absolute -top-8 sm:-top-10 md:-top-12 lg:-top-14 xl:-top-16 -left-2 sm:-left-3 z-[100]">
                 <Link to="/">
@@ -96,12 +96,9 @@ function FAQ() {
             </div>
 
             <div className="max-w-4xl mx-auto">
-                <h1 className="text-5xl md:text-7xl font-headers mb-6 text-center">
-                    <span className="text-red-600">F</span>requent&nbsp; <span className="text-red-600">A</span>nnoying&nbsp; <span className="text-red-600">Q</span>uestions
+                <h1 className="text-4xl sm:text-5xl md:text-7xl font-headers mb-4 sm:mb-6 text-center leading-tight">
+                    <span className="text-red-600">F</span>requent <span className="text-red-600">A</span>nnoying <span className="text-red-600">Q</span>uestions
                 </h1>
-                <p className="text-2xl text-center mb-12 font-body font-medium">
-                    Have questions? We've got the answers.
-                </p>
 
                 {/* FAQ List */}
                 <div className="space-y-6">
@@ -109,15 +106,15 @@ function FAQ() {
                         <Disclosure key={index}>
                             {({ open }) => (
                                 <div className="bg-black p-4 rounded-lg shadow-lg border-3 border-red-600 hover:border-red-600 transition-all duration-300">
-                                    <DisclosureButton className="flex justify-between items-center w-full text-left text-3xl font-headers font-bold">
+                                    <DisclosureButton className="flex justify-between items-center w-full text-left text-base sm:text-2xl md:text-3xl font-headers font-bold">
                                         {faq.question}
                                         {open ? (
-                                            <FaChevronUp className="text-red-600" />
+                                            <FaChevronUp className="text-red-600 text-sm sm:text-base" />
                                         ) : (
-                                            <FaChevronDown className="text-red-600" />
+                                            <FaChevronDown className="text-red-600 text-sm sm:text-base" />
                                         )}
                                     </DisclosureButton>
-                                    <DisclosurePanel className="mt-4 text-2xl text-gray-300 font-body font-medium">
+                                    <DisclosurePanel className="mt-3 sm:mt-4 text-sm sm:text-xl md:text-2xl text-gray-300 font-body font-medium">
                                         {faq.answer}
                                     </DisclosurePanel>
                                 </div>

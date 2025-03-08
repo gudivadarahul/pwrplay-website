@@ -2,7 +2,6 @@ import { useEffect,useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import Tilt from 'react-parallax-tilt';
-import { FaDice,FaRocket,FaChartLine,FaTrophy,FaGear,FaBoxOpen,FaBullhorn } from 'react-icons/fa6';
 import { Link } from 'react-router-dom';
 
 function Timeline() {
@@ -14,42 +13,36 @@ function Timeline() {
             date: "October 2023",
             title: "The Big Idea",
             description: "Three friends. One bold vision. In November 2023, we set out to create the ultimate party game—something fresh, hilarious, and guaranteed to bring people together. Thus, Controlled Chaos™ was born.",
-            icon: <FaDice className="text-3xl" />,
             stats: "3 Founders | 1 Game-Changing Idea"
         },
         {
             date: "October 2024",
             title: "Design, Playtest, Repeat",
             description: " For nearly a year, we poured our energy into perfecting Controlled Chaos™. From designing the mechanics to countless playtests, every detail was fine-tuned for the ultimate experience.",
-            icon: <FaGear className="text-3xl" />,
             stats: "100+ Playtests | 4 Decks | 1 Insanely Fun Game"
         },
         {
             date: "November 2024",
             title: "Making It Official",
             description: "PWRPLAY Creations Inc. was officially incorporated, turning our vision into reality and setting the stage for production.",
-            icon: <FaRocket className="text-3xl" />,
             stats: "Officially Incorporated | The Chaos Gets Real"
         },
         {
             date: "January 2025",
             title: "Protecting the Brand",
             description: "We took the next step—filing trademarks for Controlled Chaos™ in Canada and the USA, ensuring our game remains uniquely ours.",
-            icon: <FaChartLine className="text-3xl" />,
-            stats: "Trademark Secured | Expanding Our Reach"
+            stats: "Trademarks Secured | Expanding Our Reach"
         },
         {
             date: "February 2025",
             title: "First Official Prototype Arrives",
             description: "A major milestone! After months of development and manufacturer negotiations, our first official prototype of Controlled Chaos™ arrived. Seeing the game in its final form for the first time was a surreal moment.",
-            icon: <FaBoxOpen className="text-3xl" />,
             stats: "1st Prototype in Hand | The Vision Comes to Life"
         },
         {
             date: "March 2025",
             title: "Building the Chaos Community",
             description: "With trademarks secured and prototypes tested, we launched our website and built a thriving online community. Our focus is now on marketing, brand awareness, and gearing up for the next big step.",
-            icon: <FaBullhorn className="text-3xl" />,
             stats: "6 Social Platforms | Website Launches"
         }
     ];
@@ -85,12 +78,9 @@ function Timeline() {
             <div className="relative z-10 max-w-6xl mx-auto">
                 {/* Header Section */}
                 <div className="text-center mb-12 sm:mb-16">
-                    <h1 className="text-4xl sm:text-5xl md:text-8xl font-headers mb-4 sm:mb-6">
+                    <h1 className="text-5xl sm:text-5xl md:text-8xl font-headers mb-4 sm:mb-6">
                         Our <span className="text-red-600">Journey</span>
                     </h1>
-                    <p className="text-xl sm:text-2xl md:text-3xl font-body font-medium max-w-5xl mx-auto">
-                        Follow our journey as we revolutionize game nights.
-                    </p>
                 </div>
 
                 {/* Timeline Section */}
@@ -132,10 +122,7 @@ function Timeline() {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6 mb-6">
-                                            <div className="text-4xl sm:text-6xl text-red-600">
-                                                {event.icon}
-                                            </div>
+                                        <div className="mb-6">
                                             <p className="text-lg sm:text-xl text-white/80">
                                                 {event.description}
                                             </p>
