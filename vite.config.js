@@ -19,7 +19,10 @@ export default defineConfig({
       },
     },
     allowedHosts: [
-      '.ngrok-free.app', // Allows ngrok URLs to access Vite
+      'localhost',
+      '6398cfda1149.ngrok.app',
+      '.ngrok.app',
+      '.ngrok-free.app',
     ],
   },
 });
