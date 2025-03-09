@@ -1,0 +1,9 @@
+{
+    "name": "netlify-functions",
+    "version": "1.0.0",
+    "description": "Netlify Functions",
+    "dependencies": {
+      "nodemailer": "^6.9.7",
+      "@mailchimp/mailchimp_marketing": "^3.0.80"
+    }
+  }
