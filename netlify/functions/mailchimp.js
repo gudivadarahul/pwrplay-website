@@ -113,6 +113,12 @@ const handleSubscription = async (email, tags = ['Newsletter'], additionalData =
 const handleRetailerSubscription = async (data) => {
     const { email, name, phone, storeName, website, locationCount, primaryLocation, hearAboutUs } = data;
     
+    // Basic email validation before sending to Mailchimp
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        throw new Error("Please enter a valid email address.");
+    }
+    
     const subscriberHash = crypto
         .createHash('md5')
         .update(email.toLowerCase())
@@ -195,6 +201,18 @@ const handleRetailerSubscription = async (data) => {
         }
     } catch (error) {
         console.error('Mailchimp API error:', error);
+        
+        // Improve error handling
+        if (error.response && error.response.body) {
+            const errorBody = error.response.body;
+            
+            if (errorBody.detail && errorBody.detail.includes("looks fake or invalid")) {
+                throw new Error("Please enter a valid email address.");
+            } else if (errorBody.detail) {
+                throw new Error(errorBody.detail);
+            }
+        }
+        
         throw error;
     }
 };
@@ -282,12 +300,32 @@ export const handler = async (event) => {
                     };
                 } catch (retailerError) {
                     console.error('Retailer form error:', retailerError);
+                    
+                    // Extract a user-friendly error message
+                    let errorMessage = "Failed to process your application. Please try again.";
+                    
+                    // Check for specific Mailchimp errors
+                    if (retailerError.response && retailerError.response.body) {
+                        const errorBody = retailerError.response.body;
+                        
+                        // Handle email validation errors
+                        if (errorBody.detail && errorBody.detail.includes("looks fake or invalid")) {
+                            errorMessage = "Please enter a valid email address.";
+                        } 
+                        // Handle other specific Mailchimp errors
+                        else if (errorBody.detail) {
+                            errorMessage = errorBody.detail;
+                        }
+                    } else if (retailerError.message) {
+                        errorMessage = retailerError.message;
+                    }
+                    
                     return {
-                        statusCode: 500,
+                        statusCode: 400, // Use 400 for validation errors
                         headers,
                         body: JSON.stringify({
                             success: false,
-                            error: retailerError.message || "Failed to process your application. Please try again."
+                            error: errorMessage
                         })
                     };
                 }

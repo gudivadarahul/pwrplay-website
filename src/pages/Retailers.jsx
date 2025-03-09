@@ -1,5 +1,5 @@
-import { useState,useEffect } from 'react';
-import { useLocation,Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useLocation, Link } from 'react-router-dom';
 import API_URL from '../config/api';
 
 function Retailers() {
@@ -13,7 +13,7 @@ function Retailers() {
         });
     },[location]);
 
-    const [formData,setFormData] = useState({
+    const [formData, setFormData] = useState({
         name: '',
         email: '',
         phone: '',
@@ -25,15 +25,48 @@ function Retailers() {
         agreeToTerms: false
     });
 
-    const [loading,setLoading] = useState(false);
-    const [isSubmitted,setIsSubmitted] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [isSubmitted, setIsSubmitted] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
+
+    // Email validation function
+    const isValidEmail = (email) => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    };
+
+    // Format website URL if needed
+    const formatWebsite = (url) => {
+        if (!url) return '';
+        
+        // If URL doesn't start with http:// or https://, add http://
+        if (!url.match(/^https?:\/\//i)) {
+            return `http://${url}`;
+        }
+        return url;
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         console.log('Submitting form data:', formData);
-
+        
+        // Clear any previous error messages
+        setErrorMessage('');
+        
+        // Client-side validation
+        if (!isValidEmail(formData.email)) {
+            setErrorMessage("Please enter a valid email address.");
+            return;
+        }
+        
         setLoading(true);
         try {
+            // Format the website URL before sending
+            const formattedData = {
+                ...formData,
+                website: formatWebsite(formData.website)
+            };
+            
             const response = await fetch(`${API_URL}/mailchimp`, {
                 method: 'POST',
                 headers: {
@@ -41,23 +74,14 @@ function Retailers() {
                 },
                 body: JSON.stringify({
                     type: 'retailer',
-                    data: {
-                        email: formData.email,
-                        name: formData.name,
-                        phone: formData.phone,
-                        storeName: formData.storeName,
-                        website: formData.website,
-                        locationCount: formData.locationCount,
-                        primaryLocation: formData.primaryLocation,
-                        hearAboutUs: formData.hearAboutUs
-                    }
+                    data: formattedData
                 })
             });
-
+            
             console.log('Server response status:', response.status);
             const data = await response.json();
             console.log('Server response data:', data);
-
+            
             if (data.success) {
                 setIsSubmitted(true);
                 setFormData({
@@ -72,11 +96,12 @@ function Retailers() {
                     agreeToTerms: false
                 });
             } else {
-                alert(data.error || 'Failed to submit application. Please try again.');
+                // Display the error message from the server
+                setErrorMessage(data.error || 'Failed to submit application. Please try again.');
             }
         } catch (error) {
             console.error('Error:', error);
-            alert('Failed to submit application. Please try again.');
+            setErrorMessage('Failed to submit application. Please try again.');
         } finally {
             setLoading(false);
         }
@@ -88,6 +113,11 @@ function Retailers() {
             ...formData,
             [e.target.name]: value
         });
+        
+        // Clear error message when user starts typing
+        if (errorMessage) {
+            setErrorMessage('');
+        }
     };
 
     return (
@@ -173,10 +203,10 @@ function Retailers() {
                                 <div>
                                     <label htmlFor="website" className="block mb-1 sm:mb-2 font-body font-bold text-base sm:text-xl">Store Website</label>
                                     <input
-                                        type="url"
+                                        type="text"
                                         id="website"
                                         name="website"
-                                        placeholder="http://"
+                                        placeholder="www.yourstore.com"
                                         value={formData.website}
                                         onChange={handleChange}
                                         className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-black/50 border-2 border-red-600 rounded-lg focus:border-red-600 focus:outline-none transition-colors text-sm sm:text-base"
@@ -263,6 +293,14 @@ function Retailers() {
                             >
                                 {loading ? 'SUBMITTING...' : 'SUBMIT YOUR APPLICATION'}
                             </button>
+                            
+                            {errorMessage && (
+                                <div className="mt-4 p-4 bg-red-600/20 border-2 border-red-600 rounded-lg animate-pulse">
+                                    <p className="text-center text-white font-medium">
+                                        {errorMessage}
+                                    </p>
+                                </div>
+                            )}
                         </form>
                     ) : (
                         <div className="text-center py-8 sm:py-12">
