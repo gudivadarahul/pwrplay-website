@@ -3,6 +3,7 @@ import { FaEnvelope,FaLocationDot,FaInstagram,FaTiktok,FaXTwitter,FaFacebook,FaL
 import React from 'react';
 import { Link,useLocation } from 'react-router-dom';
 import JoinTheChaos from '../components/Join';
+import API_URL from '../config/api';
 
 function Contact() {
     const location = useLocation();
@@ -19,42 +20,69 @@ function Contact() {
         name: '',
         email: '',
         subject: '',
-        message: ''
+        message: '',
+        phone: ''
     });
 
     const [isSubmitted,setIsSubmitted] = useState(false);
     const [loading,setLoading] = useState(false);
+    const [error,setError] = useState('');
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log('Sending data:',formData);
         setLoading(true);
+        
+        console.log("Form submitted", formData);
+        
+        // Validate required fields
+        if (!formData.name || !formData.email || !formData.subject || !formData.message) {
+            setError("Please fill out all required fields.");
+            setLoading(false);
+            return;
+        }
+        
+        // Validate email format
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(formData.email)) {
+            setError("Please enter a valid email address.");
+            setLoading(false);
+            return;
+        }
+        
         try {
-            const response = await fetch('http://localhost:3001/api/contact',{
+            // Send the contact form data
+            const contactResponse = await fetch(`${API_URL}/mailchimp`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    email: formData.email,
-                    name: formData.name,
-                    subject: formData.subject,
-                    message: formData.message
-                })
+                    type: 'contact',
+                    data: formData
+                }),
             });
 
-            const data = await response.json();
-            console.log('Response:',data);
-
+            console.log("Response received", contactResponse);
+            
+            const data = await contactResponse.json();
+            console.log("Response data", data);
+            
             if (data.success) {
+                // Reset form and show success message
+                setFormData({
+                    name: '',
+                    email: '',
+                    subject: '',
+                    message: '',
+                    phone: ''
+                });
                 setIsSubmitted(true);
-                setFormData({ name: '',email: '',subject: '',message: '' });
             } else {
-                alert(data.error || 'Failed to send message. Please try again.');
+                setError(data.error || "Something went wrong. Please try again.");
             }
         } catch (error) {
-            console.error('Error:',error);
-            alert('Failed to send message. Please try again.');
+            console.error("Form submission error", error);
+            setError("Something went wrong. Please try again.");
         } finally {
             setLoading(false);
         }
@@ -280,6 +308,18 @@ function Contact() {
                                         className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-black text-white border-2 border-white rounded-lg focus:border-red-600 focus:outline-none transition-colors placeholder:font-medium placeholder:text-sm sm:placeholder:text-base [-webkit-text-fill-color:white] [&:-webkit-autofill]:bg-black [&:-webkit-autofill]:text-white [&:-webkit-autofill]:shadow-[0_0_0_30px_black_inset] [&:-webkit-autofill]:[-webkit-text-fill-color:white]"
                                         required
                                     ></textarea>
+                                </div>
+                                <div>
+                                    <label htmlFor="phone" className="block mb-1 sm:mb-2 font-body font-bold text-red-600 text-sm sm:text-base">Phone (optional)</label>
+                                    <input
+                                        type="text"
+                                        id="phone"
+                                        name="phone"
+                                        placeholder="Enter your phone"
+                                        value={formData.phone}
+                                        onChange={handleChange}
+                                        className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-black text-white border-2 border-white rounded-lg focus:border-red-600 focus:outline-none transition-colors placeholder:font-medium placeholder:text-sm sm:placeholder:text-base [-webkit-text-fill-color:white] [&:-webkit-autofill]:bg-black [&:-webkit-autofill]:text-white [&:-webkit-autofill]:shadow-[0_0_0_30px_black_inset] [&:-webkit-autofill]:[-webkit-text-fill-color:white]"
+                                    />
                                 </div>
                                 <button
                                     type="submit"
