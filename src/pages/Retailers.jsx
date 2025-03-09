@@ -87,7 +87,7 @@ function Retailers() {
     };
 
     return (
-        <div className="pt-32 px-6 min-h-screen bg-black text-white">
+        <div className="pt-24 sm:pt-32 px-6 min-h-screen bg-black text-white">
             <div className="absolute -top-8 sm:-top-10 md:-top-12 lg:-top-14 xl:-top-16 -left-2 sm:-left-3 z-[100]">
                 <Link to="/">
                     <img
@@ -99,24 +99,19 @@ function Retailers() {
             </div>
 
             <div className="max-w-3xl mx-auto">
-                <div className="text-center mb-16">
-                    <h1 className="text-5xl md:text-7xl font-headers mb-6">
+                <div className="text-center mb-8 sm:mb-16">
+                    <h1 className="text-5xl md:text-7xl font-headers mb-4 sm:mb-6">
                         Become a <span className="text-red-600">Retailer</span>
                     </h1>
-                    <p className="text-2xl max-w-3xl mx-auto font-body font-medium">
-                        Join our network of retailers and bring the excitement of
-                        <br />
-                        PWRPLAY games to your customers!
-                    </p>
                 </div>
 
-                <div className="bg-black/50 p-8 rounded-xl border-3 border-red-600 mb-16">
-                    <h2 className="text-6xl font-headers mb-8 text-center">Apply Now</h2>
+                <div className="bg-black/50 p-4 sm:p-8 rounded-xl border-3 border-red-600 mb-8 sm:mb-16">
+                    <h2 className="text-4xl sm:text-6xl font-headers mb-4 sm:mb-8 text-center">Apply Now</h2>
                     {!isSubmitted ? (
-                        <form onSubmit={handleSubmit} className="space-y-6">
-                            <div className="space-y-4">
+                        <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-6">
+                            <div className="space-y-3 sm:space-y-4">
                                 <div>
-                                    <label htmlFor="name" className="block mb-2 font-body font-bold text-xl">Name</label>
+                                    <label htmlFor="name" className="block mb-1 sm:mb-2 font-body font-bold text-base sm:text-xl">Name</label>
                                     <input
                                         type="text"
                                         id="name"
@@ -124,13 +119,13 @@ function Retailers() {
                                         placeholder="First Name, Last Name"
                                         value={formData.name}
                                         onChange={handleChange}
-                                        className="w-full px-4 py-3 bg-black/50 border-2 border-red-600 rounded-lg focus:border-red-600 focus:outline-none transition-colors text-white"
+                                        className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-black/50 border-2 border-red-600 rounded-lg focus:border-red-600 focus:outline-none transition-colors text-white text-sm sm:text-base"
                                         required
                                     />
                                 </div>
 
                                 <div>
-                                    <label htmlFor="email" className="block mb-2 font-body font-bold text-xl">Email Address</label>
+                                    <label htmlFor="email" className="block mb-1 sm:mb-2 font-body font-bold text-base sm:text-xl">Email Address</label>
                                     <input
                                         type="email"
                                         id="email"
@@ -138,13 +133,13 @@ function Retailers() {
                                         placeholder="Email"
                                         value={formData.email}
                                         onChange={handleChange}
-                                        className="w-full px-4 py-3 bg-black/50 border-2 border-red-600 rounded-lg focus:border-red-600 focus:outline-none transition-colors"
+                                        className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-black/50 border-2 border-red-600 rounded-lg focus:border-red-600 focus:outline-none transition-colors text-sm sm:text-base"
                                         required
                                     />
                                 </div>
 
                                 <div>
-                                    <label htmlFor="phone" className="block mb-2 font-body font-bold text-xl">Phone</label>
+                                    <label htmlFor="phone" className="block mb-1 sm:mb-2 font-body font-bold text-base sm:text-xl">Phone</label>
                                     <input
                                         type="tel"
                                         id="phone"
@@ -152,13 +147,13 @@ function Retailers() {
                                         placeholder="xxx-xxx-xxxx"
                                         value={formData.phone}
                                         onChange={handleChange}
-                                        className="w-full px-4 py-3 bg-black/50 border-2 border-red-600 rounded-lg focus:border-red-600 focus:outline-none transition-colors"
+                                        className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-black/50 border-2 border-red-600 rounded-lg focus:border-red-600 focus:outline-none transition-colors text-sm sm:text-base"
                                         required
                                     />
                                 </div>
 
                                 <div>
-                                    <label htmlFor="storeName" className="block mb-2 font-body font-bold text-xl">Store Name</label>
+                                    <label htmlFor="storeName" className="block mb-1 sm:mb-2 font-body font-bold text-base sm:text-xl">Store Name</label>
                                     <input
                                         type="text"
                                         id="storeName"
@@ -166,13 +161,13 @@ function Retailers() {
                                         placeholder="The name of your store"
                                         value={formData.storeName}
                                         onChange={handleChange}
-                                        className="w-full px-4 py-3 bg-black/50 border-2 border-red-600 rounded-lg focus:border-red-600 focus:outline-none transition-colors"
+                                        className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-black/50 border-2 border-red-600 rounded-lg focus:border-red-600 focus:outline-none transition-colors text-sm sm:text-base"
                                         required
                                     />
                                 </div>
 
                                 <div>
-                                    <label htmlFor="website" className="block mb-2 font-body font-bold text-xl">Store Website</label>
+                                    <label htmlFor="website" className="block mb-1 sm:mb-2 font-body font-bold text-base sm:text-xl">Store Website</label>
                                     <input
                                         type="url"
                                         id="website"
@@ -180,13 +175,13 @@ function Retailers() {
                                         placeholder="http://"
                                         value={formData.website}
                                         onChange={handleChange}
-                                        className="w-full px-4 py-3 bg-black/50 border-2 border-red-600 rounded-lg focus:border-red-600 focus:outline-none transition-colors"
+                                        className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-black/50 border-2 border-red-600 rounded-lg focus:border-red-600 focus:outline-none transition-colors text-sm sm:text-base"
                                         required
                                     />
                                 </div>
 
                                 <div>
-                                    <label htmlFor="locationCount" className="block mb-2 font-body font-bold text-xl">Location Count</label>
+                                    <label htmlFor="locationCount" className="block mb-1 sm:mb-2 font-body font-bold text-base sm:text-xl">Location Count</label>
                                     <input
                                         type="number"
                                         id="locationCount"
@@ -194,13 +189,13 @@ function Retailers() {
                                         placeholder="#"
                                         value={formData.locationCount}
                                         onChange={handleChange}
-                                        className="w-full px-4 py-3 bg-black/50 border-2 border-red-600 rounded-lg focus:border-red-600 focus:outline-none transition-colors [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                                        className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-black/50 border-2 border-red-600 rounded-lg focus:border-red-600 focus:outline-none transition-colors text-sm sm:text-base [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                                         required
                                     />
                                 </div>
 
                                 <div>
-                                    <label htmlFor="primaryLocation" className="block mb-2 font-body font-bold text-xl">Primary Location</label>
+                                    <label htmlFor="primaryLocation" className="block mb-1 sm:mb-2 font-body font-bold text-base sm:text-xl">Primary Location</label>
                                     <input
                                         type="text"
                                         id="primaryLocation"
@@ -208,38 +203,38 @@ function Retailers() {
                                         placeholder="Street, City, State, Zip"
                                         value={formData.primaryLocation}
                                         onChange={handleChange}
-                                        className="w-full px-4 py-3 bg-black/50 border-2 border-red-600 rounded-lg focus:border-red-600 focus:outline-none transition-colors"
+                                        className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-black/50 border-2 border-red-600 rounded-lg focus:border-red-600 focus:outline-none transition-colors text-sm sm:text-base"
                                         required
                                     />
                                 </div>
 
                                 <div>
-                                    <label htmlFor="hearAboutUs" className="block mb-2 font-body font-bold text-xl">How did you hear about us?</label>
+                                    <label htmlFor="hearAboutUs" className="block mb-1 sm:mb-2 font-body font-bold text-base sm:text-xl">How did you hear about us?</label>
                                     <textarea
                                         id="hearAboutUs"
                                         name="hearAboutUs"
                                         placeholder="(Optional)"
                                         value={formData.hearAboutUs}
                                         onChange={handleChange}
-                                        rows="4"
-                                        className="w-full px-4 py-3 bg-black/50 border-2 border-red-600 rounded-lg focus:border-red-600 focus:outline-none transition-colors"
+                                        rows="3"
+                                        className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-black/50 border-2 border-red-600 rounded-lg focus:border-red-600 focus:outline-none transition-colors text-sm sm:text-base"
                                     />
                                 </div>
 
-                                <div className="flex items-center gap-3">
-                                    <div className="relative flex items-center flex-shrink-0">
+                                <div className="flex items-start sm:items-center gap-2 sm:gap-3">
+                                    <div className="relative flex items-center flex-shrink-0 mt-1 sm:mt-0">
                                         <input
                                             type="checkbox"
                                             id="agreeToTerms"
                                             name="agreeToTerms"
                                             checked={formData.agreeToTerms}
                                             onChange={handleChange}
-                                            className="peer appearance-none h-5 w-5 border-2 border-red-600 rounded bg-black/50 checked:bg-red-600 
+                                            className="peer appearance-none h-4 w-4 sm:h-5 sm:w-5 border-2 border-red-600 rounded bg-black/50 checked:bg-red-600 
                                             hover:border-red-500 focus:outline-none focus:ring-2 focus:ring-red-500/30 transition-all duration-200"
                                             required
                                         />
                                         <svg
-                                            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-3 h-3 pointer-events-none 
+                                            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-2 sm:w-3 h-2 sm:h-3 pointer-events-none 
                                             text-white opacity-0 peer-checked:opacity-100 transition-opacity duration-200"
                                             viewBox="0 0 17 12"
                                             fill="none"
@@ -249,7 +244,7 @@ function Retailers() {
                                             <path d="M1 5.5L6 10.5L15.5 1" />
                                         </svg>
                                     </div>
-                                    <label htmlFor="agreeToTerms" className="font-body font-light">
+                                    <label htmlFor="agreeToTerms" className="font-body font-light text-xs sm:text-base">
                                     The product ordered will be sold exclusively at the retailer's store(s) and/or on the retailer's website. Sales to third-party sellers are not permitted.
                                     </label>
                                 </div>
@@ -258,7 +253,7 @@ function Retailers() {
                             <button
                                 type="submit"
                                 disabled={loading}
-                                className="w-full bg-red-600 text-white px-8 py-4 rounded-lg text-lg font-bold 
+                                className="w-full bg-red-600 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg text-base sm:text-lg font-bold 
                                 hover:shadow-lg hover:shadow-red-500/20 hover:-translate-y-0.5 transition-all duration-300
                                 disabled:opacity-50 disabled:cursor-not-allowed"
                             >
@@ -266,9 +261,9 @@ function Retailers() {
                             </button>
                         </form>
                     ) : (
-                        <div className="text-center py-12">
+                        <div className="text-center py-8 sm:py-12">
                             <svg
-                                className="w-24 h-24 text-red-600 mx-auto mb-6 animate-bounce"
+                                className="w-16 h-16 sm:w-24 sm:h-24 text-red-600 mx-auto mb-4 sm:mb-6 animate-bounce"
                                 fill="currentColor"
                                 viewBox="0 0 20 20"
                             >
@@ -278,8 +273,8 @@ function Retailers() {
                                     clipRule="evenodd"
                                 />
                             </svg>
-                            <h3 className="text-3xl font-subheaders mb-4">Application Submitted!</h3>
-                            <p className="font-body font-medium text-xl">
+                            <h3 className="text-2xl sm:text-3xl font-subheaders mb-2 sm:mb-4">Application Submitted!</h3>
+                            <p className="font-body font-medium text-base sm:text-xl">
                                 Thank you for your interest in becoming a PWRPLAY retailer. We'll review your application and get back to you soon!
                             </p>
                         </div>

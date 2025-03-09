@@ -223,7 +223,7 @@ function Contact() {
                 {/* Main Content Container */}
                 <div className="max-w-2xl mx-auto">
                     {/* Contact Form */}
-                    <div className="bg-black/50 p-4 sm:p-8 rounded-xl border-3 border-red-600 mb-16">
+                    <div className="bg-black/50 p-4 sm:p-8 rounded-xl border-3 border-red-600 mb-8 md:mb-16">
                         <h2 className="text-4xl sm:text-6xl font-headers mb-4 sm:mb-8 text-center">Send Us a Message</h2>
                         {!isSubmitted ? (
                             <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">

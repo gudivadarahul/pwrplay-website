@@ -67,9 +67,9 @@ function JoinTheChaos() {
     };
 
     return (
-        <div className="max-w-3xl mx-auto mt-24">
-            <div className="bg-black/50 p-8 rounded-xl border-3 border-red-600">
-                <h2 className="text-4xl font-headers text-center">
+        <div className="max-w-3xl mx-auto mt-8 md:mt-24">
+            <div className="bg-black/50 p-6 sm:p-8 rounded-xl border-3 border-red-600">
+                <h2 className="text-3xl sm:text-4xl font-headers text-center">
                     Join the <span className="text-red-600 leading-relaxed align-baseline">pwrplay</span> community
                 </h2>
                 <p className="text-xl mb-8 text-center font-body font-medium">
