@@ -15,38 +15,32 @@ const Navbar = () => {
         {
             name: 'Instagram',
             icon: <FaInstagram className="text-2xl" />,
-            url: 'https://instagram.com/your-handle',
-            color: 'hover:text-pink-500'
+            url: 'https://instagram.com/pwrplayofficial/',
         },
         {
             name: 'TikTok',
             icon: <FaTiktok className="text-2xl" />,
-            url: 'https://tiktok.com/@your-handle',
-            color: 'hover:text-rose-500'
+            url: 'https://www.tiktok.com/@pwrplayofficial',
         },
         {
             name: 'LinkedIn',
             icon: <FaLinkedin className="text-2xl" />,
-            url: 'https://linkedin.com/company/your-company',
-            color: 'hover:text-blue-500'
+            url: 'https://www.linkedin.com/company/pwrplaycreations/',
         },
         {
             name: 'Twitter',
             icon: <FaTwitter className="text-2xl" />,
-            url: 'https://twitter.com/your-handle',
-            color: 'hover:text-blue-400'
+            url: 'https://x.com/pwrplayofficial',
         },
         {
             name: 'Spotify',
             icon: <FaSpotify className="text-2xl" />,
-            url: 'https://open.spotify.com/user/your-profile',
-            color: 'hover:text-green-500'
+            url: 'https://open.spotify.com/user/31jzakcd3goacdn6unwpyceoseai',
         },
         {
             name: 'Facebook',
             icon: <FaFacebook className="text-2xl" />,
-            url: 'https://facebook.com/your-page',
-            color: 'hover:text-blue-600'
+            url: 'https://www.facebook.com/profile.php?id=61573023322110',
         }
     ];
 
@@ -214,7 +208,7 @@ const Navbar = () => {
 
             {/* Mobile Navigation */}
             {isOpen && (
-                <div className="fixed top-0 left-0 w-full h-full bg-gradient-to-b from-black to-gray-900/95 backdrop-blur-md 
+                <div className="fixed top-0 left-0 w-full h-full bg-black
                     text-white flex flex-col items-center py-8 space-y-0 shadow-xl animate-fadeIn lg:hidden
                     overflow-y-auto z-[300] pt-20">
                     
@@ -227,7 +221,7 @@ const Navbar = () => {
                             Games <FaChevronDown className={`transition-transform duration-300 ${gamesDropdown ? 'rotate-180 text-red-500' : ''}`} />
                         </button>
                         {gamesDropdown && (
-                            <div className="bg-gray-900/80 backdrop-blur-md text-white py-2 rounded-xl shadow-lg w-[95%] mx-auto mt-2
+                            <div className="bg-black border border-gray-800 text-white py-2 rounded-xl shadow-lg w-[95%] mx-auto mt-2
                                 border-l-2 border-red-600 animate-slideDown">
                                 <h3>
                                     <Link to="/controlled-chaos" onClick={() => handleNavClick('/controlled-chaos')} 
@@ -253,7 +247,7 @@ const Navbar = () => {
                             About <FaChevronDown className={`transition-transform duration-300 ${aboutDropdown ? 'rotate-180 text-red-500' : ''}`} />
                         </button>
                         {aboutDropdown && (
-                            <div className="bg-gray-900/80 backdrop-blur-md text-white py-2 rounded-xl shadow-lg w-[95%] mx-auto mt-2
+                            <div className="bg-black border border-gray-800 text-white py-2 rounded-xl shadow-lg w-[95%] mx-auto mt-2
                                 border-l-2 border-red-600 animate-slideDown">
                                 <h3>
                                     <Link to="/about" onClick={() => handleNavClick('/about')} 
@@ -293,7 +287,7 @@ const Navbar = () => {
                             Connect <FaChevronDown className={`transition-transform duration-300 ${connectDropdown ? 'rotate-180 text-red-500' : ''}`} />
                         </button>
                         {connectDropdown && (
-                            <div className="bg-gray-900/80 backdrop-blur-md text-white py-2 rounded-xl shadow-lg w-[95%] mx-auto mt-2
+                            <div className="bg-black border border-gray-800 text-white py-2 rounded-xl shadow-lg w-[95%] mx-auto mt-2
                                 border-l-2 border-red-600 animate-slideDown">
                                 <h3>
                                     <Link to="/contact" onClick={() => handleNavClick('/contact')} 
@@ -350,8 +344,7 @@ const Navbar = () => {
                                 href={social.url}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className={`p-3 rounded-full bg-gray-800 hover:bg-gray-700 
-                                    transition-all duration-300 ${social.color}`}
+                                className={`p-3 rounded-full bg-black`}
                                 aria-label={social.name}
                             >
                                 {social.icon}

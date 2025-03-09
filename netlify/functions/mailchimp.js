@@ -2,8 +2,8 @@ import mailchimp from '@mailchimp/mailchimp_marketing';
 import crypto from 'crypto';
 
 mailchimp.setConfig({
-    apiKey: process.env.VITE_MAILCHIMP_API_KEY,
-    server: process.env.VITE_MAILCHIMP_SERVER_PREFIX
+    apiKey: process.env.MAILCHIMP_API_KEY,
+    server: process.env.MAILCHIMP_SERVER_PREFIX
 });
 
 // Reuse the handleSubscription logic from server.js
@@ -15,7 +15,7 @@ const handleSubscription = async (email,tags = ['Newsletter'],additionalData = {
 
     try {
         const response = await mailchimp.lists.addListMember(
-            process.env.VITE_MAILCHIMP_LIST_ID,
+            process.env.MAILCHIMP_LIST_ID,
             {
                 email_address: email,
                 status: 'subscribed',
@@ -30,12 +30,34 @@ const handleSubscription = async (email,tags = ['Newsletter'],additionalData = {
 };
 
 export const handler = async (event) => {
+    // Add CORS headers
+    const allowedOrigins = ['https://pwrplaycreations.com', 'https://www.pwrplaycreations.com/', 'https://2868-104-153-228-34.ngrok-free.app'];
+    const origin = event.headers.origin;
+    const headers = {
+        'Access-Control-Allow-Origin': allowedOrigins.includes(origin) ? origin : '',
+        'Access-Control-Allow-Headers': 'Content-Type',
+        'Access-Control-Allow-Methods': 'GET, POST, OPTIONS'
+    };
+
+    // Handle preflight OPTIONS request
+    if (event.httpMethod === 'OPTIONS') {
+        return {
+            statusCode: 200,
+            headers,
+            body: ''
+        };
+    }
+
     if (event.httpMethod !== 'POST') {
-        return { statusCode: 405,body: 'Method Not Allowed' };
+        return { 
+            statusCode: 405,
+            headers,
+            body: 'Method Not Allowed' 
+        };
     }
 
     try {
-        const { type,data } = JSON.parse(event.body);
+        const { type, data } = JSON.parse(event.body);
 
         switch (type) {
             case 'retailer':
@@ -50,19 +72,22 @@ export const handler = async (event) => {
                 const result = await handleSubscription(data.email);
                 return {
                     statusCode: 200,
+                    headers,
                     body: JSON.stringify(result)
                 };
             // Add other cases later
             default:
                 return {
                     statusCode: 400,
-                    body: JSON.stringify({ success: false,error: 'Invalid type' })
+                    headers,
+                    body: JSON.stringify({ success: false, error: 'Invalid type' })
                 };
         }
     } catch (error) {
         return {
             statusCode: 500,
-            body: JSON.stringify({ success: false,error: error.message })
+            headers,
+            body: JSON.stringify({ success: false, error: error.message })
         };
     }
 }; 
