@@ -109,6 +109,96 @@ const handleSubscription = async (email, tags = ['Newsletter'], additionalData =
     }
 };
 
+// Add a function to handle retailer subscriptions
+const handleRetailerSubscription = async (data) => {
+    const { email, name, phone, storeName, website, locationCount, primaryLocation, hearAboutUs } = data;
+    
+    const subscriberHash = crypto
+        .createHash('md5')
+        .update(email.toLowerCase())
+        .digest('hex');
+
+    try {
+        // Split name into first and last name
+        const nameParts = name.split(' ');
+        const firstName = nameParts[0] || '';
+        const lastName = nameParts.slice(1).join(' ') || '';
+        
+        // Prepare merge fields for Mailchimp - using the exact merge tags from your Mailchimp account
+        const mergeFields = {
+            FNAME: firstName,           // *|FNAME|* OR *|MERGE1|*
+            LNAME: lastName,            // *|LNAME|* OR *|MERGE2|*
+            PHONE: phone || '',         // *|PHONE|* OR *|MERGE4|*
+            STORE: storeName || '',     // *|STORE|* OR *|MERGE5|*
+            WEBSITE: website || '',     // *|WEBSITE|* OR *|MERGE6|*
+            LOCATION: locationCount || '', // *|LOCATION|* OR *|MERGE7|* - Note the change from LOCATIONS to LOCATION
+            ADDRESS: primaryLocation || '', // *|ADDRESS|* OR *|MERGE3|*
+            HEARABOUT: hearAboutUs || '' // *|HEARABOUT|* OR *|MERGE8|*
+        };
+
+        console.log('Sending merge fields to Mailchimp:', mergeFields);
+
+        try {
+            // Check if the member already exists in the retailers list
+            const existingMember = await mailchimp.lists.getListMember(
+                process.env.MAILCHIMP_RETAILERS_LIST_ID,
+                subscriberHash
+            );
+            
+            // Update existing member
+            await mailchimp.lists.updateListMember(
+                process.env.MAILCHIMP_RETAILERS_LIST_ID,
+                subscriberHash,
+                {
+                    email_address: email,
+                    merge_fields: mergeFields,
+                    status_if_new: 'subscribed'
+                }
+            );
+            
+            // Add/update tags
+            await mailchimp.lists.updateListMemberTags(
+                process.env.MAILCHIMP_RETAILERS_LIST_ID,
+                subscriberHash,
+                {
+                    tags: [
+                        { name: "Retailer", status: "active" }
+                    ]
+                }
+            );
+            
+            return { 
+                success: true,
+                message: "Your application has been updated. We'll be in touch soon!"
+            };
+            
+        } catch (error) {
+            // If member doesn't exist, add them
+            if (error.status === 404) {
+                await mailchimp.lists.addListMember(
+                    process.env.MAILCHIMP_RETAILERS_LIST_ID,
+                    {
+                        email_address: email,
+                        status: 'subscribed',
+                        merge_fields: mergeFields,
+                        tags: ["Retailer"]
+                    }
+                );
+                
+                return { 
+                    success: true,
+                    message: "Thank you for your application! We'll review it and get back to you soon."
+                };
+            } else {
+                throw error;
+            }
+        }
+    } catch (error) {
+        console.error('Mailchimp API error:', error);
+        throw error;
+    }
+};
+
 export const handler = async (event) => {
     // Add CORS headers
     const headers = {
@@ -144,9 +234,63 @@ export const handler = async (event) => {
         
         switch (type) {
             case 'retailer':
-                // Handle retailer subscription
-                // Similar logic from server.js lines 130-173
-                break;
+                try {
+                    console.log('Processing retailer application:', data);
+                    
+                    // Use the retailer-specific function
+                    const result = await handleRetailerSubscription(data);
+                    
+                    // Try to send an email notification if credentials are available
+                    try {
+                        if (process.env.EMAIL_USER && process.env.EMAIL_PASS) {
+                            const transporter = nodemailer.createTransport({
+                                service: 'gmail',
+                                auth: {
+                                    user: process.env.EMAIL_USER,
+                                    pass: process.env.EMAIL_PASS
+                                }
+                            });
+                            
+                            const mailOptions = {
+                                from: process.env.EMAIL_USER,
+                                to: 'contact@pwrplaycreations.com',
+                                subject: `New Retailer Application: ${data.storeName}`,
+                                html: `
+                                    <h2>New Retailer Application</h2>
+                                    <p><strong>Name:</strong> ${data.name}</p>
+                                    <p><strong>Email:</strong> ${data.email}</p>
+                                    <p><strong>Phone:</strong> ${data.phone}</p>
+                                    <p><strong>Store Name:</strong> ${data.storeName}</p>
+                                    <p><strong>Website:</strong> ${data.website}</p>
+                                    <p><strong>Location Count:</strong> ${data.locationCount}</p>
+                                    <p><strong>Primary Location:</strong> ${data.primaryLocation}</p>
+                                    ${data.hearAboutUs ? `<p><strong>How they heard about us:</strong> ${data.hearAboutUs}</p>` : ''}
+                                `
+                            };
+                            
+                            await transporter.sendMail(mailOptions);
+                        }
+                    } catch (emailError) {
+                        console.error('Email sending error:', emailError);
+                        // Continue even if email fails - we've already added to Mailchimp
+                    }
+                    
+                    return {
+                        statusCode: 200,
+                        headers,
+                        body: JSON.stringify(result)
+                    };
+                } catch (retailerError) {
+                    console.error('Retailer form error:', retailerError);
+                    return {
+                        statusCode: 500,
+                        headers,
+                        body: JSON.stringify({
+                            success: false,
+                            error: retailerError.message || "Failed to process your application. Please try again."
+                        })
+                    };
+                }
             case 'contact':
                 try {
                     console.log('Processing contact form submission:', data);

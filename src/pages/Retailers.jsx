@@ -1,5 +1,6 @@
 import { useState,useEffect } from 'react';
 import { useLocation,Link } from 'react-router-dom';
+import API_URL from '../config/api';
 
 function Retailers() {
     const location = useLocation();
@@ -29,30 +30,33 @@ function Retailers() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log('Submitting form data:',formData);
+        console.log('Submitting form data:', formData);
 
         setLoading(true);
         try {
-            const response = await fetch('http://localhost:3001/api/retailer',{
+            const response = await fetch(`${API_URL}/mailchimp`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    email: formData.email,
-                    name: formData.name,
-                    phone: formData.phone,
-                    storeName: formData.storeName,
-                    website: formData.website,
-                    locationCount: formData.locationCount,
-                    primaryLocation: formData.primaryLocation,
-                    hearAboutUs: formData.hearAboutUs
+                    type: 'retailer',
+                    data: {
+                        email: formData.email,
+                        name: formData.name,
+                        phone: formData.phone,
+                        storeName: formData.storeName,
+                        website: formData.website,
+                        locationCount: formData.locationCount,
+                        primaryLocation: formData.primaryLocation,
+                        hearAboutUs: formData.hearAboutUs
+                    }
                 })
             });
 
-            console.log('Server response status:',response.status);
+            console.log('Server response status:', response.status);
             const data = await response.json();
-            console.log('Server response data:',data);
+            console.log('Server response data:', data);
 
             if (data.success) {
                 setIsSubmitted(true);
@@ -71,7 +75,7 @@ function Retailers() {
                 alert(data.error || 'Failed to submit application. Please try again.');
             }
         } catch (error) {
-            console.error('Error:',error);
+            console.error('Error:', error);
             alert('Failed to submit application. Please try again.');
         } finally {
             setLoading(false);
