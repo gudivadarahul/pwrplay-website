@@ -1,45 +1,109 @@
 import { useState, useEffect } from 'react';
 import { useLocation, Link } from 'react-router-dom';
+import API_URL from '../config/api';
 
 function Ambassador() {
     const location = useLocation();
-
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        phone: '',
+        instagram: '',
+        tiktok: '',
+        followers: '',
+        role: '',
+        amazon: '',
+        payment: '',
+        agreeToTerms: false
+    });
+    
+    const [loading, setLoading] = useState(false);
+    const [isSubmitted, setIsSubmitted] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
+    
     useEffect(() => {
         window.scrollTo({
             top: 0,
             left: 0,
             behavior: 'instant'
         });
-    },[location]);
-
-    const [formData,setFormData] = useState({
-        name: '',
-        phone: '',
-        email: '',
-        tiktok: '',
-        instagram: '',
-        followers: '',
-        role: '',
-        prime: '',
-        gameNight: '',
-        payment: ''
-    });
-
-    const [isSubmitted,setIsSubmitted] = useState(false);
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log('Form submitted:',formData);
-        setIsSubmitted(true);
+    }, [location]);
+    
+    // Email validation function
+    const isValidEmail = (email) => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
     };
-
+    
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        console.log('Submitting form data:', formData);
+        
+        // Clear any previous error messages
+        setErrorMessage('');
+        
+        // Client-side validation
+        if (!isValidEmail(formData.email)) {
+            setErrorMessage("Please enter a valid email address.");
+            return;
+        }
+        
+        setLoading(true);
+        try {
+            const response = await fetch(`${API_URL}/mailchimp`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    type: 'ambassador',
+                    data: formData
+                })
+            });
+            
+            console.log('Server response status:', response.status);
+            const data = await response.json();
+            console.log('Server response data:', data);
+            
+            if (data.success) {
+                setIsSubmitted(true);
+                setFormData({
+                    name: '',
+                    email: '',
+                    phone: '',
+                    instagram: '',
+                    tiktok: '',
+                    followers: '',
+                    role: '',
+                    amazon: '',
+                    payment: '',
+                    agreeToTerms: false
+                });
+            } else {
+                // Display the error message from the server
+                setErrorMessage(data.error || 'Failed to submit application. Please try again.');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            setErrorMessage('Failed to submit application. Please try again.');
+        } finally {
+            setLoading(false);
+        }
+    };
+    
     const handleChange = (e) => {
+        const value = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
         setFormData({
             ...formData,
-            [e.target.name]: e.target.value
+            [e.target.name]: value
         });
+        
+        // Clear error message when user starts typing
+        if (errorMessage) {
+            setErrorMessage('');
+        }
     };
-
+    
     return (
         <div className="pt-24 sm:pt-32 px-6 min-h-screen bg-black text-white">
             {/* Logo in top-left */}
@@ -53,40 +117,23 @@ function Ambassador() {
                 </Link>
             </div>
 
-            <div className="max-w-6xl mx-auto">
+            <div className="max-w-3xl mx-auto">
                 {/* Header Section */}
                 <div className="text-center mb-8 sm:mb-16">
                     <h1 className="text-5xl md:text-7xl font-headers mb-4 sm:mb-6">
-                        Join Our <span className="text-red-600">Ambassador</span> Program
+                        Become an <span className="text-red-600">Ambassador</span>
                     </h1>
                 </div>
 
-                {/* Benefits Section */}
-                <div className="grid md:grid-cols-3 gap-4 sm:gap-8 mb-16">
-                    <div className="bg-black p-4 sm:p-6 md:p-8 rounded-xl border-3 border-red-600 transition-all duration-300 text-center">
-                        <h3 className="text-2xl md:text-3xl font-subheaders mb-2 md:mb-4">Test Games First</h3>
-                        <p className="font-body font-medium text-sm sm:text-base">Be among the first to play and test our new games before they launch!</p>
-                    </div>
-
-                    <div className="bg-black p-4 sm:p-6 md:p-8 rounded-xl border-3 border-red-600 transition-all duration-300 text-center">
-                        <h3 className="text-2xl md:text-3xl font-subheaders mb-2 md:mb-4">Create Content</h3>
-                        <p className="font-body font-medium text-sm sm:text-base">Share your experience through TikToks and Instagram reels!</p>
-                    </div>
-
-                    <div className="bg-black p-4 sm:p-6 md:p-8 rounded-xl border-3 border-red-600 transition-all duration-300 text-center">
-                        <h3 className="text-2xl md:text-3xl font-subheaders mb-2 md:mb-4">Join Our Community</h3>
-                        <p className="font-body font-medium text-sm sm:text-base">Connect with like-minded creators and game enthusiasts!</p>
-                    </div>
-                </div>
-
                 {/* Application Form */}
-                <div className="max-w-2xl mx-auto">
-                    <div className="bg-black/50 p-4 sm:p-8 rounded-xl border-3 border-red-600 mb-8 sm:mb-16">
-                        <h2 className="text-4xl sm:text-6xl font-headers mb-4 sm:mb-8 text-center">Apply Now</h2>
-                        {!isSubmitted ? (
-                            <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-6">
+                <div className="bg-black/50 p-4 sm:p-8 rounded-xl border-3 border-red-600 mb-8 sm:mb-16">
+                    <h2 className="text-4xl sm:text-6xl font-headers mb-4 sm:mb-8 text-center">Apply Now</h2>
+                    {!isSubmitted ? (
+                        <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-6">
+                            <div className="space-y-3 sm:space-y-4">
+                                {/* Name field */}
                                 <div>
-                                    <label htmlFor="name" className="block mb-1 sm:mb-2 font-body font-bold text-red-600 text-base sm:text-xl">Name</label>
+                                    <label htmlFor="name" className="block mb-1 sm:mb-2 font-body font-bold text-base sm:text-xl">Name</label>
                                     <input
                                         type="text"
                                         id="name"
@@ -94,181 +141,174 @@ function Ambassador() {
                                         placeholder="First Name, Last Name"
                                         value={formData.name}
                                         onChange={handleChange}
-                                        className="autofill-input w-full px-3 sm:px-4 py-2 sm:py-3 bg-black text-white border-2 border-white rounded-lg focus:border-red-600 focus:outline-none transition-colors"
+                                        className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-black/50 border-2 border-red-600 rounded-lg focus:border-red-600 focus:outline-none transition-colors text-white text-sm sm:text-base"
                                         required
                                     />
                                 </div>
 
-                                <div className="grid md:grid-cols-2 gap-3 sm:gap-6">
-                                    <div>
-                                        <label htmlFor="phone" className="block mb-1 sm:mb-2 font-body font-bold text-red-600 text-base sm:text-xl">Phone</label>
-                                        <input
-                                            type="tel"
-                                            id="phone"
-                                            name="phone"
-                                            placeholder="xxx-xxx-xxxx"
-                                            value={formData.phone}
-                                            onChange={handleChange}
-                                            className="autofill-input w-full px-3 sm:px-4 py-2 sm:py-3 bg-black text-white border-2 border-white rounded-lg focus:border-red-600 focus:outline-none transition-colors"
-                                            required
-                                        />
-                                    </div>
-                                    <div>
-                                        <label htmlFor="email" className="block mb-1 sm:mb-2 font-body font-bold text-red-600 text-base sm:text-xl">Email</label>
-                                        <input
-                                            type="email"
-                                            id="email"
-                                            name="email"
-                                            placeholder="Your email address"
-                                            value={formData.email}
-                                            onChange={handleChange}
-                                            className="autofill-input w-full px-3 sm:px-4 py-2 sm:py-3 bg-black text-white border-2 border-white rounded-lg focus:border-red-600 focus:outline-none transition-colors"
-                                            required
-                                        />
-                                    </div>
-                                </div>
-
-                                <div className="grid md:grid-cols-2 gap-3 sm:gap-6">
-                                    <div>
-                                        <label htmlFor="tiktok" className="block mb-1 sm:mb-2 font-body font-bold text-red-600 text-base sm:text-xl">@TikTok</label>
-                                        <input
-                                            type="text"
-                                            id="tiktok"
-                                            name="tiktok"
-                                            placeholder="Your TikTok username"
-                                            value={formData.tiktok}
-                                            onChange={handleChange}
-                                            className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-black text-white border-2 border-white rounded-lg focus:border-red-600 focus:outline-none transition-colors"
-                                        />
-                                    </div>
-                                    <div>
-                                        <label htmlFor="instagram" className="block mb-1 sm:mb-2 font-body font-bold text-red-600 text-base sm:text-xl">@Instagram</label>
-                                        <input
-                                            type="text"
-                                            id="instagram"
-                                            name="instagram"
-                                            placeholder="Your Instagram username"
-                                            value={formData.instagram}
-                                            onChange={handleChange}
-                                            className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-black text-white border-2 border-white rounded-lg focus:border-red-600 focus:outline-none transition-colors"
-                                        />
-                                    </div>
-                                </div>
-
+                                {/* Email field */}
                                 <div>
-                                    <label htmlFor="followers" className="block mb-1 sm:mb-2 font-body font-bold text-red-600 text-base sm:text-xl">Total Followers</label>
+                                    <label htmlFor="email" className="block mb-1 sm:mb-2 font-body font-bold text-base sm:text-xl">Email Address</label>
                                     <input
-                                        type="number"
-                                        id="followers"
-                                        name="followers"
-                                        placeholder="Followers across platforms"
-                                        value={formData.followers}
+                                        type="email"
+                                        id="email"
+                                        name="email"
+                                        placeholder="Email"
+                                        value={formData.email}
                                         onChange={handleChange}
-                                        className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-black text-white border-2 border-white rounded-lg focus:border-red-600 focus:outline-none transition-colors [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                                        className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-black/50 border-2 border-red-600 rounded-lg focus:border-red-600 focus:outline-none transition-colors text-sm sm:text-base"
+                                        required
+                                    />
+                                </div>
+
+                                {/* Phone field */}
+                                <div>
+                                    <label htmlFor="phone" className="block mb-1 sm:mb-2 font-body font-bold text-base sm:text-xl">Phone Number</label>
+                                    <input
+                                        type="tel"
+                                        id="phone"
+                                        name="phone"
+                                        placeholder="(xxx) xxx-xxxx"
+                                        value={formData.phone}
+                                        onChange={handleChange}
+                                        className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-black/50 border-2 border-red-600 rounded-lg focus:border-red-600 focus:outline-none transition-colors text-sm sm:text-base"
+                                        required
+                                    />
+                                </div>
+
+                                {/* Social Media Fields */}
+                                <div>
+                                    <label htmlFor="tiktok" className="block mb-1 sm:mb-2 font-body font-bold text-base sm:text-xl">TikTok</label>
+                                    <input
+                                        type="text"
+                                        id="tiktok"
+                                        name="tiktok"
+                                        placeholder="@username"
+                                        value={formData.tiktok}
+                                        onChange={handleChange}
+                                        className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-black/50 border-2 border-red-600 rounded-lg focus:border-red-600 focus:outline-none transition-colors text-sm sm:text-base"
+                                        required
                                     />
                                 </div>
 
                                 <div>
-                                    <label className="block mb-1 sm:mb-2 font-body font-bold text-red-600 text-base sm:text-xl">I want to be a</label>
-                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-2 sm:gap-4">
-                                        {['Content Creator','Game Tester','Both'].map((option) => (
-                                            <div key={option} className="relative">
-                                                <input
-                                                    type="radio"
-                                                    id={option.toLowerCase().replace(' ','-')}
-                                                    name="role"
-                                                    value={option}
-                                                    onChange={handleChange}
-                                                    className="peer absolute opacity-0 [-webkit-text-fill-color:white] [&:-webkit-autofill]:bg-black [&:-webkit-autofill]:text-white [&:-webkit-autofill]:shadow-[0_0_0_30px_black_inset] [&:-webkit-autofill]:[-webkit-text-fill-color:white]"
-                                                    required
-                                                />
-                                                <label
-                                                    htmlFor={option.toLowerCase().replace(' ','-')}
-                                                    className="block w-full p-2 sm:p-4 text-center border-2 border-white rounded-lg cursor-pointer
-                                                    transition-all duration-300 font-body text-sm sm:text-base
-                                                    peer-checked:border-red-600 peer-checked:text-red-600
-                                                    hover:border-red-600 hover:text-red-600"
-                                                >
-                                                    {option}
-                                                </label>
-                                            </div>
-                                        ))}
-                                    </div>
+                                    <label htmlFor="instagram" className="block mb-1 sm:mb-2 font-body font-bold text-base sm:text-xl">Instagram</label>
+                                    <input
+                                        type="text"
+                                        id="instagram"
+                                        name="instagram"
+                                        placeholder="@username"
+                                        value={formData.instagram}
+                                        onChange={handleChange}
+                                        className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-black/50 border-2 border-red-600 rounded-lg focus:border-red-600 focus:outline-none transition-colors text-sm sm:text-base"
+                                        required
+                                    />
                                 </div>
 
                                 <div>
-                                    <label className="block mb-1 sm:mb-2 font-body font-bold text-red-600 text-base sm:text-xl">Do you have an Amazon account?</label>
-                                    <div className="grid grid-cols-2 gap-2 sm:gap-4">
-                                        {['Yes','No'].map((option) => (
-                                            <div key={option} className="relative">
-                                                <input
-                                                    type="radio"
-                                                    id={`prime-${option.toLowerCase()}`}
-                                                    name="prime"
-                                                    value={option}
-                                                    onChange={handleChange}
-                                                    className="peer absolute opacity-0 [-webkit-text-fill-color:white] [&:-webkit-autofill]:bg-black [&:-webkit-autofill]:text-white [&:-webkit-autofill]:shadow-[0_0_0_30px_black_inset] [&:-webkit-autofill]:[-webkit-text-fill-color:white]"
-                                                    required
-                                                />
-                                                <label
-                                                    htmlFor={`prime-${option.toLowerCase()}`}
-                                                    className="block w-full p-2 sm:p-4 text-center border-2 border-white rounded-lg cursor-pointer
-                                                    transition-all duration-300 font-body text-sm sm:text-base
-                                                    peer-checked:border-red-600 peer-checked:text-red-600
-                                                    hover:border-red-600 hover:text-red-600"
-                                                >
-                                                    {option}
-                                                </label>
-                                            </div>
-                                        ))}
-                                    </div>
+                                    <label htmlFor="followers" className="block mb-1 sm:mb-2 font-body font-bold text-base sm:text-xl">Total Followers</label>
+                                    <input
+                                        type="number"
+                                        id="followers"
+                                        name="followers"
+                                        placeholder="Combined followers across platforms"
+                                        value={formData.followers}
+                                        onChange={handleChange}
+                                        className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-black/50 border-2 border-red-600 rounded-lg focus:border-red-600 focus:outline-none transition-colors text-sm sm:text-base [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                                        required
+                                    />
                                 </div>
 
                                 <div>
-                                    <label className="block mb-1 sm:mb-2 font-body font-bold text-red-600 text-base sm:text-xl">Preferred Payment Method</label>
-                                    <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-4">
-                                        {['Zelle','Paypal','Venmo','e-Transfer'].map((option) => (
-                                            <div key={option} className="relative">
-                                                <input
-                                                    type="radio"
-                                                    id={option.toLowerCase()}
-                                                    name="payment"
-                                                    value={option}
-                                                    onChange={handleChange}
-                                                    className="peer absolute opacity-0 [-webkit-text-fill-color:white] [&:-webkit-autofill]:bg-black [&:-webkit-autofill]:text-white [&:-webkit-autofill]:shadow-[0_0_0_30px_black_inset] [&:-webkit-autofill]:[-webkit-text-fill-color:white]"
-                                                    required
-                                                />
-                                                <label
-                                                    htmlFor={option.toLowerCase()}
-                                                    className="block w-full p-2 sm:p-4 text-center border-2 border-white rounded-lg cursor-pointer
-                                                    transition-all duration-300 font-body text-sm sm:text-base
-                                                    peer-checked:border-red-600 peer-checked:text-red-600
-                                                    hover:border-red-600 hover:text-red-600"
-                                                >
-                                                    {option}
-                                                </label>
-                                            </div>
-                                        ))}
-                                    </div>
+                                    <label htmlFor="role" className="block mb-1 sm:mb-2 font-body font-bold text-base sm:text-xl">Role</label>
+                                    <select
+                                        id="role"
+                                        name="role"
+                                        value={formData.role}
+                                        onChange={handleChange}
+                                        className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-black/50 border-2 border-red-600 rounded-lg focus:border-red-600 focus:outline-none transition-colors text-sm sm:text-base"
+                                        required
+                                    >
+                                        <option value="">I want to be a</option>
+                                        <option value="Content Creator">Content Creator</option>
+                                        <option value="Influencer">Game Tester</option>
+                                        <option value="Streamer">Both</option>
+                                    </select>
                                 </div>
 
-                                <button
-                                    type="submit"
-                                    className="w-full bg-red-600 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg text-base sm:text-lg font-bold 
-                                    hover:shadow-lg hover:shadow-red-500/20 hover:-translate-y-0.5 transition-all duration-300"
-                                >
-                                    Submit Application
-                                </button>
-                            </form>
-                        ) : (
-                            <div className="text-center py-12">
-                                <h3 className="text-3xl font-subheaders mb-4">Application Submitted!</h3>
-                                <p className="font-body font-medium text-xl">
-                                    Thank you for applying to our Ambassador Program. We'll review your application and get back to you soon!
-                                </p>
+                                <div>
+                                    <label htmlFor="amazon" className="block mb-1 sm:mb-2 font-body font-bold text-base sm:text-xl">Do you have an Amazon account?</label>
+                                    <select
+                                        id="amazon"
+                                        name="amazon"
+                                        value={formData.amazon}
+                                        onChange={handleChange}
+                                        className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-black/50 border-2 border-red-600 rounded-lg focus:border-red-600 focus:outline-none transition-colors text-sm sm:text-base"
+                                        required
+                                    >
+                                        <option value="">Select an option</option>
+                                        <option value="Yes">Yes</option>
+                                        <option value="No">No</option>
+                                    </select>
+                                </div>
+
+                                <div>
+                                    <label htmlFor="payment" className="block mb-1 sm:mb-2 font-body font-bold text-base sm:text-xl">Preferred Payment Method</label>
+                                    <select
+                                        id="payment"
+                                        name="payment"
+                                        value={formData.payment}
+                                        onChange={handleChange}
+                                        className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-black/50 border-2 border-red-600 rounded-lg focus:border-red-600 focus:outline-none transition-colors text-sm sm:text-base"
+                                        required
+                                    >
+                                        <option value="">Select payment method</option>
+                                        <option value="PayPal">PayPal</option>
+                                        <option value="Venmo">Venmo</option>
+                                        <option value="Direct Deposit">Zelle</option>
+                                        <option value="Other">e-Transfer</option>
+                                    </select>
+                                </div>
                             </div>
-                        )}
-                    </div>
+                            
+                            <button
+                                type="submit"
+                                disabled={loading}
+                                className="w-full bg-red-600 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg text-base sm:text-lg font-bold 
+                                hover:shadow-lg hover:shadow-red-500/20 hover:-translate-y-0.5 transition-all duration-300
+                                disabled:opacity-50 disabled:cursor-not-allowed"
+                            >
+                                {loading ? 'SUBMITTING...' : 'SUBMIT YOUR APPLICATION'}
+                            </button>
+                            
+                            {/* Error message display */}
+                            {errorMessage && (
+                                <div className="mt-4 p-4 bg-red-600/20 border-2 border-red-600 rounded-lg animate-pulse">
+                                    <p className="text-center text-white font-medium">
+                                        {errorMessage}
+                                    </p>
+                                </div>
+                            )}
+                        </form>
+                    ) : (
+                        <div className="text-center py-8 sm:py-12">
+                            <svg
+                                className="w-16 h-16 sm:w-24 sm:h-24 text-red-600 mx-auto mb-4 sm:mb-6 animate-bounce"
+                                fill="currentColor"
+                                viewBox="0 0 20 20"
+                            >
+                                <path
+                                    fillRule="evenodd"
+                                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                    clipRule="evenodd"
+                                />
+                            </svg>
+                            <h3 className="text-2xl sm:text-3xl font-subheaders mb-2 sm:mb-4">Application Submitted!</h3>
+                            <p className="font-body font-medium text-base sm:text-xl">
+                                Thank you for your interest in becoming a PWRPLAY ambassador. We'll review your application and get back to you soon!
+                            </p>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>
