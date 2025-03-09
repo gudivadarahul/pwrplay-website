@@ -116,11 +116,11 @@ function PromoVideo() {
 
             {/* Main Content */}
             <div className="relative z-10 flex flex-col items-center justify-start h-full pt-8 md:pt-20">
-                <h2 className="text-4xl sm:text-3xl md:text-5xl lg:text-7xl font-headers bg-black px-4 py-1 rounded-lg whitespace-nowrap">
+                <h2 className="text-4xl sm:text-3xl md:text-5xl lg:text-7xl font-headers bg-black px-4 rounded-lg whitespace-nowrap mt-[-6px] sm:mt-0">
                     The <span className="text-red-600">Ultimate</span> Party Game
                 </h2>
 
-                <div className="w-full max-w-[70vw] md:max-w-[400px] mt-4">
+                <div className="w-full max-w-[70vw] md:max-w-[400px] mt-8">
                     <div className="relative w-full pb-[177.78%] md:pb-[177.78%]">
                         <div className="absolute inset-0 backdrop-blur-sm bg-black/50 rounded-lg p-1">
                             <iframe

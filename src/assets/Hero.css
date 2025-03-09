@@ -273,3 +273,89 @@
     transform-origin: center;
     transition: transform 3s cubic-bezier(0.2, 0.8, 0.3, 1);
 }
+
+/* Text reveal animations - faster timing */
+.reveal-text-1, .reveal-text-2, .reveal-text-3, .reveal-text-4 {
+  opacity: 0;
+  transform: translateY(20px);
+  animation-fill-mode: forwards;
+  animation-timing-function: ease-out;
+}
+
+.reveal-text-1 {
+  animation: revealText 0.8s 0.2s forwards;
+}
+
+.reveal-text-2 {
+  animation: revealText 0.8s 0.8s forwards;
+}
+
+.reveal-text-3 {
+  animation: revealText 0.8s 1.4s forwards;
+}
+
+.reveal-text-4 {
+  animation: revealText 0.8s 2s forwards;
+}
+
+@keyframes revealText {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Update the line and button animations to match the new timing */
+.line-animation-right {
+  transform: translateX(100%);
+  opacity: 0;
+  animation: slideInRight 0.6s 2.5s forwards;
+}
+
+.line-animation-left {
+  transform: translateX(-100%);
+  opacity: 0;
+  animation: slideInLeft 0.6s 2.5s forwards;
+}
+
+.reveal-button {
+  opacity: 0;
+  animation: revealButton 1s 3s forwards;
+}
+
+@keyframes revealButton {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInRight {
+  0% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInLeft {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}

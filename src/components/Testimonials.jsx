@@ -55,56 +55,128 @@ const testimonials = [
 // Add this at the top level, outside of any component
 const usedIndices = new Set();
 
-function TestimonialCard({ index,initialDelay }) { 
-    const [currentIndex,setCurrentIndex] = useState(index);
-    const [isFlipping,setIsFlipping] = useState(false);
-    const [displayedContent,setDisplayedContent] = useState(testimonials[index]);
-    const [nextContent,setNextContent] = useState(null);
-    const [isMobile,setIsMobile] = useState(window.innerWidth < 768);
-    const [touchStart,setTouchStart] = useState(null);
-    const [touchEnd,setTouchEnd] = useState(null);
-    const [isSliding,setIsSliding] = useState(false);
+function TestimonialCard({ index }) { 
+    const [currentIndex, setCurrentIndex] = useState(index);
+    const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+    const [touchStart, setTouchStart] = useState(null);
+    const [touchEnd, setTouchEnd] = useState(null);
+    const [isDragging, setIsDragging] = useState(false);
+    const [dragOffset, setDragOffset] = useState(0);
+    const [animationState, setAnimationState] = useState('idle'); // 'idle', 'exiting-left', 'exiting-right'
+    const [nextIndex, setNextIndex] = useState(null);
+    const [nextCardDirection, setNextCardDirection] = useState('right'); // 'left' or 'right'
 
     const minSwipeDistance = 50;
+    const screenWidth = typeof window !== 'undefined' ? window.innerWidth : 0;
 
     const onTouchStart = (e) => {
-        setTouchEnd(null);
+        if (animationState !== 'idle') return;
+        e.preventDefault();
         setTouchStart(e.targetTouches[0].clientX);
+        setTouchEnd(null);
+        setIsDragging(true);
+        setDragOffset(0);
     };
 
     const onTouchMove = (e) => {
+        if (animationState !== 'idle' || !isDragging) return;
+        e.preventDefault();
         setTouchEnd(e.targetTouches[0].clientX);
+        if (touchStart) {
+            const offset = e.targetTouches[0].clientX - touchStart;
+            setDragOffset(offset);
+        }
     };
 
     const onTouchEnd = () => {
-        if (!touchStart || !touchEnd) return;
+        if (animationState !== 'idle' || !isDragging) return;
+        
+        if (!touchStart || !touchEnd) {
+            setIsDragging(false);
+            setDragOffset(0);
+            return;
+        }
 
         const distance = touchStart - touchEnd;
         const isLeftSwipe = distance > minSwipeDistance;
         const isRightSwipe = distance < -minSwipeDistance;
-
+        
         if (isLeftSwipe) {
-            const getNextUniqueIndex = (currentIdx) => {
-                let nextIdx;
-                do {
-                    nextIdx = Math.floor(Math.random() * testimonials.length);
-                } while (usedIndices.has(nextIdx));
-                return nextIdx;
-            };
-
-            const nextIndex = getNextUniqueIndex(currentIndex);
-            setNextContent(testimonials[nextIndex]);
-            setIsSliding(true);
-
+            // Calculate next index
+            const next = (currentIndex + 1) % testimonials.length;
+            setNextIndex(next);
+            setNextCardDirection('right');
+            
+            // Start exit animation
+            setAnimationState('exiting-left');
+            
+            // After exit animation completes, prepare for entry animation
             setTimeout(() => {
-                usedIndices.delete(currentIndex);
-                usedIndices.add(nextIndex);
-                setCurrentIndex(nextIndex);
-                setDisplayedContent(testimonials[nextIndex]);
-                setIsSliding(false);
-                setNextContent(null);
-            },500);
+                setCurrentIndex(next);
+                setDragOffset(0);
+                setAnimationState('idle');
+                setNextIndex(null);
+            }, 300);
+        } else if (isRightSwipe) {
+            // Calculate previous index
+            const prev = (currentIndex - 1 + testimonials.length) % testimonials.length;
+            setNextIndex(prev);
+            setNextCardDirection('left');
+            
+            // Start exit animation
+            setAnimationState('exiting-right');
+            
+            // After exit animation completes, prepare for entry animation
+            setTimeout(() => {
+                setCurrentIndex(prev);
+                setDragOffset(0);
+                setAnimationState('idle');
+                setNextIndex(null);
+            }, 300);
+        } else {
+            // Return to center if not swiped far enough
+            setDragOffset(0);
         }
+        
+        setIsDragging(false);
+    };
+
+    const handlePrevClick = () => {
+        if (animationState !== 'idle') return;
+        
+        // Calculate previous index
+        const prev = (currentIndex - 1 + testimonials.length) % testimonials.length;
+        setNextIndex(prev);
+        
+        // Start exit animation - always exit to the left
+        setAnimationState('exiting-left');
+        
+        // After exit animation completes, prepare for entry animation
+        setTimeout(() => {
+            setCurrentIndex(prev);
+            setDragOffset(0);
+            setAnimationState('idle');
+            setNextIndex(null);
+        }, 300);
+    };
+
+    const handleNextClick = () => {
+        if (animationState !== 'idle') return;
+        
+        // Calculate next index
+        const next = (currentIndex + 1) % testimonials.length;
+        setNextIndex(next);
+        
+        // Start exit animation - exit to the right for next button
+        setAnimationState('exiting-right');
+        
+        // After exit animation completes, prepare for entry animation
+        setTimeout(() => {
+            setCurrentIndex(next);
+            setDragOffset(0);
+            setAnimationState('idle');
+            setNextIndex(null);
+        }, 300);
     };
 
     useEffect(() => {
@@ -112,116 +184,168 @@ function TestimonialCard({ index,initialDelay }) {
             setIsMobile(window.innerWidth < 768);
         };
 
-        window.addEventListener('resize',handleResize);
-        return () => window.removeEventListener('resize',handleResize);
-    },[]);
-
-    useEffect(() => {
-        usedIndices.add(index);
-
-        const getNextUniqueIndex = (currentIdx) => {
-            let nextIdx;
-            do {
-                nextIdx = Math.floor(Math.random() * testimonials.length);
-            } while (usedIndices.has(nextIdx));
-            return nextIdx;
-        };
-
-        const timer = setInterval(() => {
-            if (isMobile) {
-                const nextIndex = getNextUniqueIndex(currentIndex);
-                usedIndices.delete(currentIndex);
-                usedIndices.add(nextIndex);
-                setCurrentIndex(nextIndex);
-                setDisplayedContent(testimonials[nextIndex]);
-            } else {
-                setIsFlipping(true);
-
-                setTimeout(() => {
-                    usedIndices.delete(currentIndex);
-                    const nextIndex = getNextUniqueIndex(currentIndex);
-                    usedIndices.add(nextIndex);
-                    setCurrentIndex(nextIndex);
-                    setDisplayedContent(testimonials[nextIndex]);
-                },500);
-
-                setTimeout(() => {
-                    setIsFlipping(false);
-                },1000);
-            }
-        },isMobile ? 8000 : (10000 + Math.random() * 5000));
-
-        return () => {
-            clearInterval(timer);
-            usedIndices.delete(currentIndex);
-        };
-    },[currentIndex,isMobile]);
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     if (isMobile) {
         return (
-            <div
-                className="w-full h-[400px] relative overflow-hidden"
-                onTouchStart={onTouchStart}
-                onTouchMove={onTouchMove}
-                onTouchEnd={onTouchEnd}
-            >
+            <div className="w-full h-[400px] relative overflow-hidden">
+                <style jsx>{`
+                    @keyframes slideOutToLeft {
+                        from { transform: translateX(0); }
+                        to { transform: translateX(-100%); }
+                    }
+                    
+                    @keyframes slideInFromRight {
+                        from { transform: translateX(100%); }
+                        to { transform: translateX(0); }
+                    }
+                    
+                    @keyframes slideOutToRight {
+                        from { transform: translateX(0); }
+                        to { transform: translateX(100%); }
+                    }
+                    
+                    @keyframes slideInFromLeft {
+                        from { transform: translateX(-100%); }
+                        to { transform: translateX(0); }
+                    }
+                    
+                    .current-card {
+                        position: absolute;
+                        inset: 0;
+                        width: 100%;
+                        z-index: 1;
+                    }
+                    
+                    .current-card.exiting-left {
+                        animation: slideOutToLeft 0.3s forwards;
+                    }
+                    
+                    .current-card.exiting-right {
+                        animation: slideOutToRight 0.3s forwards;
+                    }
+                    
+                    .next-card-right {
+                        position: absolute;
+                        inset: 0;
+                        width: 100%;
+                        transform: translateX(100%);
+                        z-index: 0;
+                    }
+                    
+                    .next-card-right.entering {
+                        animation: slideInFromRight 0.3s forwards;
+                    }
+                    
+                    .next-card-left {
+                        position: absolute;
+                        inset: 0;
+                        width: 100%;
+                        transform: translateX(-100%);
+                        z-index: 0;
+                    }
+                    
+                    .next-card-left.entering {
+                        animation: slideInFromLeft 0.3s forwards;
+                    }
+                `}</style>
+                
                 {/* Current card */}
-                <div className="absolute inset-0 w-full">
+                <div 
+                    className={`current-card ${
+                        animationState === 'exiting-left' 
+                            ? 'exiting-left' 
+                            : animationState === 'exiting-right' 
+                                ? 'exiting-right' 
+                                : ''
+                    }`}
+                    onTouchStart={onTouchStart}
+                    onTouchMove={onTouchMove}
+                    onTouchEnd={onTouchEnd}
+                >
                     <div className="bg-black text-white p-6 rounded-xl h-full flex flex-col mx-4">
                         <FaQuoteLeft className="text-red-600 text-3xl mb-4 flex-shrink-0" />
                         <p className="text-lg mb-4 flex-grow leading-relaxed font-medium">
-                            {displayedContent.text}
+                            {testimonials[currentIndex].text}
                         </p>
                         <hr className="border-red-600 border-t-2 mb-4" />
                         <div>
                             <p className="font-bold text-xl text-red-600">
-                                {displayedContent.author}
+                                {testimonials[currentIndex].author}
                             </p>
                         </div>
                     </div>
                 </div>
-
-                {/* Sliding card */}
-                {nextContent && (
-                    <div
-                        className={`absolute inset-0 w-full transition-transform duration-500 ease-in-out transform ${isSliding ? 'translate-x-0' : 'translate-x-[200%]'
-                            }`}
-                    >
+                
+                {/* Next card from right */}
+                {nextIndex !== null && animationState === 'exiting-left' && (
+                    <div className="next-card-right entering">
                         <div className="bg-black text-white p-6 rounded-xl h-full flex flex-col mx-4">
                             <FaQuoteLeft className="text-red-600 text-3xl mb-4 flex-shrink-0" />
                             <p className="text-lg mb-4 flex-grow leading-relaxed font-medium">
-                                {nextContent.text}
+                                {testimonials[nextIndex].text}
                             </p>
                             <hr className="border-red-600 border-t-2 mb-4" />
                             <div>
                                 <p className="font-bold text-xl text-red-600">
-                                    {nextContent.author}
+                                    {testimonials[nextIndex].author}
                                 </p>
                             </div>
                         </div>
                     </div>
                 )}
+                
+                {/* Next card from left */}
+                {nextIndex !== null && animationState === 'exiting-right' && (
+                    <div className="next-card-left entering">
+                        <div className="bg-black text-white p-6 rounded-xl h-full flex flex-col mx-4">
+                            <FaQuoteLeft className="text-red-600 text-3xl mb-4 flex-shrink-0" />
+                            <p className="text-lg mb-4 flex-grow leading-relaxed font-medium">
+                                {testimonials[nextIndex].text}
+                            </p>
+                            <hr className="border-red-600 border-t-2 mb-4" />
+                            <div>
+                                <p className="font-bold text-xl text-red-600">
+                                    {testimonials[nextIndex].author}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                )}
+                
+                {/* Left arrow - outside the card on white background */}
+                <div 
+                    className="absolute left-0 top-1/2 transform -translate-y-1/2 text-red-600 text-3xl font-bold cursor-pointer z-10 bg-white bg-opacity-70 p-2 rounded-r-lg"
+                    onClick={handlePrevClick}
+                >
+                    &#10094;
+                </div>
+                
+                {/* Right arrow - outside the card on white background */}
+                <div 
+                    className="absolute right-0 top-1/2 transform -translate-y-1/2 text-red-600 text-3xl font-bold cursor-pointer z-10 bg-white bg-opacity-70 p-2 rounded-l-lg"
+                    onClick={handleNextClick}
+                >
+                    &#10095;
+                </div>
             </div>
         );
     }
 
     return (
-        <div className="w-full max-w-sm h-full perspective-1000 py-4">
-            <div
-                className={`relative h-full transition-transform duration-1000 transform-style-3d ${isFlipping ? 'rotate-y-180' : ''
-                    }`}
-            >
-                <div className="bg-black text-white p-6 rounded-xl h-full min-h-[300px] flex flex-col backface-hidden">
-                    <FaQuoteLeft className="text-red-600 text-3xl mb-4 flex-shrink-0" />
-                    <p className="text-lg mb-4 flex-grow leading-relaxed font-medium">
-                        {displayedContent.text}
+        <div className="w-full max-w-sm h-full py-4">
+            <div className="bg-black text-white p-6 rounded-xl h-full min-h-[300px] flex flex-col">
+                <FaQuoteLeft className="text-red-600 text-3xl mb-4 flex-shrink-0" />
+                <p className="text-lg mb-4 flex-grow leading-relaxed font-medium">
+                    {testimonials[index].text}
+                </p>
+                <hr className="border-red-600 border-t-2 mb-4" />
+                <div>
+                    <p className="font-bold text-xl text-red-600">
+                        {testimonials[index].author}
                     </p>
-                    <hr className="border-red-600 border-t-2 mb-4" />
-                    <div>
-                        <p className="font-bold text-xl text-red-600">
-                            {displayedContent.author}
-                        </p>
-                    </div>
                 </div>
             </div>
         </div>
@@ -229,16 +353,16 @@ function TestimonialCard({ index,initialDelay }) {
 }
 
 function Testimonials() {
-    const [isMobile,setIsMobile] = useState(window.innerWidth < 768);
+    const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
     useEffect(() => {
         const handleResize = () => {
             setIsMobile(window.innerWidth < 768);
         };
 
-        window.addEventListener('resize',handleResize);
-        return () => window.removeEventListener('resize',handleResize);
-    },[]);
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     return (
         <section className="relative bg-white text-black py-24 px-6">
@@ -249,13 +373,12 @@ function Testimonials() {
 
                 <div className="grid grid-cols-1 md:grid-cols-3 justify-items-center gap-8 overflow-hidden">
                     {isMobile ? (
-                        <TestimonialCard key="mobile-card" index={0} initialDelay={0} />
+                        <TestimonialCard key="mobile-card" index={0} />
                     ) : (
-                        [0,1,2].map((index) => (
+                        [0, 1, 2].map((index) => (
                             <TestimonialCard
                                 key={`card-${index}`}
                                 index={index}
-                                initialDelay={index * 1000}
                             />
                         ))
                     )}
