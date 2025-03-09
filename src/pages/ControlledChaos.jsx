@@ -1,4 +1,4 @@
-import { FaRotate,FaPlay,FaTrophy,FaChampagneGlasses,FaRepeat, FaArrowRight, FaArrowDown, FaDice } from "react-icons/fa6";
+import { FaRotate,FaPlay,FaTrophy,FaChampagneGlasses,FaRepeat, FaArrowRight, FaArrowDown, FaDice, FaEnvelope } from "react-icons/fa6";
 import { BsArrowDownRight } from "react-icons/bs";
 import { useEffect,useState,useRef } from 'react';
 import { useLocation,Link } from 'react-router-dom';
@@ -7,6 +7,8 @@ function ControlledChaos() {
     const location = useLocation();
     const [showPopup, setShowPopup] = useState(false);
     const [activeBox, setActiveBox] = useState(0); // Track which box is currently active
+    const [emailSubmitted, setEmailSubmitted] = useState(false); // New state for tracking email submission
+    const [email, setEmail] = useState(''); // New state for email input
 
     useEffect(() => {
         if (location.hash === '#buy-section') {
@@ -83,11 +85,11 @@ function ControlledChaos() {
 
             // Get viewport width to adjust card positioning
             const isMobile = window.innerWidth < 768;
-            // Position cards closer to spinner on mobile
+            // Position cards at a balanced distance - 15% for mobile
             const positionValue = isMobile ? '10%' : '15%';
             
-            // Adjust vertical offset based on screen size - reduced from 55% to 52%
-            const verticalOffset = isMobile ? '52%' : '50%';
+            // Adjust vertical offset based on screen size - 35% for mobile
+            const verticalOffset = isMobile ? '40%' : '50%';
             
             // Spread cards to their positions with adjusted vertical position
             cards[0].style.transform = `translate(-50%, -${verticalOffset})`; // Blue (top-left)
@@ -228,6 +230,17 @@ function ControlledChaos() {
         return () => clearInterval(interval);
     }, []);
 
+    // Function to handle email submission
+    const handleNotifySubmit = () => {
+        // In the future, this would send the email to your backend
+        // For now, just show the confirmation message
+        setEmailSubmitted(true);
+        setShowPopup(false); // Hide the popup when showing the confirmation
+        
+        // Reset email field
+        setEmail('');
+    };
+
     return (
         <div className="pt-24 sm:pt-40 text-white min-h-screen bg-black">
             {/* Logo in top-left */}
@@ -255,7 +268,7 @@ function ControlledChaos() {
                 <div className="flex justify-center items-center">
                     <div className="relative w-[320px] h-[320px] sm:w-[500px] sm:h-[500px] md:w-[600px] md:h-[600px] lg:w-[700px] lg:h-[700px] flex items-center justify-center">
                         {/* Top Left Card (Blue) */}
-                        <div className="absolute pointer-events-none w-36 h-36 sm:w-48 sm:h-48 md:w-56 md:h-56 lg:w-72 lg:h-72 perspective-1000">
+                        <div className="absolute pointer-events-none w-40 h-40 sm:w-48 sm:h-48 md:w-56 md:h-56 lg:w-72 lg:h-72 perspective-1000">
                             <div className="relative w-full h-full transition-transform duration-500 transform-style-preserve-3d" id="blue-card">
                                 <img
                                     src="/card-back-1.png"
@@ -271,7 +284,7 @@ function ControlledChaos() {
                         </div>
 
                         {/* Top Right Card (Purple) */}
-                        <div className="absolute pointer-events-none w-36 h-36 sm:w-48 sm:h-48 md:w-56 md:h-56 lg:w-72 lg:h-72 perspective-1000">
+                        <div className="absolute pointer-events-none w-40 h-40 sm:w-48 sm:h-48 md:w-56 md:h-56 lg:w-72 lg:h-72 perspective-1000">
                             <div className="relative w-full h-full transition-transform duration-500 transform-style-preserve-3d" id="purple-card">
                                 <img
                                     src="/card-back-4.png"
@@ -287,7 +300,7 @@ function ControlledChaos() {
                         </div>
 
                         {/* Bottom Left Card (Orange) */}
-                        <div className="absolute pointer-events-none w-36 h-36 sm:w-48 sm:h-48 md:w-56 md:h-56 lg:w-72 lg:h-72 perspective-1000">
+                        <div className="absolute pointer-events-none w-40 h-40 sm:w-48 sm:h-48 md:w-56 md:h-56 lg:w-72 lg:h-72 perspective-1000">
                             <div className="relative w-full h-full transition-transform duration-500 transform-style-preserve-3d" id="orange-card">
                                 <img
                                     src="/card-back-2.png"
@@ -303,7 +316,7 @@ function ControlledChaos() {
                         </div>
 
                         {/* Bottom Right Card (Red) */}
-                        <div className="absolute pointer-events-none w-36 h-36 sm:w-48 sm:h-48 md:w-56 md:h-56 lg:w-72 lg:h-72 perspective-1000">
+                        <div className="absolute pointer-events-none w-40 h-40 sm:w-48 sm:h-48 md:w-56 md:h-56 lg:w-72 lg:h-72 perspective-1000">
                             <div className="relative w-full h-full transition-transform duration-500 transform-style-preserve-3d" id="red-card">
                                 <img
                                     src="/card-back-3.png"
@@ -319,7 +332,7 @@ function ControlledChaos() {
                         </div>
 
                         {/* Center Spinner - Add id and initial opacity-0 */}
-                        <div id="spinner-container" className="relative w-44 h-44 sm:w-60 sm:h-60 md:w-72 md:h-72 lg:w-80 lg:h-80">
+                        <div id="spinner-container" className="relative w-36 h-36 sm:w-60 sm:h-60 md:w-72 md:h-72 lg:w-80 lg:h-80">
                             <img
                                 src="/spinner_wo_arrow.png"
                                 alt="Game Spinner Base"
@@ -343,87 +356,38 @@ function ControlledChaos() {
                     Just shuffle, draw, and let the chaos unfold!
                 </p>
 
-                {/* Steps in a circular pattern */}
-                <div className="relative max-w-3xl mx-auto">
-                    {/* Mobile view - circular arrangement */}
-                    <div className="md:hidden relative mx-auto" style={{ width: '280px', height: '280px' }}>
-                        {/* Curved lines - positioned BEFORE boxes so they appear behind */}
-                        <img 
-                            src="/curved_line.png" 
-                            alt="Curved Line" 
-                            className="absolute top-[5%] right-[5%] w-[100px] h-auto transform z-0"
-                        />
-                        <img 
-                            src="/curved_line.png" 
-                            alt="Curved Line" 
-                            className="absolute bottom-[5%] right-[5%] w-[100px] h-auto transform rotate-[90deg] z-0"
-                        />
-                        <img 
-                            src="/curved_line.png" 
-                            alt="Curved Line" 
-                            className="absolute bottom-[5%] left-[5%] w-[100px] h-auto transform rotate-[180deg] z-0"
-                        />
-                        <img 
-                            src="/curved_line.png" 
-                            alt="Curved Line" 
-                            className="absolute top-[5%] left-[5%] w-[100px] h-auto transform rotate-[270deg] z-0"
-                        />
-                        
-                        {/* Step 1: Spin (Top) - Adjusted position to be lower */}
-                        <div className={`absolute top-[-7%] left-1/2 transform -translate-x-1/2 bg-black p-2 rounded-lg shadow-lg flex flex-col items-center ${activeBox === 0 ? 'border-red-600 border-[3px] shadow-[0_0_50px_15px_rgba(255,0,0,1.0),0_0_20px_5px_rgba(255,0,0,0.8)_inset] saturate-150 scale-105 transition-all duration-500' : 'border-white border-2'} z-10`} style={{ width: '80px', height: '80px' }}>
-                            <FaRotate className={`${activeBox === 0 ? 'text-red-500 drop-shadow-[0_0_8px_#ff0000]' : 'text-red-600'} text-2xl mb-1`} />
-                            <h3 className="text-xl font-subheaders text-white">SPIN</h3>
-                        </div>
-                        
-                        {/* Step 2: Play (Right) */}
-                        <div className={`absolute top-1/2 right-[2%] transform translate-x-1/3 -translate-y-1/2 bg-black p-2 rounded-lg shadow-lg flex flex-col items-center ${activeBox === 1 ? 'border-red-600 border-[3px] shadow-[0_0_50px_15px_rgba(255,0,0,1.0),0_0_20px_5px_rgba(255,0,0,0.8)_inset] saturate-150 scale-105 transition-all duration-500' : 'border-white border-2'} z-10`} style={{ width: '80px', height: '80px' }}>
-                            <FaPlay className={`${activeBox === 1 ? 'text-red-500 drop-shadow-[0_0_8px_#ff0000]' : 'text-red-600'} text-2xl mb-1`} />
-                            <h3 className="text-xl font-subheaders text-white">PLAY</h3>
-                        </div>
-                        
-                        {/* Step 3: Sip (Bottom) */}
-                        <div className={`absolute bottom-[2%] left-1/2 transform -translate-x-1/2 translate-y-1/3 bg-black p-2 rounded-lg shadow-lg flex flex-col items-center ${activeBox === 2 ? 'border-red-600 border-[3px] shadow-[0_0_50px_15px_rgba(255,0,0,1.0),0_0_20px_5px_rgba(255,0,0,0.8)_inset] saturate-150 scale-105 transition-all duration-500' : 'border-white border-2'} z-10`} style={{ width: '80px', height: '80px' }}>
-                            <FaChampagneGlasses className={`${activeBox === 2 ? 'text-red-500 drop-shadow-[0_0_8px_#ff0000]' : 'text-red-600'} text-2xl mb-1`} />
-                            <h3 className="text-xl font-subheaders text-white">SIP</h3>
-                        </div>
-                        
-                        {/* Step 4: Repeat (Left) */}
-                        <div className={`absolute top-1/2 left-[2%] transform -translate-x-1/3 -translate-y-1/2 bg-black p-2 rounded-lg shadow-lg flex flex-col items-center ${activeBox === 3 ? 'border-red-600 border-[3px] shadow-[0_0_50px_15px_rgba(255,0,0,1.0),0_0_20px_5px_rgba(255,0,0,0.8)_inset] saturate-150 scale-105 transition-all duration-500' : 'border-white border-2'} z-10`} style={{ width: '80px', height: '80px' }}>
-                            <FaRepeat className={`${activeBox === 3 ? 'text-red-500 drop-shadow-[0_0_8px_#ff0000]' : 'text-red-600'} text-2xl mb-1`} />
-                            <h3 className="text-xl font-subheaders text-white">REPEAT</h3>
-                        </div>
-                    </div>
-
-                    {/* Desktop view - horizontal layout - Also adjusted the first box position */}
-                    <div className="hidden md:flex justify-center items-center gap-8 mt-12">
-                        {/* Step 1: Spin - Added margin-top to move it down slightly */}
-                        <div className={`bg-black p-6 rounded-lg shadow-lg flex flex-col items-center ${activeBox === 0 ? 'border-red-600 border-[3px] shadow-[0_0_50px_15px_rgba(255,0,0,1.0),0_0_20px_5px_rgba(255,0,0,0.8)_inset] saturate-150 scale-105 transition-all duration-500' : 'border-white border-2'} w-44 h-44 mt-4`}>
-                            <FaRotate className={`${activeBox === 0 ? 'text-red-500 drop-shadow-[0_0_8px_#ff0000]' : 'text-red-600'} text-5xl mb-3`} />
-                            <h3 className="text-4xl font-subheaders text-white">SPIN</h3>
+                {/* Steps in a horizontal row */}
+                <div className="relative max-w-4xl mx-auto">
+                    {/* Horizontal layout for both mobile and desktop */}
+                    <div className="flex flex-row justify-center items-center gap-3 md:gap-8 mt-12">
+                        {/* Step 1: Spin */}
+                        <div className={`bg-black aspect-square rounded-lg shadow-lg flex flex-col items-center justify-center ${activeBox === 0 ? 'border-red-600 border-[3px] shadow-[0_0_50px_15px_rgba(255,0,0,1.0),0_0_20px_5px_rgba(255,0,0,0.8)_inset] saturate-150 scale-105 transition-all duration-500' : 'border-white border-2'} w-20 md:w-40`}>
+                            <FaRotate className={`${activeBox === 0 ? 'text-red-500 drop-shadow-[0_0_8px_#ff0000]' : 'text-red-600'} text-2xl md:text-5xl mb-1 md:mb-2`} />
+                            <h3 className="text-sm md:text-3xl font-subheaders text-white">SPIN</h3>
                         </div>
                         
                         {/* Step 2: Play */}
-                        <div className={`bg-black p-6 rounded-lg shadow-lg flex flex-col items-center ${activeBox === 1 ? 'border-red-600 border-[3px] shadow-[0_0_50px_15px_rgba(255,0,0,1.0),0_0_20px_5px_rgba(255,0,0,0.8)_inset] saturate-150 scale-105 transition-all duration-500' : 'border-white border-2'} w-44 h-44`}>
-                            <FaPlay className={`${activeBox === 1 ? 'text-red-500 drop-shadow-[0_0_8px_#ff0000]' : 'text-red-600'} text-5xl mb-3`} />
-                            <h3 className="text-4xl font-subheaders text-white">PLAY</h3>
+                        <div className={`bg-black aspect-square rounded-lg shadow-lg flex flex-col items-center justify-center ${activeBox === 1 ? 'border-red-600 border-[3px] shadow-[0_0_50px_15px_rgba(255,0,0,1.0),0_0_20px_5px_rgba(255,0,0,0.8)_inset] saturate-150 scale-105 transition-all duration-500' : 'border-white border-2'} w-20 md:w-40`}>
+                            <FaPlay className={`${activeBox === 1 ? 'text-red-500 drop-shadow-[0_0_8px_#ff0000]' : 'text-red-600'} text-2xl md:text-5xl mb-1 md:mb-2`} />
+                            <h3 className="text-sm md:text-3xl font-subheaders text-white">PLAY</h3>
                         </div>
                         
                         {/* Step 3: Sip */}
-                        <div className={`bg-black p-6 rounded-lg shadow-lg flex flex-col items-center ${activeBox === 2 ? 'border-red-600 border-[3px] shadow-[0_0_50px_15px_rgba(255,0,0,1.0),0_0_20px_5px_rgba(255,0,0,0.8)_inset] saturate-150 scale-105 transition-all duration-500' : 'border-white border-2'} w-44 h-44`}>
-                            <FaChampagneGlasses className={`${activeBox === 2 ? 'text-red-500 drop-shadow-[0_0_8px_#ff0000]' : 'text-red-600'} text-5xl mb-3`} />
-                            <h3 className="text-4xl font-subheaders text-white">SIP</h3>
+                        <div className={`bg-black aspect-square rounded-lg shadow-lg flex flex-col items-center justify-center ${activeBox === 2 ? 'border-red-600 border-[3px] shadow-[0_0_50px_15px_rgba(255,0,0,1.0),0_0_20px_5px_rgba(255,0,0,0.8)_inset] saturate-150 scale-105 transition-all duration-500' : 'border-white border-2'} w-20 md:w-40`}>
+                            <FaChampagneGlasses className={`${activeBox === 2 ? 'text-red-500 drop-shadow-[0_0_8px_#ff0000]' : 'text-red-600'} text-2xl md:text-5xl mb-1 md:mb-2`} />
+                            <h3 className="text-sm md:text-3xl font-subheaders text-white">SIP</h3>
                         </div>
                         
                         {/* Step 4: Repeat */}
-                        <div className={`bg-black p-6 rounded-lg shadow-lg flex flex-col items-center ${activeBox === 3 ? 'border-red-600 border-[3px] shadow-[0_0_50px_15px_rgba(255,0,0,1.0),0_0_20px_5px_rgba(255,0,0,0.8)_inset] saturate-150 scale-105 transition-all duration-500' : 'border-white border-2'} w-44 h-44`}>
-                            <FaRepeat className={`${activeBox === 3 ? 'text-red-500 drop-shadow-[0_0_8px_#ff0000]' : 'text-red-600'} text-5xl mb-3`} />
-                            <h3 className="text-4xl font-subheaders text-white">REPEAT</h3>
+                        <div className={`bg-black aspect-square rounded-lg shadow-lg flex flex-col items-center justify-center ${activeBox === 3 ? 'border-red-600 border-[3px] shadow-[0_0_50px_15px_rgba(255,0,0,1.0),0_0_20px_5px_rgba(255,0,0,0.8)_inset] saturate-150 scale-105 transition-all duration-500' : 'border-white border-2'} w-20 md:w-40`}>
+                            <FaRepeat className={`${activeBox === 3 ? 'text-red-500 drop-shadow-[0_0_8px_#ff0000]' : 'text-red-600'} text-2xl md:text-5xl mb-1 md:mb-2`} />
+                            <h3 className="text-sm md:text-3xl font-subheaders text-white">REPEAT</h3>
                         </div>
                     </div>
                 </div>
 
-                {/* Optional Video Embed */}
-                <div className="mt-16 md:mt-40">
+                {/* Optional Video Embed - Reduced top margin on mobile */}
+                <div className="mt-8 md:mt-40">
                     <div className="relative w-full max-w-3xl mx-auto aspect-video">
                         <iframe
                             className="w-full h-full rounded-lg shadow-lg"
@@ -461,31 +425,40 @@ function ControlledChaos() {
                 <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-80 backdrop-blur-sm transition-all duration-300">
                     <div 
                         className="bg-black border-2 border-red-600 rounded-lg p-6 md:p-8 max-w-md w-full mx-4 
-                        shadow-lg shadow-red-500/30 animate-fade-in"
+                        shadow-lg shadow-red-500/30 animate-fade-in relative"
                     >
                         <div className="text-center">
                             <h3 className="text-3xl md:text-4xl font-headers text-white mb-2">COMING SOON</h3>
                             <div className="w-16 h-1 bg-red-600 mx-auto mb-4"></div>
                             
                             <p className="text-lg md:text-xl font-subheaders text-white mb-6">
-                                Controlled Chaos will be available for purchase soon! 
+                                Controlled Chaos™ will be available for purchase soon! 
                             </p>
+                            
+                            {/* Email input field */}
+                            <div className="mb-4">
+                                <input 
+                                    type="email" 
+                                    placeholder="Email" 
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    className="w-full px-4 py-3 bg-black border-2 border-white/30 rounded-lg text-white 
+                                    focus:outline-none focus:border-red-600 transition-colors duration-300"
+                                />
+                            </div>
                             
                             {/* Notify Me Button */}
                             <button 
                                 className="bg-red-600 text-white px-6 py-3 rounded-lg text-lg font-bold
-                                hover:bg-red-700 transition-all duration-300 mb-4 w-full md:w-auto"
-                                onClick={() => {
-                                    setShowPopup(false);
-                                    // You could add email collection logic here
-                                }}
+                                hover:bg-red-700 transition-all duration-300 mb-4 w-full"
+                                onClick={handleNotifySubmit}
                             >
                                 Notify Me on Release
                             </button>
                             
                             {/* Close Button - Improved styling */}
                             <button 
-                                className="mt-4 px-4 py-2 border border-white/30 rounded-md text-white/80 
+                                className="mt-2 px-4 py-2 border border-white/30 rounded-md text-white/80 
                                 hover:text-white hover:border-red-600 transition-all duration-300 
                                 font-subheaders text-sm uppercase tracking-wider"
                                 onClick={() => setShowPopup(false)}
@@ -493,6 +466,27 @@ function ControlledChaos() {
                                 Close
                             </button>
                         </div>
+                    </div>
+                </div>
+            )}
+            
+            {/* Submission Confirmation - Similar to Contact.jsx */}
+            {emailSubmitted && (
+                <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-80 backdrop-blur-sm transition-all duration-300">
+                    <div className="bg-black border-2 border-red-600 rounded-lg p-6 md:p-8 max-w-md w-full mx-4 
+                        shadow-lg shadow-red-500/30 animate-fade-in text-center">
+                        <FaEnvelope className="text-red-600 text-4xl sm:text-6xl mx-auto mb-4 sm:mb-6 animate-bounce" />
+                        <h3 className="text-2xl sm:text-3xl font-subheaders mb-2 sm:mb-4">Submitted!</h3>
+                        <p className="font-body font-medium text-base sm:text-xl mb-6">
+                            We'll notify you when Controlled Chaos™ is released!
+                        </p>
+                        <button 
+                            className="px-6 py-3 bg-red-600 text-white rounded-lg text-lg font-bold
+                            hover:bg-red-700 transition-all duration-300"
+                            onClick={() => setEmailSubmitted(false)}
+                        >
+                            Close
+                        </button>
                     </div>
                 </div>
             )}

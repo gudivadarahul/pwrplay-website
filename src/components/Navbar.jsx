@@ -60,6 +60,18 @@ const Navbar = () => {
         return () => window.removeEventListener('scroll',handleScroll);
     },[]);
 
+    useEffect(() => {
+        if (isOpen) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'auto';
+        }
+        
+        return () => {
+            document.body.style.overflow = 'auto';
+        };
+    }, [isOpen]);
+
     const handleNavClick = (path) => {
         if (window.location.pathname === path) {
             window.location.reload();
@@ -156,7 +168,7 @@ const Navbar = () => {
                                 </h3>
                                 <h3>
                                     <Link to="/ambassador" onClick={() => handleNavClick('/ambassador')} className="nav-link">
-                                        Ambassador Program
+                                        Ambassadors
                                     </Link>
                                 </h3>
                                 <h3>
@@ -189,108 +201,163 @@ const Navbar = () => {
                 {/* Mobile Menu Button */}
                 <button
                     onClick={() => setIsOpen(!isOpen)}
-                    className="lg:hidden hover:text-red-500 transition-all duration-300 p-2 
-                        hover:bg-gray-800/30 rounded-lg outline-none"
+                    className="lg:hidden hover:text-red-500 transition-all duration-300 p-3
+                        hover:bg-red-600/10 rounded-full outline-none z-[400] relative"
+                    aria-label={isOpen ? "Close menu" : "Open menu"}
                 >
-                    {isOpen ? <FaXmark size={24} /> : <FaBars size={24} />}
+                    {isOpen ? 
+                        <FaXmark size={28} className="text-red-500" /> : 
+                        <FaBars size={28} />
+                    }
                 </button>
             </div>
 
             {/* Mobile Navigation */}
             {isOpen && (
-                <div className="absolute top-[72px] left-0 w-full bg-black/95 backdrop-blur-sm 
-                    text-white flex flex-col items-center py-6 space-y-4 shadow-xl animate-fadeIn lg:hidden">
-                    <Link to="/" onClick={() => handleNavClick('/')} className="py-2 px-4 hover:text-red-500 transition-all duration-300 rounded-lg w-[90%] text-center outline-none uppercase">
-                        Home
-                    </Link>
-                    <button
-                        onClick={() => setGamesDropdown(!gamesDropdown)}
-                        className="flex items-center justify-center gap-2 py-2 px-4 hover:text-red-500 transition-all duration-300 
-                                hover:bg-gray-800/30 rounded-lg w-[90%] outline-none uppercase"
-                    >
-                        Games <FaChevronDown className={`transition-transform duration-300 ${gamesDropdown ? 'rotate-180' : ''}`} />
-                    </button>
-                    {gamesDropdown && (
-                        <div className="bg-black/95 backdrop-blur-sm text-white py-2 rounded-lg shadow-lg w-[90%] max-w-[300px] border border-gray-800/50 animate-slideDown">
-                            <h3>
-                                <Link to="/controlled-chaos" onClick={() => handleNavClick('/controlled-chaos')} className="block px-6 py-3 hover:text-red-500 transition-all duration-300 hover:pl-8 outline-none font-headers text-3xl uppercase">
-                                    Controlled Chaos™
-                                </Link>
-                            </h3>
-                        </div>
-                    )}
+                <div className="fixed top-0 left-0 w-full h-full bg-gradient-to-b from-black to-gray-900/95 backdrop-blur-md 
+                    text-white flex flex-col items-center py-8 space-y-0 shadow-xl animate-fadeIn lg:hidden
+                    overflow-y-auto z-[300] pt-20">
+                    
+                    <div className="w-[90%] mb-4">
+                        <button
+                            onClick={() => setGamesDropdown(!gamesDropdown)}
+                            className="flex items-center justify-between gap-2 py-3 px-6 hover:bg-red-600/20 hover:text-red-500 
+                                    transition-all duration-300 rounded-xl w-full outline-none uppercase font-medium tracking-wide text-xl"
+                        >
+                            Games <FaChevronDown className={`transition-transform duration-300 ${gamesDropdown ? 'rotate-180 text-red-500' : ''}`} />
+                        </button>
+                        {gamesDropdown && (
+                            <div className="bg-gray-900/80 backdrop-blur-md text-white py-2 rounded-xl shadow-lg w-[95%] mx-auto mt-2
+                                border-l-2 border-red-600 animate-slideDown">
+                                <h3>
+                                    <Link to="/controlled-chaos" onClick={() => handleNavClick('/controlled-chaos')} 
+                                        className="block px-6 py-3 hover:text-red-500 transition-all duration-300 
+                                        hover:bg-red-600/10 hover:pl-8 outline-none font-headers text-lg uppercase">
+                                        Controlled Chaos™
+                                    </Link>
+                                </h3>
+                            </div>
+                        )}
+                    </div>
+                    
+                    {/* Stylish separator */}
+                    <div className="w-[85%] h-[1px] bg-gradient-to-r from-transparent via-red-600 to-transparent my-2"></div>
 
                     {/* About Dropdown Mobile */}
-                    <button
-                        onClick={() => setAboutDropdown(!aboutDropdown)}
-                        className="flex items-center justify-center gap-2 py-2 px-4 hover:text-red-500 transition-all duration-300 
-                                hover:bg-gray-800/30 rounded-lg w-[90%] outline-none uppercase"
-                    >
-                        About <FaChevronDown className={`transition-transform duration-300 ${aboutDropdown ? 'rotate-180' : ''}`} />
-                    </button>
-                    {aboutDropdown && (
-                        <div className="bg-black/95 backdrop-blur-sm text-white py-2 rounded-lg shadow-lg w-[90%] max-w-[300px] border border-gray-800/50 animate-slideDown">
-                            <h3>
-                                <Link to="/about" onClick={() => handleNavClick('/about')} className="block px-6 py-3 hover:text-red-500 transition-all duration-300 hover:pl-8 outline-none font-headers text-3xl uppercase">
-                                    Team
-                                </Link>
-                            </h3>
-                            <h3>
-                                <Link to="/about/timeline" onClick={() => handleNavClick('/about/timeline')} className="block px-6 py-3 hover:text-red-500 transition-all duration-300 hover:pl-8 outline-none font-headers text-3xl uppercase">
-                                    Timeline
-                                </Link>
-                            </h3>
-                            <h3>
-                                <Link to="/faq" onClick={() => handleNavClick('/faq')} className="block px-6 py-3 hover:text-red-500 transition-all duration-300 hover:pl-8 outline-none font-headers text-3xl uppercase">
-                                    FAQs
-                                </Link>
-                            </h3>
-                        </div>
-                    )}
+                    <div className="w-[90%] mb-4 mt-4">
+                        <button
+                            onClick={() => setAboutDropdown(!aboutDropdown)}
+                            className="flex items-center justify-between gap-2 py-3 px-6 hover:bg-red-600/20 hover:text-red-500 
+                                    transition-all duration-300 rounded-xl w-full outline-none uppercase font-medium tracking-wide text-xl"
+                        >
+                            About <FaChevronDown className={`transition-transform duration-300 ${aboutDropdown ? 'rotate-180 text-red-500' : ''}`} />
+                        </button>
+                        {aboutDropdown && (
+                            <div className="bg-gray-900/80 backdrop-blur-md text-white py-2 rounded-xl shadow-lg w-[95%] mx-auto mt-2
+                                border-l-2 border-red-600 animate-slideDown">
+                                <h3>
+                                    <Link to="/about" onClick={() => handleNavClick('/about')} 
+                                        className="block px-6 py-3 hover:text-red-500 transition-all duration-300 
+                                        hover:bg-red-600/10 hover:pl-8 outline-none font-headers text-lg uppercase">
+                                        Team
+                                    </Link>
+                                </h3>
+                                <h3>
+                                    <Link to="/about/timeline" onClick={() => handleNavClick('/about/timeline')} 
+                                        className="block px-6 py-3 hover:text-red-500 transition-all duration-300 
+                                        hover:bg-red-600/10 hover:pl-8 outline-none font-headers text-lg uppercase">
+                                        Timeline
+                                    </Link>
+                                </h3>
+                                <h3>
+                                    <Link to="/faq" onClick={() => handleNavClick('/faq')} 
+                                        className="block px-6 py-3 hover:text-red-500 transition-all duration-300 
+                                        hover:bg-red-600/10 hover:pl-8 outline-none font-headers text-lg uppercase">
+                                        FAQs
+                                    </Link>
+                                </h3>
+                            </div>
+                        )}
+                    </div>
+                    
+                    {/* Stylish separator */}
+                    <div className="w-[85%] h-[1px] bg-gradient-to-r from-transparent via-red-600 to-transparent my-2"></div>
 
                     {/* Connect Dropdown Mobile */}
-                    <button
-                        onClick={() => setConnectDropdown(!connectDropdown)}
-                        className="flex items-center justify-center gap-2 py-2 px-4 hover:text-red-500 transition-all duration-300 
-                                hover:bg-gray-800/30 rounded-lg w-[90%] outline-none uppercase"
-                    >
-                        Connect <FaChevronDown className={`transition-transform duration-300 ${connectDropdown ? 'rotate-180' : ''}`} />
-                    </button>
-                    {connectDropdown && (
-                        <div className="bg-black/95 backdrop-blur-sm text-white py-2 rounded-lg shadow-lg w-[90%] max-w-[300px] border border-gray-800/50 animate-slideDown">
-                            <h3>
-                                <Link to="/contact" onClick={() => handleNavClick('/contact')} className="block px-6 py-3 hover:text-red-500 transition-all duration-300 hover:pl-8 outline-none font-headers text-3xl uppercase">
-                                    Contact Us
-                                </Link>
-                            </h3>
-                            <h3>
-                                <Link to="/ambassador" onClick={() => handleNavClick('/ambassador')} className="block px-6 py-3 hover:text-red-500 transition-all duration-300 hover:pl-8 outline-none font-headers text-3xl uppercase">
-                                    Ambassador Program
-                                </Link>
-                            </h3>
-                            <h3>
-                                <Link to="/connect/retailers" onClick={() => handleNavClick('/connect/retailers')} className="block px-6 py-3 hover:text-red-500 transition-all duration-300 hover:pl-8 outline-none font-headers text-3xl uppercase">
-                                    Retailers
-                                </Link>
-                            </h3>
-                            <h3>
-                                <Link to="/faq" onClick={() => handleNavClick('/faq')} className="block px-6 py-3 hover:text-red-500 transition-all duration-300 hover:pl-8 outline-none font-headers text-3xl uppercase">
-                                    FAQ
-                                </Link>
-                            </h3>
-                        </div>
-                    )}
+                    <div className="w-[90%] mb-4 mt-4">
+                        <button
+                            onClick={() => setConnectDropdown(!connectDropdown)}
+                            className="flex items-center justify-between gap-2 py-3 px-6 hover:bg-red-600/20 hover:text-red-500 
+                                    transition-all duration-300 rounded-xl w-full outline-none uppercase font-medium tracking-wide text-xl"
+                        >
+                            Connect <FaChevronDown className={`transition-transform duration-300 ${connectDropdown ? 'rotate-180 text-red-500' : ''}`} />
+                        </button>
+                        {connectDropdown && (
+                            <div className="bg-gray-900/80 backdrop-blur-md text-white py-2 rounded-xl shadow-lg w-[95%] mx-auto mt-2
+                                border-l-2 border-red-600 animate-slideDown">
+                                <h3>
+                                    <Link to="/contact" onClick={() => handleNavClick('/contact')} 
+                                        className="block px-6 py-3 hover:text-red-500 transition-all duration-300 
+                                        hover:bg-red-600/10 hover:pl-8 outline-none font-headers text-lg uppercase">
+                                        Contact Us
+                                    </Link>
+                                </h3>
+                                <h3>
+                                    <Link to="/ambassador" onClick={() => handleNavClick('/ambassador')} 
+                                        className="block px-6 py-3 hover:text-red-500 transition-all duration-300 
+                                        hover:bg-red-600/10 hover:pl-8 outline-none font-headers text-lg uppercase">
+                                        Ambassador Program
+                                    </Link>
+                                </h3>
+                                <h3>
+                                    <Link to="/connect/retailers" onClick={() => handleNavClick('/connect/retailers')} 
+                                        className="block px-6 py-3 hover:text-red-500 transition-all duration-300 
+                                        hover:bg-red-600/10 hover:pl-8 outline-none font-headers text-lg uppercase">
+                                        Retailers
+                                    </Link>
+                                </h3>
+                                <h3>
+                                    <Link to="/faq" onClick={() => handleNavClick('/faq')} 
+                                        className="block px-6 py-3 hover:text-red-500 transition-all duration-300 
+                                        hover:bg-red-600/10 hover:pl-8 outline-none font-headers text-lg uppercase">
+                                        FAQ
+                                    </Link>
+                                </h3>
+                            </div>
+                        )}
+                    </div>
+                    
+                    {/* Stylish separator */}
+                    <div className="w-[85%] h-[1px] bg-gradient-to-r from-transparent via-red-600 to-transparent my-2"></div>
 
-                    <h3>
+                    <div className="mt-6 w-[90%]">
                         <Link
                             to="/controlled-chaos#buy-section"
                             onClick={() => handleNavClick('/controlled-chaos#buy-section')}
-                            className="px-6 py-2 bg-red-600 transition-all duration-300 rounded-lg text-3xl font-headers
-                                    hover:shadow-lg hover:shadow-red-500/20 hover:-translate-y-0.5 outline-none hover:box-shadow-[0_0_20px_rgba(239,68,68,0.6)] uppercase"
+                            className="block w-full text-center px-6 py-3 bg-gradient-to-r from-red-700 to-red-600 
+                                transition-all duration-300 rounded-xl text-xl font-bold uppercase tracking-wider
+                                shadow-lg shadow-red-600/20 hover:shadow-red-500/40 hover:scale-105 outline-none"
                         >
-                            Shop
+                            Shop Now
                         </Link>
-                    </h3>
+                    </div>
+                    
+                    {/* Social media icons */}
+                    <div className="flex flex-wrap justify-center gap-3 mt-8 pt-4 border-t border-gray-700/50 w-[90%] pb-8">
+                        {socialLinks.map((social, index) => (
+                            <a
+                                key={social.name}
+                                href={social.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className={`p-3 rounded-full bg-gray-800 hover:bg-gray-700 
+                                    transition-all duration-300 ${social.color}`}
+                                aria-label={social.name}
+                            >
+                                {social.icon}
+                            </a>
+                        ))}
+                    </div>
                 </div>
             )}
 

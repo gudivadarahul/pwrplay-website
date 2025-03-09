@@ -67,16 +67,16 @@ function JoinTheChaos() {
     };
 
     return (
-        <div className="max-w-3xl mx-auto mt-8 md:mt-24">
-            <div className="bg-black/50 p-6 sm:p-8 rounded-xl border-3 border-red-600">
-                <h2 className="text-3xl sm:text-4xl font-headers text-center">
+        <div className="max-w-3xl mx-auto mt-4 md:mt-24 px-4">
+            <div className="bg-black/50 p-4 sm:p-8 rounded-xl border-2 sm:border-3 border-red-600 max-w-[95%] mx-auto">
+                <h2 className="text-3xl sm:text-5xl font-headers text-center">
                     Join the <span className="text-red-600 leading-relaxed align-baseline">pwrplay</span> community
                 </h2>
-                <p className="text-xl mb-8 text-center font-body font-medium">
+                <p className="text-sm sm:text-lg mb-4 sm:mb-8 text-center font-body font-medium">
                     Be the first to hear about exclusive deals, expansions & new games!
                 </p>
 
-                <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4">
+                <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 sm:gap-4">
                     <input
                         type="email"
                         placeholder="Enter your email"
@@ -84,7 +84,7 @@ function JoinTheChaos() {
                         onChange={(e) => setEmail(e.target.value)}
                         required
                         disabled={loading || attempts >= MAX_ATTEMPTS}
-                        className="flex-grow px-4 py-3 bg-black text-white border-2 border-white rounded-lg 
+                        className="flex-grow px-3 sm:px-4 py-2 sm:py-3 bg-black text-white border-2 border-white rounded-lg 
                         focus:border-red-600 focus:outline-none transition-colors placeholder:font-medium 
                         [-webkit-text-fill-color:white] [&:-webkit-autofill]:bg-black 
                         [&:-webkit-autofill]:text-white [&:-webkit-autofill]:shadow-[0_0_0_30px_black_inset] 
@@ -94,7 +94,7 @@ function JoinTheChaos() {
                     <button
                         type="submit"
                         disabled={loading || attempts >= MAX_ATTEMPTS}
-                        className="px-8 py-3 bg-red-600 text-white rounded-lg text-lg font-bold
+                        className="px-6 sm:px-8 py-2 sm:py-3 bg-red-600 text-white rounded-lg text-base sm:text-lg font-bold
                         hover:shadow-lg hover:shadow-red-500/20 hover:-translate-y-0.5 
                         transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
@@ -103,7 +103,7 @@ function JoinTheChaos() {
                 </form>
 
                 {message && (
-                    <p className={`mt-4 text-center text-xl font-body font-medium ${message.includes("already part") || message.includes("Thanks")
+                    <p className={`mt-3 sm:mt-4 text-center text-base sm:text-xl font-body font-medium ${message.includes("already part") || message.includes("Thanks")
                         ? "text-red-600"
                         : "text-yellow-500"
                         }`}>
