@@ -145,49 +145,49 @@ function Retailers() {
                         <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-6">
                             <div className="space-y-3 sm:space-y-4">
                                 <div>
-                                    <label htmlFor="name" className="block mb-1 sm:mb-2 font-body font-bold text-base sm:text-xl">Name</label>
+                                    <label htmlFor="name" className="block mb-1 sm:mb-2 font-body font-bold text-red-600 text-base sm:text-xl">Store Name</label>
                                     <input
                                         type="text"
                                         id="name"
                                         name="name"
-                                        placeholder="First Name, Last Name"
+                                        placeholder="Enter your store name"
                                         value={formData.name}
                                         onChange={handleChange}
-                                        className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-black/50 border-2 border-red-600 rounded-lg focus:border-red-600 focus:outline-none transition-colors text-white text-sm sm:text-base"
+                                        className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-black/50 border-2 border-white rounded-lg focus:border-red-600 focus:outline-none transition-colors text-white text-sm sm:text-base"
                                         required
                                     />
                                 </div>
 
                                 <div>
-                                    <label htmlFor="email" className="block mb-1 sm:mb-2 font-body font-bold text-base sm:text-xl">Email Address</label>
+                                    <label htmlFor="email" className="block mb-1 sm:mb-2 font-body font-bold text-red-600 text-base sm:text-xl">Email Address</label>
                                     <input
                                         type="email"
                                         id="email"
                                         name="email"
-                                        placeholder="Email"
+                                        placeholder="Enter your email"
                                         value={formData.email}
                                         onChange={handleChange}
-                                        className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-black/50 border-2 border-red-600 rounded-lg focus:border-red-600 focus:outline-none transition-colors text-sm sm:text-base"
+                                        className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-black/50 border-2 border-white rounded-lg focus:border-red-600 focus:outline-none transition-colors text-white text-sm sm:text-base"
                                         required
                                     />
                                 </div>
 
                                 <div>
-                                    <label htmlFor="phone" className="block mb-1 sm:mb-2 font-body font-bold text-base sm:text-xl">Phone</label>
+                                    <label htmlFor="phone" className="block mb-1 sm:mb-2 font-body font-bold text-red-600 text-base sm:text-xl">Phone Number</label>
                                     <input
                                         type="tel"
                                         id="phone"
                                         name="phone"
-                                        placeholder="xxx-xxx-xxxx"
+                                        placeholder="(xxx) xxx-xxxx"
                                         value={formData.phone}
                                         onChange={handleChange}
-                                        className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-black/50 border-2 border-red-600 rounded-lg focus:border-red-600 focus:outline-none transition-colors text-sm sm:text-base"
+                                        className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-black/50 border-2 border-white rounded-lg focus:border-red-600 focus:outline-none transition-colors text-white text-sm sm:text-base"
                                         required
                                     />
                                 </div>
 
                                 <div>
-                                    <label htmlFor="storeName" className="block mb-1 sm:mb-2 font-body font-bold text-base sm:text-xl">Store Name</label>
+                                    <label htmlFor="storeName" className="block mb-1 sm:mb-2 font-body font-bold text-red-600 text-base sm:text-xl">Store Name</label>
                                     <input
                                         type="text"
                                         id="storeName"
@@ -195,27 +195,26 @@ function Retailers() {
                                         placeholder="The name of your store"
                                         value={formData.storeName}
                                         onChange={handleChange}
-                                        className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-black/50 border-2 border-red-600 rounded-lg focus:border-red-600 focus:outline-none transition-colors text-sm sm:text-base"
+                                        className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-black/50 border-2 border-white rounded-lg focus:border-red-600 focus:outline-none transition-colors text-white text-sm sm:text-base"
                                         required
                                     />
                                 </div>
 
                                 <div>
-                                    <label htmlFor="website" className="block mb-1 sm:mb-2 font-body font-bold text-base sm:text-xl">Store Website</label>
+                                    <label htmlFor="website" className="block mb-1 sm:mb-2 font-body font-bold text-red-600 text-base sm:text-xl">Website (optional)</label>
                                     <input
-                                        type="text"
+                                        type="url"
                                         id="website"
                                         name="website"
-                                        placeholder="www.yourstore.com"
+                                        placeholder="https://www.example.com"
                                         value={formData.website}
                                         onChange={handleChange}
-                                        className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-black/50 border-2 border-red-600 rounded-lg focus:border-red-600 focus:outline-none transition-colors text-sm sm:text-base"
-                                        required
+                                        className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-black/50 border-2 border-white rounded-lg focus:border-red-600 focus:outline-none transition-colors text-white text-sm sm:text-base"
                                     />
                                 </div>
 
                                 <div>
-                                    <label htmlFor="locationCount" className="block mb-1 sm:mb-2 font-body font-bold text-base sm:text-xl">Location Count</label>
+                                    <label htmlFor="locationCount" className="block mb-1 sm:mb-2 font-body font-bold text-red-600 text-base sm:text-xl">Location Count</label>
                                     <input
                                         type="number"
                                         id="locationCount"
@@ -223,13 +222,13 @@ function Retailers() {
                                         placeholder="#"
                                         value={formData.locationCount}
                                         onChange={handleChange}
-                                        className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-black/50 border-2 border-red-600 rounded-lg focus:border-red-600 focus:outline-none transition-colors text-sm sm:text-base [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                                        className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-black/50 border-2 border-white rounded-lg focus:border-red-600 focus:outline-none transition-colors text-white text-sm sm:text-base [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                                         required
                                     />
                                 </div>
 
                                 <div>
-                                    <label htmlFor="primaryLocation" className="block mb-1 sm:mb-2 font-body font-bold text-base sm:text-xl">Primary Location</label>
+                                    <label htmlFor="primaryLocation" className="block mb-1 sm:mb-2 font-body font-bold text-red-600 text-base sm:text-xl">Primary Location</label>
                                     <input
                                         type="text"
                                         id="primaryLocation"
@@ -237,13 +236,13 @@ function Retailers() {
                                         placeholder="Street, City, State, Zip"
                                         value={formData.primaryLocation}
                                         onChange={handleChange}
-                                        className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-black/50 border-2 border-red-600 rounded-lg focus:border-red-600 focus:outline-none transition-colors text-sm sm:text-base"
+                                        className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-black/50 border-2 border-white rounded-lg focus:border-red-600 focus:outline-none transition-colors text-white text-sm sm:text-base"
                                         required
                                     />
                                 </div>
 
                                 <div>
-                                    <label htmlFor="hearAboutUs" className="block mb-1 sm:mb-2 font-body font-bold text-base sm:text-xl">How did you hear about us?</label>
+                                    <label htmlFor="hearAboutUs" className="block mb-1 sm:mb-2 font-body font-bold text-red-600 text-base sm:text-xl">How did you hear about us?</label>
                                     <textarea
                                         id="hearAboutUs"
                                         name="hearAboutUs"
@@ -251,7 +250,7 @@ function Retailers() {
                                         value={formData.hearAboutUs}
                                         onChange={handleChange}
                                         rows="3"
-                                        className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-black/50 border-2 border-red-600 rounded-lg focus:border-red-600 focus:outline-none transition-colors text-sm sm:text-base"
+                                        className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-black/50 border-2 border-white rounded-lg focus:border-red-600 focus:outline-none transition-colors text-white text-sm sm:text-base"
                                     />
                                 </div>
 

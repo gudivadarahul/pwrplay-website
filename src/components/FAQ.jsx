@@ -27,7 +27,7 @@ const faqs = [
     },
     {
         question: "How do you play Controlled Chaos™?",
-        answer: "It's simple! The Control Center spinner decides which deck you draw from—whether it's an outrageous challenge, an 'ick' callout, a rapid-fire naming game, or a wild group vote. Follow the card's instructions, embrace the chaos, and see where the night takes you."
+        answer: "It's simple! The Control Center spinner decides which deck you draw from—whether it's an outrageous challenge, an 'ick' callout, or a wild group vote. Follow the card's instructions, embrace the chaos, and see where the night takes you."
     },
     {
         question: "Is Controlled Chaos™ a drinking game?",

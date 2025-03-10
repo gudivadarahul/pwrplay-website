@@ -267,7 +267,7 @@ const Navbar = () => {
                                     <Link to="/faq" onClick={() => handleNavClick('/faq')} 
                                         className="block px-6 py-3 hover:text-red-500 transition-all duration-300 
                                         hover:bg-red-600/10 hover:pl-8 outline-none font-headers text-lg uppercase">
-                                        FAQs
+                                        FAQ
                                     </Link>
                                 </h3>
                             </div>
@@ -308,13 +308,6 @@ const Navbar = () => {
                                         className="block px-6 py-3 hover:text-red-500 transition-all duration-300 
                                         hover:bg-red-600/10 hover:pl-8 outline-none font-headers text-lg uppercase">
                                         Retailers
-                                    </Link>
-                                </h3>
-                                <h3>
-                                    <Link to="/faq" onClick={() => handleNavClick('/faq')} 
-                                        className="block px-6 py-3 hover:text-red-500 transition-all duration-300 
-                                        hover:bg-red-600/10 hover:pl-8 outline-none font-headers text-lg uppercase">
-                                        FAQ
                                     </Link>
                                 </h3>
                             </div>

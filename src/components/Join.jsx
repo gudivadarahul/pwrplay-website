@@ -113,10 +113,10 @@ function JoinTheChaos() {
     };
 
     return (
-        <div className="max-w-3xl mx-auto mt-4 md:mt-24 px-4">
+        <div className="max-w-2xl mx-auto mt-4 md:mt-24">
             <div 
                 ref={formContainerRef}
-                className="bg-black/50 p-4 sm:p-8 rounded-xl border-2 sm:border-3 border-red-600 max-w-[95%] mx-auto relative overflow-hidden"
+                className="bg-black/50 p-4 sm:p-8 rounded-xl border-3 border-red-600 w-full mx-auto relative overflow-hidden"
             >
                 {/* Confetti limited to the container but spread wider */}
                 {showConfetti && (
@@ -179,11 +179,8 @@ function JoinTheChaos() {
                                 onChange={(e) => setEmail(e.target.value)}
                                 required
                                 disabled={loading || attempts >= MAX_ATTEMPTS}
-                                className="flex-grow px-3 sm:px-4 py-2 sm:py-3 bg-black text-white border-2 border-white rounded-lg 
-                                focus:border-red-600 focus:outline-none transition-colors placeholder:font-medium 
-                                [-webkit-text-fill-color:white] [&:-webkit-autofill]:bg-black 
-                                [&:-webkit-autofill]:text-white [&:-webkit-autofill]:shadow-[0_0_0_30px_black_inset] 
-                                [&:-webkit-autofill]:[-webkit-text-fill-color:white]
+                                className="flex-grow px-3 sm:px-4 py-2 sm:py-3 bg-black/50 text-white border-2 border-white rounded-lg 
+                                focus:border-red-600 focus:outline-none transition-colors
                                 disabled:opacity-50 disabled:cursor-not-allowed"
                             />
                             <button
@@ -193,7 +190,7 @@ function JoinTheChaos() {
                                 hover:shadow-lg hover:shadow-red-500/20 hover:-translate-y-0.5 
                                 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                             >
-                                {loading ? "Signing up..." : "Sign Up"}
+                                {loading ? "SIGNING UP..." : "SIGN UP"}
                             </button>
                         </form>
 

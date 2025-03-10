@@ -202,7 +202,9 @@ function Contact() {
                         <FaEnvelope className="text-red-600 text-6xl mx-auto mb-4" />
                         <h3 className="text-3xl font-subheaders mb-2">Email Us</h3>
                         <p className="font-body font-medium text-base break-words">
-                            contact@pwrplaycreations.com
+                            <a href="mailto:contact@pwrplaycreations.com" className="hover:text-red-600 transition-colors">
+                                contact@pwrplaycreations.com
+                            </a>
                         </p>
                     </div>
 
@@ -235,7 +237,11 @@ function Contact() {
                             <FaEnvelope className="text-red-600 text-xl mr-2" />
                             <span className="font-subheaders text-lg font-medium text-red-600">Email Us</span>
                         </div>
-                        <span className="font-body font-medium text-base break-words">contact@pwrplaycreations.com</span>
+                        <span className="font-body font-medium text-base break-words">
+                            <a href="mailto:contact@pwrplaycreations.com" className="hover:text-red-600 transition-colors">
+                                contact@pwrplaycreations.com
+                            </a>
+                        </span>
                     </div>
                     
                     {/* Hours */}
@@ -265,7 +271,7 @@ function Contact() {
                                             placeholder="Enter your name"
                                             value={formData.name}
                                             onChange={handleChange}
-                                            className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-black text-white border-2 border-white rounded-lg focus:border-red-600 focus:outline-none transition-colors placeholder:font-medium placeholder:text-sm sm:placeholder:text-base [-webkit-text-fill-color:white] [&:-webkit-autofill]:bg-black [&:-webkit-autofill]:text-white [&:-webkit-autofill]:shadow-[0_0_0_30px_black_inset] [&:-webkit-autofill]:[-webkit-text-fill-color:white]"
+                                            className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-black/50 border-2 border-white rounded-lg focus:border-red-600 focus:outline-none transition-colors text-white text-sm sm:text-base"
                                             required
                                         />
                                     </div>
@@ -278,7 +284,7 @@ function Contact() {
                                             placeholder="Enter your email"
                                             value={formData.email}
                                             onChange={handleChange}
-                                            className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-black text-white border-2 border-white rounded-lg focus:border-red-600 focus:outline-none transition-colors placeholder:font-medium placeholder:text-sm sm:placeholder:text-base [-webkit-text-fill-color:white] [&:-webkit-autofill]:bg-black [&:-webkit-autofill]:text-white [&:-webkit-autofill]:shadow-[0_0_0_30px_black_inset] [&:-webkit-autofill]:[-webkit-text-fill-color:white]"
+                                            className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-black/50 border-2 border-white rounded-lg focus:border-red-600 focus:outline-none transition-colors text-white text-sm sm:text-base"
                                             required
                                         />
                                     </div>
@@ -292,7 +298,7 @@ function Contact() {
                                         placeholder="Enter subject"
                                         value={formData.subject}
                                         onChange={handleChange}
-                                        className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-black text-white border-2 border-white rounded-lg focus:border-red-600 focus:outline-none transition-colors placeholder:font-medium placeholder:text-sm sm:placeholder:text-base [-webkit-text-fill-color:white] [&:-webkit-autofill]:bg-black [&:-webkit-autofill]:text-white [&:-webkit-autofill]:shadow-[0_0_0_30px_black_inset] [&:-webkit-autofill]:[-webkit-text-fill-color:white]"
+                                        className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-black/50 border-2 border-white rounded-lg focus:border-red-600 focus:outline-none transition-colors text-white text-sm sm:text-base"
                                         required
                                     />
                                 </div>
@@ -305,7 +311,7 @@ function Contact() {
                                         value={formData.message}
                                         onChange={handleChange}
                                         rows="4"
-                                        className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-black text-white border-2 border-white rounded-lg focus:border-red-600 focus:outline-none transition-colors placeholder:font-medium placeholder:text-sm sm:placeholder:text-base [-webkit-text-fill-color:white] [&:-webkit-autofill]:bg-black [&:-webkit-autofill]:text-white [&:-webkit-autofill]:shadow-[0_0_0_30px_black_inset] [&:-webkit-autofill]:[-webkit-text-fill-color:white]"
+                                        className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-black/50 border-2 border-white rounded-lg focus:border-red-600 focus:outline-none transition-colors text-white text-sm sm:text-base"
                                         required
                                     ></textarea>
                                 </div>
@@ -315,10 +321,10 @@ function Contact() {
                                         type="text"
                                         id="phone"
                                         name="phone"
-                                        placeholder="Enter your phone"
+                                        placeholder="Enter your phone number"
                                         value={formData.phone}
                                         onChange={handleChange}
-                                        className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-black text-white border-2 border-white rounded-lg focus:border-red-600 focus:outline-none transition-colors placeholder:font-medium placeholder:text-sm sm:placeholder:text-base [-webkit-text-fill-color:white] [&:-webkit-autofill]:bg-black [&:-webkit-autofill]:text-white [&:-webkit-autofill]:shadow-[0_0_0_30px_black_inset] [&:-webkit-autofill]:[-webkit-text-fill-color:white]"
+                                        className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-black/50 border-2 border-white rounded-lg focus:border-red-600 focus:outline-none transition-colors text-white text-sm sm:text-base"
                                     />
                                 </div>
                                 <button
@@ -328,7 +334,7 @@ function Contact() {
                                     hover:shadow-lg hover:shadow-red-500/20 hover:-translate-y-0.5 
                                     transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                                 >
-                                    {loading ? "Sending..." : "Send Message"}
+                                    {loading ? "SENDING..." : "SEND MESSAGE"}
                                 </button>
                             </form>
                         ) : (

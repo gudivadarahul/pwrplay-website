@@ -12,7 +12,7 @@ function Timeline() {
         {
             date: "October 2023",
             title: "The Big Idea",
-            description: "Three friends. One bold vision. In November 2023, we set out to create the ultimate party game—something fresh, hilarious, and guaranteed to bring people together. Thus, Controlled Chaos™ was born.",
+            description: "Three friends. One bold vision. In October 2023, we set out to create the ultimate party game—something fresh, hilarious, and guaranteed to bring people together. Thus, Controlled Chaos™ was born.",
             stats: "3 Founders | 1 Game-Changing Idea"
         },
         {
@@ -35,13 +35,13 @@ function Timeline() {
         },
         {
             date: "February 2025",
-            title: "First Official Prototype Arrives",
+            title: "First Prototype Arrives",
             description: "A major milestone! After months of development and manufacturer negotiations, our first official prototype of Controlled Chaos™ arrived. Seeing the game in its final form for the first time was a surreal moment.",
             stats: "1st Prototype in Hand | The Vision Comes to Life"
         },
         {
             date: "March 2025",
-            title: "Building the Chaos Community",
+            title: "Building the Community",
             description: "With trademarks secured and prototypes tested, we launched our website and built a thriving online community. Our focus is now on marketing, brand awareness, and gearing up for the next big step.",
             stats: "6 Social Platforms | Website Launches"
         }
@@ -106,19 +106,16 @@ function Timeline() {
                                 >
                                     <motion.div
                                         whileHover={{ scale: 1.03 }}
-                                        className="bg-black p-4 sm:p-8 rounded-xl border-2 sm:border-3 border-white hover:border-red-600 
+                                        className="bg-black p-4 sm:p-8 rounded-xl border-2 sm:border-3 border-red-600 hover:border-red-600 
                                         group transition-all duration-300 shadow-lg hover:shadow-red-500/20"
                                     >
-                                        <div className="flex justify-between items-start mb-4">
-                                            <h3 className="text-2xl sm:text-3xl font-bold text-red-600">
+                                        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-4">
+                                            <h3 className="text-3xl sm:text-4xl font-bold text-red-600 text-center sm:text-left mb-2 sm:mb-0">
                                                 {event.title}
                                             </h3>
-                                            <div className="text-right ml-4">
-                                                <div className="text-xl sm:text-2xl text-white font-bold">
-                                                    {event.date.split(" ")[0]}
-                                                </div>
-                                                <div className="text-lg sm:text-xl text-white/80">
-                                                    {event.date.split(" ")[1]}
+                                            <div className="text-center sm:text-right sm:ml-4">
+                                                <div className="text-xl sm:text-2xl text-white font-medium">
+                                                    {event.date}
                                                 </div>
                                             </div>
                                         </div>
@@ -128,7 +125,7 @@ function Timeline() {
                                             </p>
                                         </div>
                                         <div className="pt-3 border-t border-red-600">
-                                            <div className="text-base sm:text-xl text-red-600 font-medium">
+                                            <div className="text-base sm:text-xl text-white font-medium">
                                                 {event.stats}
                                             </div>
                                         </div>
@@ -142,7 +139,7 @@ function Timeline() {
                 {/* Footer Quote */}
                 <div className="text-center mt-12 sm:mt-16 mb-20 sm:mb-32">
                     <p className="text-2xl sm:text-4xl font-bold font-headers italic px-4">
-                        This is just the beginning of our <span className="text-red-600">game-changing</span> journey
+                        This is just the beginning of our <span className="text-red-600">game-changing</span> journey.
                     </p>
                 </div>
             </div>

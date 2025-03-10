@@ -65,7 +65,7 @@ function PromoVideo() {
     },[]);
 
     return (
-        <section className="relative bg-black text-white py-2 px-2 text-center overflow-hidden min-h-[90vh] sm:min-h-[80vh]">
+        <section className="relative bg-black text-white py-2 px-2 text-center overflow-hidden min-h-[90vh] sm:min-h-[80vh] md:min-h-[120vh] lg:min-h-[129vh]">
             {/* Background Text Pattern - Increased size */}
             <div className="absolute inset-0 overflow-hidden whitespace-nowrap leading-tight"
                 style={{
@@ -116,11 +116,11 @@ function PromoVideo() {
 
             {/* Main Content */}
             <div className="relative z-10 flex flex-col items-center justify-start h-full pt-8 md:pt-20">
-                <h2 className="text-4xl sm:text-3xl md:text-5xl lg:text-7xl font-headers bg-black px-4 rounded-lg whitespace-nowrap mt-[-6px] sm:mt-0">
+                <h2 className="text-4xl sm:text-3xl md:text-5xl lg:text-7xl font-headers bg-black px-4 rounded-lg whitespace-nowrap mt-[-6px] sm:mt-0 md:mt-6 lg:mt-3">
                     The <span className="text-red-600">Ultimate</span> Party Game
                 </h2>
 
-                <div className="w-full max-w-[70vw] md:max-w-[400px] mt-8">
+                <div className="w-full max-w-[70vw] md:max-w-[400px] mt-8 md:mt-16 lg:mt-14">
                     <div className="relative w-full pb-[177.78%] md:pb-[177.78%]">
                         <div className="absolute inset-0 backdrop-blur-sm bg-black/50 rounded-lg p-1">
                             <iframe

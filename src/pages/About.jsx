@@ -76,7 +76,7 @@ function About() {
                 </section>
 
                 {/* Founders' Group Image */}
-                <div className="mt-8 sm:mt-12">
+                <div className="mt-8 sm:mt-12 mb-[10vh] md:mb-8">
                     <img
                         src="founders.jpg"
                         alt="Founders"
@@ -126,23 +126,23 @@ function About() {
 
                 {/* Our Mission */}
                 <section className="mb-8 sm:mb-16 mt-16">
-                    <h2 className="text-4xl font-headers mb-8 lg:text-5xl xl:text-6xl 2xl:text-7xl">
+                    <h2 className="text-5xl sm:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-headers mb-8">
                         Our <span className="text-red-600">Mission</span>
                     </h2>
                     <div className="space-y-8">
                         <p className="responsive-text leading-relaxed font-body font-light text-base md:text-2xl md:text-justify">
                             PWRPLAY Creations was founded in 2023 by friends, Seva Vora, Rohith Gudivada, and Niam Vora, with a
-                            bold vision to <span className="text-red-600 leading-relaxed align-baseline"> reinvent the way people connect </span> through unforgettable game nights.
+                            bold vision to <span className="text-red-600 font-medium leading-relaxed align-baseline"> reinvent the way people connect </span> through unforgettable game nights.
                         </p>
 
                         <p className="responsive-text leading-relaxed font-body font-light text-base md:text-2xl md:text-justify">
-                            Frustrated by predictable games with repetitive mechanics, we set out to create something fresh, dynamic, and packed with energy. <span className="text-red-600 leading-relaxed align-baseline">
+                            Frustrated by predictable games with repetitive mechanics, we set out to create something fresh, dynamic, and packed with energy. <span className="text-red-600 font-medium leading-relaxed align-baseline">
                                 Our debut game, Controlled Chaos™</span>, is the first step in that journey,
                             designed to bring laughter, surprises, and bold challenges to every party.
                         </p>
 
                         <p className="responsive-text leading-relaxed font-body font-light   text-base md:text-2xl md:text-justify">
-                            While we are just getting started, we are dedicated to building <span className="text-red-600 leading-relaxed align-baseline">
+                            While we are just getting started, we are dedicated to building <span className="text-red-600 font-medium leading-relaxed align-baseline">
                                 high-quality, original games</span> that break the ice, spark real conversations, and create moments
                             that people will remember long after the night ends. We can't wait to bring Controlled Chaos™ to players soon.
                         </p>

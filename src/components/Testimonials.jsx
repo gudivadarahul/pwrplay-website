@@ -27,6 +27,10 @@ const testimonials = [
         author: "S.P."
     },
     {
+        text: "This game has been one of the most fun ones I've ever played! The prompts are unique and the stick an Ick questions were my personal favorite!",
+        author: "R.S."
+    },
+    {
         text: "I liked how much the social barrier was just absolutely destroyed within two rounds of playing, and that we just played for hours on end without realizing.",
         author: "S.G."
     },
@@ -37,10 +41,6 @@ const testimonials = [
     {
         text: "My favorite part was when we stick-an-ick'd one of our friends a few times in a row. You never know what's gonna happen when the Chaos starts!",
         author: "K.G."
-    },
-    {
-        text: "This game has been one of the most fun ones I've ever played! The prompts are unique and the stick an Ick questions were my personal favorite!",
-        author: "R.S."
     },
     {
         text: "Chaos is the ultimate party game! It gets everyone involved, keeps the energy high, and guarantees nonstop laughter. The Outlast deck was my favorite!",
@@ -55,8 +55,9 @@ const testimonials = [
 // Add this at the top level, outside of any component
 const usedIndices = new Set();
 
-function TestimonialCard({ index }) { 
+function TestimonialCard({ index, flipSequence, sequenceIndex }) { 
     const [currentIndex, setCurrentIndex] = useState(index);
+    const [nextTestimonialIndex, setNextTestimonialIndex] = useState(index);
     const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
     const [touchStart, setTouchStart] = useState(null);
     const [touchEnd, setTouchEnd] = useState(null);
@@ -65,6 +66,10 @@ function TestimonialCard({ index }) {
     const [animationState, setAnimationState] = useState('idle'); // 'idle', 'exiting-left', 'exiting-right'
     const [nextIndex, setNextIndex] = useState(null);
     const [nextCardDirection, setNextCardDirection] = useState('right'); // 'left' or 'right'
+    const [isFlipping, setIsFlipping] = useState(false);
+    const [isFlipped, setIsFlipped] = useState(false);
+    const [isChangingContent, setIsChangingContent] = useState(false);
+    const [lastFlipTime, setLastFlipTime] = useState(0);
 
     const minSwipeDistance = 50;
     const screenWidth = typeof window !== 'undefined' ? window.innerWidth : 0;
@@ -187,6 +192,69 @@ function TestimonialCard({ index }) {
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
     }, []);
+
+    // Updated effect for desktop card flipping in sequence
+    useEffect(() => {
+        if (isMobile) return;
+        
+        // Function to flip the card
+        const flipCard = () => {
+            // Prevent multiple flips while one is in progress or too soon after last flip
+            const now = Date.now();
+            if (isFlipping || now - lastFlipTime < 1000) return;
+            
+            // Update last flip time
+            setLastFlipTime(now);
+            
+            // Calculate the next testimonial index
+            const nextIndex = (currentIndex + 3) % testimonials.length;
+            
+            // Set the content for the back of the card
+            setNextTestimonialIndex(nextIndex);
+            
+            // Start the flip animation
+            setIsFlipping(true);
+            
+            // After full animation completes, update the current index and reset flipping state
+            setTimeout(() => {
+                // First update the current index to match what's now showing on the back
+                setCurrentIndex(nextIndex);
+                
+                // Then update the next index to match, so when we remove the flipping class,
+                // both sides have the same content (preventing the visual double-flip)
+                setNextTestimonialIndex(nextIndex);
+                
+                // Use requestAnimationFrame to ensure the DOM has updated before removing the flipping class
+                requestAnimationFrame(() => {
+                    requestAnimationFrame(() => {
+                        // Now it's safe to remove the flipping class
+                        setIsFlipping(false);
+                        
+                        // Notify parent that this card has completed its flip
+                        if (flipSequence) {
+                            flipSequence(sequenceIndex);
+                        }
+                    });
+                });
+            }, 800); // Match the CSS transition duration
+        };
+        
+        // Subscribe to the flip event - only once per mount
+        const handleFlip = (e) => {
+            // Only flip if this is the current card in the sequence
+            if (e.detail === sequenceIndex) {
+                flipCard();
+            }
+        };
+        
+        // Add event listener
+        window.addEventListener('flip-card', handleFlip);
+        
+        // Clean up
+        return () => {
+            window.removeEventListener('flip-card', handleFlip);
+        };
+    }, [currentIndex, isMobile, sequenceIndex, flipSequence, isFlipping, lastFlipTime]);
 
     if (isMobile) {
         return (
@@ -336,16 +404,81 @@ function TestimonialCard({ index }) {
 
     return (
         <div className="w-full max-w-sm h-full py-4">
-            <div className="bg-black text-white p-6 rounded-xl h-full min-h-[300px] flex flex-col">
-                <FaQuoteLeft className="text-red-600 text-3xl mb-4 flex-shrink-0" />
-                <p className="text-lg mb-4 flex-grow leading-relaxed font-medium">
-                    {testimonials[index].text}
-                </p>
-                <hr className="border-red-600 border-t-2 mb-4" />
-                <div>
-                    <p className="font-bold text-xl text-red-600">
-                        {testimonials[index].author}
-                    </p>
+            <div className={`flip-card ${isFlipping ? 'flipping' : ''}`}>
+                <style jsx>{`
+                    .flip-card {
+                        perspective: 1000px;
+                        width: 100%;
+                        height: 100%;
+                        min-height: 300px;
+                        margin: 10px 0;
+                    }
+                    
+                    .flip-card-inner {
+                        position: relative;
+                        width: 100%;
+                        height: 100%;
+                        text-align: left;
+                        transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+                        transform-style: preserve-3d;
+                        will-change: transform;
+                    }
+                    
+                    .flipping .flip-card-inner {
+                        transform: rotateY(180deg);
+                    }
+                    
+                    /* When not flipping, immediately apply transform without transition */
+                    .flip-card:not(.flipping) .flip-card-inner {
+                        transition: none;
+                    }
+                    
+                    .flip-card-front, .flip-card-back {
+                        position: absolute;
+                        width: 100%;
+                        height: 100%;
+                        -webkit-backface-visibility: hidden;
+                        backface-visibility: hidden;
+                        border-radius: 0.75rem;
+                        will-change: transform;
+                    }
+                    
+                    .flip-card-front {
+                        background-color: black;
+                        color: white;
+                    }
+                    
+                    .flip-card-back {
+                        background-color: black;
+                        color: white;
+                        transform: rotateY(180deg);
+                    }
+                `}</style>
+                <div className="flip-card-inner">
+                    <div className="flip-card-front bg-black text-white p-6 rounded-xl h-full min-h-[300px] flex flex-col">
+                        <FaQuoteLeft className="text-red-600 text-3xl mb-4 flex-shrink-0" />
+                        <p className="text-lg mb-4 flex-grow leading-relaxed font-medium text-left">
+                            {testimonials[currentIndex].text}
+                        </p>
+                        <hr className="border-red-600 border-t-2 mb-4" />
+                        <div>
+                            <p className="font-bold text-xl text-red-600 text-left">
+                                {testimonials[currentIndex].author}
+                            </p>
+                        </div>
+                    </div>
+                    <div className="flip-card-back bg-black text-white p-6 rounded-xl h-full min-h-[300px] flex flex-col">
+                        <FaQuoteLeft className="text-red-600 text-3xl mb-4 flex-shrink-0" />
+                        <p className="text-lg mb-4 flex-grow leading-relaxed font-medium text-left">
+                            {testimonials[nextTestimonialIndex].text}
+                        </p>
+                        <hr className="border-red-600 border-t-2 mb-4" />
+                        <div>
+                            <p className="font-bold text-xl text-red-600 text-left">
+                                {testimonials[nextTestimonialIndex].author}
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -354,6 +487,8 @@ function TestimonialCard({ index }) {
 
 function Testimonials() {
     const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+    const [currentCardIndex, setCurrentCardIndex] = useState(0);
+    const [isFlipSequenceActive, setIsFlipSequenceActive] = useState(false);
 
     useEffect(() => {
         const handleResize = () => {
@@ -364,14 +499,60 @@ function Testimonials() {
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
+    // Manage the flip sequence
+    useEffect(() => {
+        if (isMobile) return;
+
+        // Function to trigger a specific card to flip
+        const triggerCardFlip = (cardIndex) => {
+            // Only dispatch if we're not already in an active sequence
+            if (!isFlipSequenceActive) {
+                setIsFlipSequenceActive(true);
+                window.dispatchEvent(new CustomEvent('flip-card', { detail: cardIndex }));
+            }
+        };
+
+        // Start the sequence after 10 seconds
+        const startSequence = () => {
+            // Flip the first card
+            triggerCardFlip(0);
+        };
+
+        // Initial timeout to start the sequence
+        const initialTimeoutId = setTimeout(startSequence, 10000);
+
+        // Clean up
+        return () => {
+            clearTimeout(initialTimeoutId);
+        };
+    }, [isMobile, isFlipSequenceActive]);
+
+    // Function to be called when a card completes its flip
+    const handleCardFlipped = (index) => {
+        // If this was the last card, wait 10 seconds and start over
+        if (index === 2) {
+            setIsFlipSequenceActive(false); // Reset the sequence flag
+            setTimeout(() => {
+                // Trigger the first card to flip again
+                setIsFlipSequenceActive(true);
+                window.dispatchEvent(new CustomEvent('flip-card', { detail: 0 }));
+            }, 10000); // Wait 10 seconds after the last card flips
+        } else {
+            // Otherwise, trigger the next card to flip after a short delay
+            setTimeout(() => {
+                window.dispatchEvent(new CustomEvent('flip-card', { detail: index + 1 }));
+            }, 500); // Small delay between card flips
+        }
+    };
+
     return (
         <section className="relative bg-white text-black py-24 px-6">
             <div className="max-w-7xl mx-auto">
-                <h2 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-center mb-8">
+                <h2 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-center mb-10">
                     The Reviews Are In — <span className="text-red-600">Players Love It!</span>
                 </h2>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 justify-items-center gap-8 overflow-hidden">
+                <div className="grid grid-cols-1 md:grid-cols-3 justify-items-center gap-8 overflow-visible min-h-[400px]">
                     {isMobile ? (
                         <TestimonialCard key="mobile-card" index={0} />
                     ) : (
@@ -379,6 +560,8 @@ function Testimonials() {
                             <TestimonialCard
                                 key={`card-${index}`}
                                 index={index}
+                                sequenceIndex={index}
+                                flipSequence={handleCardFlipped}
                             />
                         ))
                     )}
@@ -388,4 +571,4 @@ function Testimonials() {
     );
 }
 
-export default Testimonials; 
+export default Testimonials;

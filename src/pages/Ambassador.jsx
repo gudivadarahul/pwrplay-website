@@ -133,7 +133,7 @@ function Ambassador() {
                             <div className="space-y-3 sm:space-y-4">
                                 {/* Name field */}
                                 <div>
-                                    <label htmlFor="name" className="block mb-1 sm:mb-2 font-body font-bold text-base sm:text-xl">Name</label>
+                                    <label htmlFor="name" className="block mb-1 sm:mb-2 font-body font-bold text-base sm:text-xl text-red-600">Name</label>
                                     <input
                                         type="text"
                                         id="name"
@@ -141,14 +141,14 @@ function Ambassador() {
                                         placeholder="First Name, Last Name"
                                         value={formData.name}
                                         onChange={handleChange}
-                                        className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-black/50 border-2 border-red-600 rounded-lg focus:border-red-600 focus:outline-none transition-colors text-white text-sm sm:text-base"
+                                        className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-black/50 border-2 border-white rounded-lg focus:border-red-600 focus:outline-none transition-colors text-white text-sm sm:text-base"
                                         required
                                     />
                                 </div>
 
                                 {/* Email field */}
                                 <div>
-                                    <label htmlFor="email" className="block mb-1 sm:mb-2 font-body font-bold text-base sm:text-xl">Email Address</label>
+                                    <label htmlFor="email" className="block mb-1 sm:mb-2 font-body font-bold text-base sm:text-xl text-red-600">Email Address</label>
                                     <input
                                         type="email"
                                         id="email"
@@ -156,14 +156,14 @@ function Ambassador() {
                                         placeholder="Email"
                                         value={formData.email}
                                         onChange={handleChange}
-                                        className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-black/50 border-2 border-red-600 rounded-lg focus:border-red-600 focus:outline-none transition-colors text-sm sm:text-base"
+                                        className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-black/50 border-2 border-white rounded-lg focus:border-red-600 focus:outline-none transition-colors text-sm sm:text-base"
                                         required
                                     />
                                 </div>
 
                                 {/* Phone field */}
                                 <div>
-                                    <label htmlFor="phone" className="block mb-1 sm:mb-2 font-body font-bold text-base sm:text-xl">Phone Number</label>
+                                    <label htmlFor="phone" className="block mb-1 sm:mb-2 font-body font-bold text-base sm:text-xl text-red-600">Phone Number</label>
                                     <input
                                         type="tel"
                                         id="phone"
@@ -171,14 +171,14 @@ function Ambassador() {
                                         placeholder="(xxx) xxx-xxxx"
                                         value={formData.phone}
                                         onChange={handleChange}
-                                        className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-black/50 border-2 border-red-600 rounded-lg focus:border-red-600 focus:outline-none transition-colors text-sm sm:text-base"
+                                        className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-black/50 border-2 border-white rounded-lg focus:border-red-600 focus:outline-none transition-colors text-sm sm:text-base"
                                         required
                                     />
                                 </div>
 
                                 {/* Social Media Fields */}
                                 <div>
-                                    <label htmlFor="tiktok" className="block mb-1 sm:mb-2 font-body font-bold text-base sm:text-xl">TikTok</label>
+                                    <label htmlFor="tiktok" className="block mb-1 sm:mb-2 font-body font-bold text-base sm:text-xl text-red-600">TikTok</label>
                                     <input
                                         type="text"
                                         id="tiktok"
@@ -186,13 +186,13 @@ function Ambassador() {
                                         placeholder="@username"
                                         value={formData.tiktok}
                                         onChange={handleChange}
-                                        className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-black/50 border-2 border-red-600 rounded-lg focus:border-red-600 focus:outline-none transition-colors text-sm sm:text-base"
+                                        className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-black/50 border-2 border-white rounded-lg focus:border-red-600 focus:outline-none transition-colors text-sm sm:text-base"
                                         required
                                     />
                                 </div>
 
                                 <div>
-                                    <label htmlFor="instagram" className="block mb-1 sm:mb-2 font-body font-bold text-base sm:text-xl">Instagram</label>
+                                    <label htmlFor="instagram" className="block mb-1 sm:mb-2 font-body font-bold text-base sm:text-xl text-red-600">Instagram</label>
                                     <input
                                         type="text"
                                         id="instagram"
@@ -200,13 +200,13 @@ function Ambassador() {
                                         placeholder="@username"
                                         value={formData.instagram}
                                         onChange={handleChange}
-                                        className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-black/50 border-2 border-red-600 rounded-lg focus:border-red-600 focus:outline-none transition-colors text-sm sm:text-base"
+                                        className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-black/50 border-2 border-white rounded-lg focus:border-red-600 focus:outline-none transition-colors text-sm sm:text-base"
                                         required
                                     />
                                 </div>
 
                                 <div>
-                                    <label htmlFor="followers" className="block mb-1 sm:mb-2 font-body font-bold text-base sm:text-xl">Total Followers</label>
+                                    <label htmlFor="followers" className="block mb-1 sm:mb-2 font-body font-bold text-base sm:text-xl text-red-600">Total Followers</label>
                                     <input
                                         type="number"
                                         id="followers"
@@ -214,59 +214,59 @@ function Ambassador() {
                                         placeholder="Combined followers across platforms"
                                         value={formData.followers}
                                         onChange={handleChange}
-                                        className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-black/50 border-2 border-red-600 rounded-lg focus:border-red-600 focus:outline-none transition-colors text-sm sm:text-base [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                                        className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-black/50 border-2 border-white rounded-lg focus:border-red-600 focus:outline-none transition-colors text-sm sm:text-base [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                                         required
                                     />
                                 </div>
 
                                 <div>
-                                    <label htmlFor="role" className="block mb-1 sm:mb-2 font-body font-bold text-base sm:text-xl">Role</label>
+                                    <label htmlFor="role" className="block mb-1 sm:mb-2 font-body font-bold text-base sm:text-xl text-red-600">Role</label>
                                     <select
                                         id="role"
                                         name="role"
                                         value={formData.role}
                                         onChange={handleChange}
-                                        className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-black/50 border-2 border-red-600 rounded-lg focus:border-red-600 focus:outline-none transition-colors text-sm sm:text-base"
+                                        className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-black/50 border-2 border-white rounded-lg focus:border-red-600 focus:outline-none transition-colors text-sm sm:text-base text-gray-400"
                                         required
                                     >
-                                        <option value="">I want to be a</option>
-                                        <option value="Content Creator">Content Creator</option>
-                                        <option value="Influencer">Game Tester</option>
-                                        <option value="Streamer">Both</option>
+                                        <option value="" className="text-gray-400">I want to be a</option>
+                                        <option value="Content Creator" className="text-white">Content Creator</option>
+                                        <option value="Influencer" className="text-white">Game Tester</option>
+                                        <option value="Streamer" className="text-white">Both</option>
                                     </select>
                                 </div>
 
                                 <div>
-                                    <label htmlFor="amazon" className="block mb-1 sm:mb-2 font-body font-bold text-base sm:text-xl">Do you have an Amazon account?</label>
+                                    <label htmlFor="amazon" className="block mb-1 sm:mb-2 font-body font-bold text-base sm:text-xl text-red-600">Do you have an Amazon account?</label>
                                     <select
                                         id="amazon"
                                         name="amazon"
                                         value={formData.amazon}
                                         onChange={handleChange}
-                                        className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-black/50 border-2 border-red-600 rounded-lg focus:border-red-600 focus:outline-none transition-colors text-sm sm:text-base"
+                                        className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-black/50 border-2 border-white rounded-lg focus:border-red-600 focus:outline-none transition-colors text-sm sm:text-base text-gray-400"
                                         required
                                     >
-                                        <option value="">Select an option</option>
-                                        <option value="Yes">Yes</option>
-                                        <option value="No">No</option>
+                                        <option value="" className="text-gray-400">Select an option</option>
+                                        <option value="Yes" className="text-white">Yes</option>
+                                        <option value="No" className="text-white">No</option>
                                     </select>
                                 </div>
 
                                 <div>
-                                    <label htmlFor="payment" className="block mb-1 sm:mb-2 font-body font-bold text-base sm:text-xl">Preferred Payment Method</label>
+                                    <label htmlFor="payment" className="block mb-1 sm:mb-2 font-body font-bold text-base sm:text-xl text-red-600">Preferred Payment Method</label>
                                     <select
                                         id="payment"
                                         name="payment"
                                         value={formData.payment}
                                         onChange={handleChange}
-                                        className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-black/50 border-2 border-red-600 rounded-lg focus:border-red-600 focus:outline-none transition-colors text-sm sm:text-base"
+                                        className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-black/50 border-2 border-white rounded-lg focus:border-red-600 focus:outline-none transition-colors text-sm sm:text-base text-gray-400"
                                         required
                                     >
-                                        <option value="">Select payment method</option>
-                                        <option value="PayPal">PayPal</option>
-                                        <option value="Venmo">Venmo</option>
-                                        <option value="Direct Deposit">Zelle</option>
-                                        <option value="Other">e-Transfer</option>
+                                        <option value="" className="text-gray-400">Select payment method</option>
+                                        <option value="PayPal" className="text-white">PayPal</option>
+                                        <option value="Venmo" className="text-white">Venmo</option>
+                                        <option value="Direct Deposit" className="text-white">Zelle</option>
+                                        <option value="Other" className="text-white">e-Transfer</option>
                                     </select>
                                 </div>
                             </div>
