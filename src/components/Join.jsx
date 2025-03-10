@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import ReactConfetti from "react-confetti";
 import API_URL from '../config/api';
+import { trackEvent } from '../config/analytics';
 
 function JoinTheChaos() {
     const [email, setEmail] = useState("");
@@ -54,6 +55,18 @@ function JoinTheChaos() {
         };
     }, [showConfetti]);
 
+    // Add a new useEffect
+    useEffect(() => {
+        const handleBeforeUnload = () => {
+            if (email && !formSubmitted) {
+                trackEvent('Newsletter', 'Form Abandoned', 'Mailchimp Form');
+            }
+        };
+        
+        window.addEventListener('beforeunload', handleBeforeUnload);
+        return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+    }, [email, formSubmitted]);
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -90,6 +103,9 @@ function JoinTheChaos() {
             const data = await response.json();
 
             if (data.success) {
+                // Track successful newsletter signup
+                trackEvent('Newsletter', 'Signup', 'Mailchimp Subscription');
+                
                 // Always use the message from the API response
                 setMessage(data.message);
                 setEmail("");
@@ -103,6 +119,8 @@ function JoinTheChaos() {
                 // Display the error message from the server
                 setMessage(data.error || "Something went wrong. Please try again.");
                 setIsSuccess(false);
+                // Track failed signup
+                trackEvent('Newsletter', 'Signup Failed', data.error || 'Unknown Error');
             }
         } catch (error) {
             setMessage("Something went wrong. Please try again.");
