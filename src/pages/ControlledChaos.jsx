@@ -2,6 +2,7 @@ import { FaRotate,FaPlay,FaTrophy,FaChampagneGlasses,FaRepeat, FaArrowRight, FaA
 import { BsArrowDownRight } from "react-icons/bs";
 import { useEffect,useState,useRef } from 'react';
 import { useLocation,Link } from 'react-router-dom';
+import API_URL from '../config/api'; // Add this import for the API URL
 
 function ControlledChaos() {
     const location = useLocation();
@@ -9,6 +10,8 @@ function ControlledChaos() {
     const [activeBox, setActiveBox] = useState(0); // Track which box is currently active
     const [emailSubmitted, setEmailSubmitted] = useState(false); // New state for tracking email submission
     const [email, setEmail] = useState(''); // New state for email input
+    const [loading, setLoading] = useState(false); // Add loading state
+    const [message, setMessage] = useState(''); // Add message state for errors
 
     useEffect(() => {
         if (location.hash === '#buy-section') {
@@ -231,14 +234,44 @@ function ControlledChaos() {
     }, []);
 
     // Function to handle email submission
-    const handleNotifySubmit = () => {
-        // In the future, this would send the email to your backend
-        // For now, just show the confirmation message
-        setEmailSubmitted(true);
-        setShowPopup(false); // Hide the popup when showing the confirmation
-        
-        // Reset email field
-        setEmail('');
+    const handleNotifySubmit = async () => {
+        // Basic email validation
+        if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            setMessage("Please enter a valid email address.");
+            return;
+        }
+
+        setLoading(true);
+        setMessage('');
+
+        try {
+            const response = await fetch(`${API_URL}/mailchimp`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    type: 'subscribe',
+                    data: { email }
+                }),
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                // Show success state
+                setEmailSubmitted(true);
+                setShowPopup(false); // Hide the popup when showing the confirmation
+                setEmail(''); // Reset email field
+            } else {
+                // Show error message
+                setMessage(data.error || "Something went wrong. Please try again.");
+            }
+        } catch (error) {
+            setMessage("Something went wrong. Please try again.");
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -444,16 +477,21 @@ function ControlledChaos() {
                                     onChange={(e) => setEmail(e.target.value)}
                                     className="w-full px-4 py-3 bg-black border-2 border-white/30 rounded-lg text-white 
                                     focus:outline-none focus:border-red-600 transition-colors duration-300"
+                                    disabled={loading}
                                 />
+                                {message && (
+                                    <p className="mt-2 text-yellow-500 text-sm text-left">{message}</p>
+                                )}
                             </div>
                             
                             {/* Notify Me Button */}
                             <button 
                                 className="bg-red-600 text-white px-6 py-3 rounded-lg text-lg font-bold
-                                hover:bg-red-700 transition-all duration-300 mb-4 w-full"
+                                hover:bg-red-700 transition-all duration-300 mb-4 w-full disabled:opacity-50 disabled:cursor-not-allowed"
                                 onClick={handleNotifySubmit}
+                                disabled={loading}
                             >
-                                Notify Me on Release
+                                {loading ? "Submitting..." : "Notify Me on Release"}
                             </button>
                             
                             {/* Close Button - Improved styling */}

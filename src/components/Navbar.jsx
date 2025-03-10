@@ -81,9 +81,10 @@ const Navbar = () => {
             <div className="max-w-8xl pr-6 flex justify-between items-center h-full">
                 {/* Left side - Logo */}
                 <div className="flex items-center -ml-2">
-                    {/* Mobile Logo */}
-                    <div className={`block lg:hidden transition-all duration-500 absolute -top-4 ${isScrolled ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-10'
-                        }`}>
+                    {/* Mobile Logo - Only visible when scrolled */}
+                    <div className={`block lg:hidden transition-all duration-500 absolute -top-4 ${
+                        isScrolled ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-10'
+                    }`}>
                         <Link to="/" onClick={() => handleNavClick('/')} className="block">
                             <img
                                 src="/pwrplay-logo.png"
@@ -209,14 +210,25 @@ const Navbar = () => {
             {/* Mobile Navigation */}
             {isOpen && (
                 <div className="fixed top-0 left-0 w-full h-full bg-black
-                    text-white flex flex-col items-center py-8 space-y-0 shadow-xl animate-fadeIn lg:hidden
-                    overflow-y-auto z-[300] pt-20">
+                    text-white flex flex-col items-center py-8 shadow-xl animate-fadeIn lg:hidden
+                    overflow-y-auto z-[300] pt-32">
                     
-                    <div className="w-[90%] mb-4">
+                    {/* Logo in mobile menu */}
+                    <div className="absolute -top-4 left-0 z-[350]">
+                        <Link to="/" onClick={() => handleNavClick('/')}>
+                            <img
+                                src="/pwrplay-logo.png"
+                                alt="PWRPLAY Logo"
+                                className="h-32 w-auto"
+                            />
+                        </Link>
+                    </div>
+                    
+                    <div className="w-[90%]">
                         <button
                             onClick={() => setGamesDropdown(!gamesDropdown)}
-                            className="flex items-center justify-between gap-2 py-3 px-6 hover:bg-red-600/20 hover:text-red-500 
-                                    transition-all duration-300 rounded-xl w-full outline-none uppercase font-medium tracking-wide text-xl"
+                            className="flex items-center justify-between gap-2 py-4 px-6 hover:bg-red-600/20 hover:text-red-500 
+                                    transition-all duration-300 rounded-xl w-full outline-none uppercase font-medium tracking-wide text-2xl"
                         >
                             Games <FaChevronDown className={`transition-transform duration-300 ${gamesDropdown ? 'rotate-180 text-red-500' : ''}`} />
                         </button>
@@ -225,8 +237,8 @@ const Navbar = () => {
                                 border-l-2 border-red-600 animate-slideDown">
                                 <h3>
                                     <Link to="/controlled-chaos" onClick={() => handleNavClick('/controlled-chaos')} 
-                                        className="block px-6 py-3 hover:text-red-500 transition-all duration-300 
-                                        hover:bg-red-600/10 hover:pl-8 outline-none font-headers text-lg uppercase">
+                                        className="block px-6 py-4 hover:text-red-500 transition-all duration-300 
+                                        hover:bg-red-600/10 hover:pl-8 outline-none font-headers text-xl uppercase">
                                         Controlled Chaos™
                                     </Link>
                                 </h3>
@@ -234,15 +246,15 @@ const Navbar = () => {
                         )}
                     </div>
                     
-                    {/* Stylish separator */}
-                    <div className="w-[85%] h-[1px] bg-gradient-to-r from-transparent via-red-600 to-transparent my-2"></div>
+                    {/* Red border separator */}
+                    <div className="w-[90%] border-b-4 border-red-600 my-6"></div>
 
                     {/* About Dropdown Mobile */}
-                    <div className="w-[90%] mb-4 mt-4">
+                    <div className="w-[90%]">
                         <button
                             onClick={() => setAboutDropdown(!aboutDropdown)}
-                            className="flex items-center justify-between gap-2 py-3 px-6 hover:bg-red-600/20 hover:text-red-500 
-                                    transition-all duration-300 rounded-xl w-full outline-none uppercase font-medium tracking-wide text-xl"
+                            className="flex items-center justify-between gap-2 py-4 px-6 hover:bg-red-600/20 hover:text-red-500 
+                                    transition-all duration-300 rounded-xl w-full outline-none uppercase font-medium tracking-wide text-2xl"
                         >
                             About <FaChevronDown className={`transition-transform duration-300 ${aboutDropdown ? 'rotate-180 text-red-500' : ''}`} />
                         </button>
@@ -251,22 +263,22 @@ const Navbar = () => {
                                 border-l-2 border-red-600 animate-slideDown">
                                 <h3>
                                     <Link to="/about" onClick={() => handleNavClick('/about')} 
-                                        className="block px-6 py-3 hover:text-red-500 transition-all duration-300 
-                                        hover:bg-red-600/10 hover:pl-8 outline-none font-headers text-lg uppercase">
+                                        className="block px-6 py-4 hover:text-red-500 transition-all duration-300 
+                                        hover:bg-red-600/10 hover:pl-8 outline-none font-headers text-xl uppercase">
                                         Team
                                     </Link>
                                 </h3>
                                 <h3>
                                     <Link to="/about/timeline" onClick={() => handleNavClick('/about/timeline')} 
-                                        className="block px-6 py-3 hover:text-red-500 transition-all duration-300 
-                                        hover:bg-red-600/10 hover:pl-8 outline-none font-headers text-lg uppercase">
+                                        className="block px-6 py-4 hover:text-red-500 transition-all duration-300 
+                                        hover:bg-red-600/10 hover:pl-8 outline-none font-headers text-xl uppercase">
                                         Timeline
                                     </Link>
                                 </h3>
                                 <h3>
                                     <Link to="/faq" onClick={() => handleNavClick('/faq')} 
-                                        className="block px-6 py-3 hover:text-red-500 transition-all duration-300 
-                                        hover:bg-red-600/10 hover:pl-8 outline-none font-headers text-lg uppercase">
+                                        className="block px-6 py-4 hover:text-red-500 transition-all duration-300 
+                                        hover:bg-red-600/10 hover:pl-8 outline-none font-headers text-xl uppercase">
                                         FAQ
                                     </Link>
                                 </h3>
@@ -274,15 +286,15 @@ const Navbar = () => {
                         )}
                     </div>
                     
-                    {/* Stylish separator */}
-                    <div className="w-[85%] h-[1px] bg-gradient-to-r from-transparent via-red-600 to-transparent my-2"></div>
+                    {/* Red border separator */}
+                    <div className="w-[90%] border-b-4 border-red-600 my-6"></div>
 
                     {/* Connect Dropdown Mobile */}
-                    <div className="w-[90%] mb-4 mt-4">
+                    <div className="w-[90%]">
                         <button
                             onClick={() => setConnectDropdown(!connectDropdown)}
-                            className="flex items-center justify-between gap-2 py-3 px-6 hover:bg-red-600/20 hover:text-red-500 
-                                    transition-all duration-300 rounded-xl w-full outline-none uppercase font-medium tracking-wide text-xl"
+                            className="flex items-center justify-between gap-2 py-4 px-6 hover:bg-red-600/20 hover:text-red-500 
+                                    transition-all duration-300 rounded-xl w-full outline-none uppercase font-medium tracking-wide text-2xl"
                         >
                             Connect <FaChevronDown className={`transition-transform duration-300 ${connectDropdown ? 'rotate-180 text-red-500' : ''}`} />
                         </button>
@@ -291,22 +303,22 @@ const Navbar = () => {
                                 border-l-2 border-red-600 animate-slideDown">
                                 <h3>
                                     <Link to="/contact" onClick={() => handleNavClick('/contact')} 
-                                        className="block px-6 py-3 hover:text-red-500 transition-all duration-300 
-                                        hover:bg-red-600/10 hover:pl-8 outline-none font-headers text-lg uppercase">
+                                        className="block px-6 py-4 hover:text-red-500 transition-all duration-300 
+                                        hover:bg-red-600/10 hover:pl-8 outline-none font-headers text-xl uppercase">
                                         Contact Us
                                     </Link>
                                 </h3>
                                 <h3>
                                     <Link to="/ambassador" onClick={() => handleNavClick('/ambassador')} 
-                                        className="block px-6 py-3 hover:text-red-500 transition-all duration-300 
-                                        hover:bg-red-600/10 hover:pl-8 outline-none font-headers text-lg uppercase">
-                                        Ambassador Program
+                                        className="block px-6 py-4 hover:text-red-500 transition-all duration-300 
+                                        hover:bg-red-600/10 hover:pl-8 outline-none font-headers text-xl uppercase">
+                                        Ambassadors
                                     </Link>
                                 </h3>
                                 <h3>
                                     <Link to="/connect/retailers" onClick={() => handleNavClick('/connect/retailers')} 
-                                        className="block px-6 py-3 hover:text-red-500 transition-all duration-300 
-                                        hover:bg-red-600/10 hover:pl-8 outline-none font-headers text-lg uppercase">
+                                        className="block px-6 py-4 hover:text-red-500 transition-all duration-300 
+                                        hover:bg-red-600/10 hover:pl-8 outline-none font-headers text-xl uppercase">
                                         Retailers
                                     </Link>
                                 </h3>
@@ -314,15 +326,15 @@ const Navbar = () => {
                         )}
                     </div>
                     
-                    {/* Stylish separator */}
-                    <div className="w-[85%] h-[1px] bg-gradient-to-r from-transparent via-red-600 to-transparent my-2"></div>
+                    {/* Red border separator */}
+                    <div className="w-[90%] border-b-4 border-red-600 my-6"></div>
 
-                    <div className="mt-6 w-[90%]">
+                    <div className="w-[90%] mt-2">
                         <Link
                             to="/controlled-chaos#buy-section"
                             onClick={() => handleNavClick('/controlled-chaos#buy-section')}
-                            className="block w-full text-center px-6 py-3 bg-gradient-to-r from-red-700 to-red-600 
-                                transition-all duration-300 rounded-xl text-xl font-bold uppercase tracking-wider
+                            className="block w-full text-center px-6 py-4 bg-gradient-to-r from-red-700 to-red-600 
+                                transition-all duration-300 rounded-xl text-2xl font-bold uppercase tracking-wider
                                 shadow-lg shadow-red-600/20 hover:shadow-red-500/40 hover:scale-105 outline-none"
                         >
                             Shop Now
