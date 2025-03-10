@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import Home from "./pages/Home";
 import About from "./pages/About";
@@ -13,14 +13,27 @@ import Contact from "./pages/Contact";
 import Retailers from "./pages/Retailers";
 import Timeline from "./pages/Timeline";
 import Ambassador from "./pages/Ambassador";
+import { initGA, trackPageView } from './config/analytics';
 
 function App() {
+  const location = useLocation();
+  
   useEffect(() => {
     if ('scrollRestoration' in window.history) {
       window.history.scrollRestoration = 'manual';
       window.scrollTo(0, 0);
     }
   }, []);
+
+  useEffect(() => {
+    // Initialize Google Analytics with your measurement ID
+    initGA('G-GED2BCB4MJ');
+  }, []);
+  
+  useEffect(() => {
+    // Track page views whenever the location changes
+    trackPageView(location.pathname + location.search);
+  }, [location]);
 
   return (
     <div className="flex flex-col min-h-screen bg-black text-white overflow-auto">
