@@ -23,7 +23,7 @@ const testimonials = [
         author: "A.S."
     },
     {
-        text: "It's perfect to play with friends you've known for years or as an icebreaker with a new group. If you want a game that'll have you ugly laughing!",
+        text: "It's perfect to play with friends you've known for years or as an icebreaker with a new group.",
         author: "S.P."
     },
     {
