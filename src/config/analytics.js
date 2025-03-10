@@ -1,5 +1,4 @@
 import ReactGA from 'react-ga4';
-import { useEffect } from 'react';
 
 // Initialize Google Analytics
 export const initGA = (measurementId) => {
@@ -31,22 +30,12 @@ export const trackTiming = (category, variable, value, label) => {
   });
 };
 
-// Measure how long content takes to load
-const startTime = performance.now();
-// ... load content
-const endTime = performance.now();
-trackTiming('Content', 'Load Time', endTime - startTime, 'Home Page Hero');
-
-// Add to your analytics.js
+// Set user property
 export const setUserProperty = (name, value) => {
   ReactGA.set({ [name]: value });
 };
 
-// After user logs in or sets preferences
-setUserProperty('userType', 'premium');
-setUserProperty('theme', 'dark');
-
-// Add to your analytics.js
+// Track exception
 export const trackException = (description, fatal = false) => {
   ReactGA.exception({
     description,
@@ -54,7 +43,7 @@ export const trackException = (description, fatal = false) => {
   });
 };
 
-// Add to your analytics.js
+// Initialize scroll tracking
 export const initScrollTracking = () => {
   let scrollDepths = [25, 50, 75, 90];
   let scrollDepthTriggered = {};
@@ -69,10 +58,4 @@ export const initScrollTracking = () => {
       }
     });
   });
-};
-
-// Then call this in your App.jsx after initializing GA
-useEffect(() => {
-  initGA('G-GED2BCB4MJ');
-  initScrollTracking();
-}, []); 
+}; 
