@@ -49,27 +49,51 @@ const testimonials = [
     {
         text: "Had a great time playing Controlled Chaos with my group. Definitely an interactive game that plays into inside jokes. Love the idea of stick an ick!",
         author: "K.S."
+    },
+    {
+        text: "My favourite play was definitely the \"outlast\" deck because it was hilarious testing everyone's knowledge while they were tipsy and still fighting over the previous play. I'm so incredibly impressed by this game and can't wait to bring it out at my next party!",
+        author: "T.B."
+    },
+    {
+        text: "Controlled Chaos is a fun and easy-to-learn game to play with your friends! Be aware, though, you may have to admit you may have some icks...",
+        author: "P.C."
+    },
+    {
+        text: "My friends and I had a so many laughs playing controlled chaos last weekend! it's a great balance of a fast paced game while still creating a chance to get to know other players. Will definitely be bringing it out again for our next pregame!",
+        author: "S.I."
+    },
+    {
+        text: "Loved playing Controlled Chaos! Such a fun icebreaker. \"Stick an Ick\" was my favorite- when it's brutally accurate and funny, no one can be mad. Perfect way to start the night!",
+        author: "S.J."
+    },
+    {
+        text: "I tried Controlled Chaos at a pre before going to the bar, and it was an absolute hit! The rules are easy to follow, and the variety of challenges and creative twists kept the game exciting. I would highly recommend it to anyone!",
+        author: "C.L."
+    },
+    {
+        text: "Controlled chaos brings together strangers and friends alike. From testing the limits of our mind with Outlast or making up new rules as we go, two hours can really fly by. Oh yeah, disclaimer: May cause hilarious spit takes!",
+        author: "O.C."
     }
 ];
 
 // Add this at the top level, outside of any component
 const usedIndices = new Set();
 
-function TestimonialCard({ index, flipSequence, sequenceIndex }) { 
-    const [currentIndex, setCurrentIndex] = useState(index);
-    const [nextTestimonialIndex, setNextTestimonialIndex] = useState(index);
-    const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
-    const [touchStart, setTouchStart] = useState(null);
-    const [touchEnd, setTouchEnd] = useState(null);
-    const [isDragging, setIsDragging] = useState(false);
-    const [dragOffset, setDragOffset] = useState(0);
-    const [animationState, setAnimationState] = useState('idle'); // 'idle', 'exiting-left', 'exiting-right'
-    const [nextIndex, setNextIndex] = useState(null);
-    const [nextCardDirection, setNextCardDirection] = useState('right'); // 'left' or 'right'
-    const [isFlipping, setIsFlipping] = useState(false);
-    const [isFlipped, setIsFlipped] = useState(false);
-    const [isChangingContent, setIsChangingContent] = useState(false);
-    const [lastFlipTime, setLastFlipTime] = useState(0);
+function TestimonialCard({ index,flipSequence,sequenceIndex }) {
+    const [currentIndex,setCurrentIndex] = useState(index);
+    const [nextTestimonialIndex,setNextTestimonialIndex] = useState(index);
+    const [isMobile,setIsMobile] = useState(window.innerWidth < 768);
+    const [touchStart,setTouchStart] = useState(null);
+    const [touchEnd,setTouchEnd] = useState(null);
+    const [isDragging,setIsDragging] = useState(false);
+    const [dragOffset,setDragOffset] = useState(0);
+    const [animationState,setAnimationState] = useState('idle'); // 'idle', 'exiting-left', 'exiting-right'
+    const [nextIndex,setNextIndex] = useState(null);
+    const [nextCardDirection,setNextCardDirection] = useState('right'); // 'left' or 'right'
+    const [isFlipping,setIsFlipping] = useState(false);
+    const [isFlipped,setIsFlipped] = useState(false);
+    const [isChangingContent,setIsChangingContent] = useState(false);
+    const [lastFlipTime,setLastFlipTime] = useState(0);
 
     const minSwipeDistance = 50;
     const screenWidth = typeof window !== 'undefined' ? window.innerWidth : 0;
@@ -95,7 +119,7 @@ function TestimonialCard({ index, flipSequence, sequenceIndex }) {
 
     const onTouchEnd = () => {
         if (animationState !== 'idle' || !isDragging) return;
-        
+
         if (!touchStart || !touchEnd) {
             setIsDragging(false);
             setDragOffset(0);
@@ -105,83 +129,83 @@ function TestimonialCard({ index, flipSequence, sequenceIndex }) {
         const distance = touchStart - touchEnd;
         const isLeftSwipe = distance > minSwipeDistance;
         const isRightSwipe = distance < -minSwipeDistance;
-        
+
         if (isLeftSwipe) {
             // Calculate next index
             const next = (currentIndex + 1) % testimonials.length;
             setNextIndex(next);
             setNextCardDirection('right');
-            
+
             // Start exit animation
             setAnimationState('exiting-left');
-            
+
             // After exit animation completes, prepare for entry animation
             setTimeout(() => {
                 setCurrentIndex(next);
                 setDragOffset(0);
                 setAnimationState('idle');
                 setNextIndex(null);
-            }, 300);
+            },300);
         } else if (isRightSwipe) {
             // Calculate previous index
             const prev = (currentIndex - 1 + testimonials.length) % testimonials.length;
             setNextIndex(prev);
             setNextCardDirection('left');
-            
+
             // Start exit animation
             setAnimationState('exiting-right');
-            
+
             // After exit animation completes, prepare for entry animation
             setTimeout(() => {
                 setCurrentIndex(prev);
                 setDragOffset(0);
                 setAnimationState('idle');
                 setNextIndex(null);
-            }, 300);
+            },300);
         } else {
             // Return to center if not swiped far enough
             setDragOffset(0);
         }
-        
+
         setIsDragging(false);
     };
 
     const handlePrevClick = () => {
         if (animationState !== 'idle') return;
-        
+
         // Calculate previous index
         const prev = (currentIndex - 1 + testimonials.length) % testimonials.length;
         setNextIndex(prev);
-        
+
         // Start exit animation - always exit to the left
         setAnimationState('exiting-left');
-        
+
         // After exit animation completes, prepare for entry animation
         setTimeout(() => {
             setCurrentIndex(prev);
             setDragOffset(0);
             setAnimationState('idle');
             setNextIndex(null);
-        }, 300);
+        },300);
     };
 
     const handleNextClick = () => {
         if (animationState !== 'idle') return;
-        
+
         // Calculate next index
         const next = (currentIndex + 1) % testimonials.length;
         setNextIndex(next);
-        
+
         // Start exit animation - exit to the right for next button
         setAnimationState('exiting-right');
-        
+
         // After exit animation completes, prepare for entry animation
         setTimeout(() => {
             setCurrentIndex(next);
             setDragOffset(0);
             setAnimationState('idle');
             setNextIndex(null);
-        }, 300);
+        },300);
     };
 
     useEffect(() => {
@@ -189,56 +213,56 @@ function TestimonialCard({ index, flipSequence, sequenceIndex }) {
             setIsMobile(window.innerWidth < 768);
         };
 
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
-    }, []);
+        window.addEventListener('resize',handleResize);
+        return () => window.removeEventListener('resize',handleResize);
+    },[]);
 
     // Updated effect for desktop card flipping in sequence
     useEffect(() => {
         if (isMobile) return;
-        
+
         // Function to flip the card
         const flipCard = () => {
             // Prevent multiple flips while one is in progress or too soon after last flip
             const now = Date.now();
             if (isFlipping || now - lastFlipTime < 1000) return;
-            
+
             // Update last flip time
             setLastFlipTime(now);
-            
+
             // Calculate the next testimonial index
             const nextIndex = (currentIndex + 3) % testimonials.length;
-            
+
             // Set the content for the back of the card
             setNextTestimonialIndex(nextIndex);
-            
+
             // Start the flip animation
             setIsFlipping(true);
-            
+
             // After full animation completes, update the current index and reset flipping state
             setTimeout(() => {
                 // First update the current index to match what's now showing on the back
                 setCurrentIndex(nextIndex);
-                
+
                 // Then update the next index to match, so when we remove the flipping class,
                 // both sides have the same content (preventing the visual double-flip)
                 setNextTestimonialIndex(nextIndex);
-                
+
                 // Use requestAnimationFrame to ensure the DOM has updated before removing the flipping class
                 requestAnimationFrame(() => {
                     requestAnimationFrame(() => {
                         // Now it's safe to remove the flipping class
                         setIsFlipping(false);
-                        
+
                         // Notify parent that this card has completed its flip
                         if (flipSequence) {
                             flipSequence(sequenceIndex);
                         }
                     });
                 });
-            }, 800); // Match the CSS transition duration
+            },800); // Match the CSS transition duration
         };
-        
+
         // Subscribe to the flip event - only once per mount
         const handleFlip = (e) => {
             // Only flip if this is the current card in the sequence
@@ -246,15 +270,15 @@ function TestimonialCard({ index, flipSequence, sequenceIndex }) {
                 flipCard();
             }
         };
-        
+
         // Add event listener
-        window.addEventListener('flip-card', handleFlip);
-        
+        window.addEventListener('flip-card',handleFlip);
+
         // Clean up
         return () => {
-            window.removeEventListener('flip-card', handleFlip);
+            window.removeEventListener('flip-card',handleFlip);
         };
-    }, [currentIndex, isMobile, sequenceIndex, flipSequence, isFlipping, lastFlipTime]);
+    },[currentIndex,isMobile,sequenceIndex,flipSequence,isFlipping,lastFlipTime]);
 
     if (isMobile) {
         return (
@@ -319,16 +343,15 @@ function TestimonialCard({ index, flipSequence, sequenceIndex }) {
                         animation: slideInFromLeft 0.3s forwards;
                     }
                 `}</style>
-                
+
                 {/* Current card */}
-                <div 
-                    className={`current-card ${
-                        animationState === 'exiting-left' 
-                            ? 'exiting-left' 
-                            : animationState === 'exiting-right' 
-                                ? 'exiting-right' 
+                <div
+                    className={`current-card ${animationState === 'exiting-left'
+                            ? 'exiting-left'
+                            : animationState === 'exiting-right'
+                                ? 'exiting-right'
                                 : ''
-                    }`}
+                        }`}
                     onTouchStart={onTouchStart}
                     onTouchMove={onTouchMove}
                     onTouchEnd={onTouchEnd}
@@ -346,7 +369,7 @@ function TestimonialCard({ index, flipSequence, sequenceIndex }) {
                         </div>
                     </div>
                 </div>
-                
+
                 {/* Next card from right */}
                 {nextIndex !== null && animationState === 'exiting-left' && (
                     <div className="next-card-right entering">
@@ -364,7 +387,7 @@ function TestimonialCard({ index, flipSequence, sequenceIndex }) {
                         </div>
                     </div>
                 )}
-                
+
                 {/* Next card from left */}
                 {nextIndex !== null && animationState === 'exiting-right' && (
                     <div className="next-card-left entering">
@@ -382,17 +405,17 @@ function TestimonialCard({ index, flipSequence, sequenceIndex }) {
                         </div>
                     </div>
                 )}
-                
+
                 {/* Left arrow - outside the card on white background */}
-                <div 
+                <div
                     className="absolute left-0 top-1/2 transform -translate-y-1/2 text-red-600 text-3xl font-bold cursor-pointer z-10 bg-white bg-opacity-70 p-2 rounded-r-lg"
                     onClick={handlePrevClick}
                 >
                     &#10094;
                 </div>
-                
+
                 {/* Right arrow - outside the card on white background */}
-                <div 
+                <div
                     className="absolute right-0 top-1/2 transform -translate-y-1/2 text-red-600 text-3xl font-bold cursor-pointer z-10 bg-white bg-opacity-70 p-2 rounded-l-lg"
                     onClick={handleNextClick}
                 >
@@ -486,18 +509,18 @@ function TestimonialCard({ index, flipSequence, sequenceIndex }) {
 }
 
 function Testimonials() {
-    const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
-    const [currentCardIndex, setCurrentCardIndex] = useState(0);
-    const [isFlipSequenceActive, setIsFlipSequenceActive] = useState(false);
+    const [isMobile,setIsMobile] = useState(window.innerWidth < 768);
+    const [currentCardIndex,setCurrentCardIndex] = useState(0);
+    const [isFlipSequenceActive,setIsFlipSequenceActive] = useState(false);
 
     useEffect(() => {
         const handleResize = () => {
             setIsMobile(window.innerWidth < 768);
         };
 
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
-    }, []);
+        window.addEventListener('resize',handleResize);
+        return () => window.removeEventListener('resize',handleResize);
+    },[]);
 
     // Manage the flip sequence
     useEffect(() => {
@@ -508,7 +531,7 @@ function Testimonials() {
             // Only dispatch if we're not already in an active sequence
             if (!isFlipSequenceActive) {
                 setIsFlipSequenceActive(true);
-                window.dispatchEvent(new CustomEvent('flip-card', { detail: cardIndex }));
+                window.dispatchEvent(new CustomEvent('flip-card',{ detail: cardIndex }));
             }
         };
 
@@ -519,13 +542,13 @@ function Testimonials() {
         };
 
         // Initial timeout to start the sequence
-        const initialTimeoutId = setTimeout(startSequence, 10000);
+        const initialTimeoutId = setTimeout(startSequence,10000);
 
         // Clean up
         return () => {
             clearTimeout(initialTimeoutId);
         };
-    }, [isMobile, isFlipSequenceActive]);
+    },[isMobile,isFlipSequenceActive]);
 
     // Function to be called when a card completes its flip
     const handleCardFlipped = (index) => {
@@ -535,13 +558,13 @@ function Testimonials() {
             setTimeout(() => {
                 // Trigger the first card to flip again
                 setIsFlipSequenceActive(true);
-                window.dispatchEvent(new CustomEvent('flip-card', { detail: 0 }));
-            }, 10000); // Wait 10 seconds after the last card flips
+                window.dispatchEvent(new CustomEvent('flip-card',{ detail: 0 }));
+            },10000); // Wait 10 seconds after the last card flips
         } else {
             // Otherwise, trigger the next card to flip after a short delay
             setTimeout(() => {
-                window.dispatchEvent(new CustomEvent('flip-card', { detail: index + 1 }));
-            }, 500); // Small delay between card flips
+                window.dispatchEvent(new CustomEvent('flip-card',{ detail: index + 1 }));
+            },500); // Small delay between card flips
         }
     };
 
@@ -556,7 +579,7 @@ function Testimonials() {
                     {isMobile ? (
                         <TestimonialCard key="mobile-card" index={0} />
                     ) : (
-                        [0, 1, 2].map((index) => (
+                        [0,1,2].map((index) => (
                             <TestimonialCard
                                 key={`card-${index}`}
                                 index={index}
