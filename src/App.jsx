@@ -14,6 +14,7 @@ import Retailers from "./pages/Retailers";
 import Timeline from "./pages/Timeline";
 import Ambassador from "./pages/Ambassador";
 import { initGA, trackPageView } from './config/analytics';
+import ScrollToTop from './components/ScrollToTop';
 
 function App() {
   const location = useLocation();
@@ -36,25 +37,28 @@ function App() {
   }, [location]);
 
   return (
-    <div className="flex flex-col min-h-screen bg-black text-white overflow-auto">
-      <Navbar />
-      <main className="flex-grow">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/buy" element={<BuyNow />} />
-          <Route path="/terms" element={<Terms />} />
-          <Route path="/privacy" element={<Privacy />} />
-          <Route path="/faq" element={<FAQ />} />
-          <Route path="/controlled-chaos" element={<ControlledChaos />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/connect/retailers" element={<Retailers />} />
-          <Route path="/about/timeline" element={<Timeline />} />
-          <Route path="/ambassador" element={<Ambassador />} />
-        </Routes>
-      </main>
-      <Footer />
-    </div>
+    <>
+      <ScrollToTop />
+      <div className="flex flex-col min-h-screen bg-black text-white overflow-auto">
+        <Navbar />
+        <main className="flex-grow">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/buy" element={<BuyNow />} />
+            <Route path="/terms" element={<Terms />} />
+            <Route path="/privacy" element={<Privacy />} />
+            <Route path="/faq" element={<FAQ />} />
+            <Route path="/controlled-chaos" element={<ControlledChaos />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/connect/retailers" element={<Retailers />} />
+            <Route path="/about/timeline" element={<Timeline />} />
+            <Route path="/ambassador" element={<Ambassador />} />
+          </Routes>
+        </main>
+        <Footer />
+      </div>
+    </>
   );
 }
 

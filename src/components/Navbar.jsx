@@ -60,11 +60,11 @@ const Navbar = () => {
         } else {
             document.body.style.overflow = 'auto';
         }
-        
+
         return () => {
             document.body.style.overflow = 'auto';
         };
-    }, [isOpen]);
+    },[isOpen]);
 
     const handleNavClick = (path) => {
         if (window.location.pathname === path) {
@@ -74,17 +74,16 @@ const Navbar = () => {
     };
 
     return (
-        <nav className={`fixed w-full z-[200] transition-colors duration-300 h-20 ${isScrolled
-                ? 'bg-black lg:border-b-0 border-b-2 border-red-600'
-                : 'bg-transparent border-b-0 lg:border-b-2 lg:border-transparent'
+        <nav className={`fixed w-full z-[200] h-20 ${isScrolled
+            ? 'bg-black border-b-2 border-red-600 transition-none'
+            : 'bg-transparent border-b-0 border-transparent transition-colors duration-300'
             }`}>
             <div className="max-w-8xl pr-6 flex justify-between items-center h-full">
                 {/* Left side - Logo */}
                 <div className="flex items-center -ml-2">
                     {/* Mobile Logo - Only visible when scrolled */}
-                    <div className={`block lg:hidden transition-all duration-500 absolute -top-4 ${
-                        isScrolled ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-10'
-                    }`}>
+                    <div className={`block lg:hidden transition-all duration-500 absolute -top-4 ${isScrolled ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-10'
+                        }`}>
                         <Link to="/" onClick={() => handleNavClick('/')} className="block">
                             <img
                                 src="/pwrplay-logo.png"
@@ -200,8 +199,8 @@ const Navbar = () => {
                         hover:bg-red-600/10 rounded-full outline-none z-[400] relative"
                     aria-label={isOpen ? "Close menu" : "Open menu"}
                 >
-                    {isOpen ? 
-                        <FaXmark size={28} className="text-red-500" /> : 
+                    {isOpen ?
+                        <FaXmark size={28} className="text-red-500" /> :
                         <FaBars size={28} />
                     }
                 </button>
@@ -212,7 +211,7 @@ const Navbar = () => {
                 <div className="fixed top-0 left-0 w-full h-full bg-black
                     text-white flex flex-col items-center py-8 shadow-xl animate-fadeIn lg:hidden
                     overflow-y-auto z-[300] pt-32">
-                    
+
                     {/* Logo in mobile menu */}
                     <div className="absolute -top-4 left-0 z-[350]">
                         <Link to="/" onClick={() => handleNavClick('/')}>
@@ -223,7 +222,7 @@ const Navbar = () => {
                             />
                         </Link>
                     </div>
-                    
+
                     <div className="w-[90%]">
                         <button
                             onClick={() => setGamesDropdown(!gamesDropdown)}
@@ -236,7 +235,7 @@ const Navbar = () => {
                             <div className="bg-black border border-gray-800 text-white py-2 rounded-xl shadow-lg w-[95%] mx-auto mt-2
                                 border-l-2 border-red-600 animate-slideDown">
                                 <h3>
-                                    <Link to="/controlled-chaos" onClick={() => handleNavClick('/controlled-chaos')} 
+                                    <Link to="/controlled-chaos" onClick={() => handleNavClick('/controlled-chaos')}
                                         className="block px-6 py-4 hover:text-red-500 transition-all duration-300 
                                         hover:bg-red-600/10 hover:pl-8 outline-none font-headers text-xl uppercase">
                                         Controlled Chaos™
@@ -245,7 +244,7 @@ const Navbar = () => {
                             </div>
                         )}
                     </div>
-                    
+
                     {/* Red border separator */}
                     <div className="w-[90%] border-b-4 border-red-600 my-6"></div>
 
@@ -262,21 +261,21 @@ const Navbar = () => {
                             <div className="bg-black border border-gray-800 text-white py-2 rounded-xl shadow-lg w-[95%] mx-auto mt-2
                                 border-l-2 border-red-600 animate-slideDown">
                                 <h3>
-                                    <Link to="/about" onClick={() => handleNavClick('/about')} 
+                                    <Link to="/about" onClick={() => handleNavClick('/about')}
                                         className="block px-6 py-4 hover:text-red-500 transition-all duration-300 
                                         hover:bg-red-600/10 hover:pl-8 outline-none font-headers text-xl uppercase">
                                         Team
                                     </Link>
                                 </h3>
                                 <h3>
-                                    <Link to="/about/timeline" onClick={() => handleNavClick('/about/timeline')} 
+                                    <Link to="/about/timeline" onClick={() => handleNavClick('/about/timeline')}
                                         className="block px-6 py-4 hover:text-red-500 transition-all duration-300 
                                         hover:bg-red-600/10 hover:pl-8 outline-none font-headers text-xl uppercase">
                                         Timeline
                                     </Link>
                                 </h3>
                                 <h3>
-                                    <Link to="/faq" onClick={() => handleNavClick('/faq')} 
+                                    <Link to="/faq" onClick={() => handleNavClick('/faq')}
                                         className="block px-6 py-4 hover:text-red-500 transition-all duration-300 
                                         hover:bg-red-600/10 hover:pl-8 outline-none font-headers text-xl uppercase">
                                         FAQ
@@ -285,7 +284,7 @@ const Navbar = () => {
                             </div>
                         )}
                     </div>
-                    
+
                     {/* Red border separator */}
                     <div className="w-[90%] border-b-4 border-red-600 my-6"></div>
 
@@ -302,21 +301,21 @@ const Navbar = () => {
                             <div className="bg-black border border-gray-800 text-white py-2 rounded-xl shadow-lg w-[95%] mx-auto mt-2
                                 border-l-2 border-red-600 animate-slideDown">
                                 <h3>
-                                    <Link to="/contact" onClick={() => handleNavClick('/contact')} 
+                                    <Link to="/contact" onClick={() => handleNavClick('/contact')}
                                         className="block px-6 py-4 hover:text-red-500 transition-all duration-300 
                                         hover:bg-red-600/10 hover:pl-8 outline-none font-headers text-xl uppercase">
                                         Contact Us
                                     </Link>
                                 </h3>
                                 <h3>
-                                    <Link to="/ambassador" onClick={() => handleNavClick('/ambassador')} 
+                                    <Link to="/ambassador" onClick={() => handleNavClick('/ambassador')}
                                         className="block px-6 py-4 hover:text-red-500 transition-all duration-300 
                                         hover:bg-red-600/10 hover:pl-8 outline-none font-headers text-xl uppercase">
                                         Ambassadors
                                     </Link>
                                 </h3>
                                 <h3>
-                                    <Link to="/connect/retailers" onClick={() => handleNavClick('/connect/retailers')} 
+                                    <Link to="/connect/retailers" onClick={() => handleNavClick('/connect/retailers')}
                                         className="block px-6 py-4 hover:text-red-500 transition-all duration-300 
                                         hover:bg-red-600/10 hover:pl-8 outline-none font-headers text-xl uppercase">
                                         Retailers
@@ -325,7 +324,7 @@ const Navbar = () => {
                             </div>
                         )}
                     </div>
-                    
+
                     {/* Red border separator */}
                     <div className="w-[90%] border-b-4 border-red-600 my-6"></div>
 
@@ -340,10 +339,10 @@ const Navbar = () => {
                             Shop Now
                         </Link>
                     </div>
-                    
+
                     {/* Social media icons */}
                     <div className="flex flex-wrap justify-center gap-3 mt-8 pt-4 border-t border-gray-700/50 w-[90%] pb-8">
-                        {socialLinks.map((social, index) => (
+                        {socialLinks.map((social,index) => (
                             <a
                                 key={social.name}
                                 href={social.url}

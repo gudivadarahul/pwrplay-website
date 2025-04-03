@@ -277,15 +277,15 @@ function ControlledChaos() {
     return (
         <div className="pt-24 sm:pt-40 text-white min-h-screen bg-black">
             {/* Logo in top-left */}
-            <div className="absolute -top-8 sm:-top-10 md:-top-12 lg:-top-14 xl:-top-16 -left-2 sm:-left-3 z-[100]">
-                <Link to="/">
-                    <img
-                        src="/pwrplay-logo.png"
-                        alt="PWRPLAY Logo"
-                        className="w-36 sm:w-48 md:w-56 lg:w-64 xl:w-72 h-auto cursor-pointer"
-                    />
-                </Link>
-            </div>
+            <div className="absolute -top-8 sm:-top-10 md:-top-12 lg:-top-14 xl:-top-16 -left-2 sm:-left-3 z-[30]">
+        <Link to="/">
+          <img
+            src="/pwrplay-logo.png"
+            alt="PWRPLAY Logo"
+            className="w-48 sm:w-56 md:w-64 lg:w-72 xl:w-80 h-auto cursor-pointer"
+          />
+        </Link>
+      </div>
 
             {/* Title */}
             <h1 className="text-4xl md:text-6xl font-headers text-center fade-in px-4 sm:px-8">

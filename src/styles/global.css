@@ -133,3 +133,83 @@ h6 {
 .rotate-y-180 {
     transform: rotateY(180deg);
 }
+
+/* Hide scrollbars on mobile devices while preserving scroll functionality */
+@media (max-width: 767px) {
+  /* For WebKit browsers (Chrome, Safari) */
+  ::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* For Firefox */
+  * {
+    scrollbar-width: none;
+  }
+  
+  /* For IE and Edge */
+  * {
+    -ms-overflow-style: none;
+  }
+  
+  /* Make the body and html use the scrolling-touch property for smoother scrolling on iOS */
+  html, body {
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* Remove underlines from email links - more specific and forceful */
+a[href^="mailto:"],
+a[href*="@"],
+span[href*="@"],
+.no-underline {
+  text-decoration: none !important;
+  border-bottom: none !important;
+  box-shadow: none !important;
+}
+
+/* Target specifically the email in the FAQ component */
+.text-red-600.no-underline {
+  text-decoration: none !important;
+  border-bottom: none !important;
+}
+
+/* Chrome-specific fix for email links */
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  a[href^="mailto:"],
+  a[href*="@"],
+  span:has(text()[contains("@")]),
+  *:not(a)[contains("@")] {
+    text-decoration: none !important;
+    -webkit-text-decoration: none !important;
+  }
+}
+
+/* Prevent Chrome from auto-linking emails */
+.prevent-auto-link {
+  unicode-bidi: bidi-override;
+  direction: rtl;
+  text-align: left;
+}
+
+/* Fix Chrome autofill styling */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus {
+  -webkit-text-fill-color: white !important;
+  -webkit-box-shadow: 0 0 0px 1000px rgba(0, 0, 0, 0.5) inset !important;
+  box-shadow: 0 0 0px 1000px rgba(0, 0, 0, 0.5) inset !important;
+  transition: background-color 5000s ease-in-out 0s;
+  caret-color: white;
+}
+
+/* Ensure text remains white in all states */
+input:-webkit-autofill::first-line {
+  color: white !important;
+}

@@ -1,10 +1,10 @@
-import { useState, useEffect } from 'react';
-import { useLocation, Link } from 'react-router-dom';
+import { useState,useEffect } from 'react';
+import { useLocation,Link } from 'react-router-dom';
 import API_URL from '../config/api';
 
 function Ambassador() {
     const location = useLocation();
-    const [formData, setFormData] = useState({
+    const [formData,setFormData] = useState({
         name: '',
         email: '',
         phone: '',
@@ -16,41 +16,41 @@ function Ambassador() {
         payment: '',
         agreeToTerms: false
     });
-    
-    const [loading, setLoading] = useState(false);
-    const [isSubmitted, setIsSubmitted] = useState(false);
-    const [errorMessage, setErrorMessage] = useState('');
-    
+
+    const [loading,setLoading] = useState(false);
+    const [isSubmitted,setIsSubmitted] = useState(false);
+    const [errorMessage,setErrorMessage] = useState('');
+
     useEffect(() => {
         window.scrollTo({
             top: 0,
             left: 0,
             behavior: 'instant'
         });
-    }, [location]);
-    
+    },[location]);
+
     // Email validation function
     const isValidEmail = (email) => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return emailRegex.test(email);
     };
-    
+
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log('Submitting form data:', formData);
-        
+        console.log('Submitting form data:',formData);
+
         // Clear any previous error messages
         setErrorMessage('');
-        
+
         // Client-side validation
         if (!isValidEmail(formData.email)) {
             setErrorMessage("Please enter a valid email address.");
             return;
         }
-        
+
         setLoading(true);
         try {
-            const response = await fetch(`${API_URL}/mailchimp`, {
+            const response = await fetch(`${API_URL}/mailchimp`,{
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -60,11 +60,11 @@ function Ambassador() {
                     data: formData
                 })
             });
-            
-            console.log('Server response status:', response.status);
+
+            console.log('Server response status:',response.status);
             const data = await response.json();
-            console.log('Server response data:', data);
-            
+            console.log('Server response data:',data);
+
             if (data.success) {
                 setIsSubmitted(true);
                 setFormData({
@@ -84,26 +84,68 @@ function Ambassador() {
                 setErrorMessage(data.error || 'Failed to submit application. Please try again.');
             }
         } catch (error) {
-            console.error('Error:', error);
+            console.error('Error:',error);
             setErrorMessage('Failed to submit application. Please try again.');
         } finally {
             setLoading(false);
         }
     };
-    
+
     const handleChange = (e) => {
         const value = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
         setFormData({
             ...formData,
             [e.target.name]: value
         });
-        
+
         // Clear error message when user starts typing
         if (errorMessage) {
             setErrorMessage('');
         }
     };
-    
+
+    useEffect(() => {
+        // Function to fix autofill styling
+        const fixAutofillStyling = () => {
+            const inputs = document.querySelectorAll('input, select');
+
+            inputs.forEach(input => {
+                // Apply direct style overrides
+                input.setAttribute('style','background-color: transparent !important; color: white !important;');
+
+                // Add event listener to catch the moment Chrome applies autofill
+                input.addEventListener('animationstart',(e) => {
+                    if (e.animationName === 'autofill') {
+                        e.target.setAttribute('style','background-color: transparent !important; color: white !important;');
+                    }
+                });
+            });
+        };
+
+        // Run immediately and after a short delay to catch Chrome's autofill
+        fixAutofillStyling();
+        setTimeout(fixAutofillStyling,100);
+
+        // Also add a style element to detect autofill
+        const styleElem = document.createElement('style');
+        styleElem.innerHTML = `
+            @keyframes autofill {
+                from {/**/}
+                to {/**/}
+            }
+            
+            input:-webkit-autofill {
+                animation-name: autofill;
+                animation-fill-mode: both;
+            }
+        `;
+        document.head.appendChild(styleElem);
+
+        return () => {
+            document.head.removeChild(styleElem);
+        };
+    },[]);
+
     return (
         <div className="pt-24 sm:pt-32 px-6 min-h-screen bg-black text-white">
             {/* Logo in top-left */}
@@ -143,6 +185,8 @@ function Ambassador() {
                                         onChange={handleChange}
                                         className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-black/50 border-2 border-white rounded-lg focus:border-red-600 focus:outline-none transition-colors text-white text-sm sm:text-base"
                                         required
+                                        autocomplete="off"
+                                        data-form-type="other"
                                     />
                                 </div>
 
@@ -158,6 +202,8 @@ function Ambassador() {
                                         onChange={handleChange}
                                         className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-black/50 border-2 border-white rounded-lg focus:border-red-600 focus:outline-none transition-colors text-sm sm:text-base"
                                         required
+                                        autocomplete="off"
+                                        data-form-type="email"
                                     />
                                 </div>
 
@@ -173,6 +219,8 @@ function Ambassador() {
                                         onChange={handleChange}
                                         className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-black/50 border-2 border-white rounded-lg focus:border-red-600 focus:outline-none transition-colors text-sm sm:text-base"
                                         required
+                                        autocomplete="off"
+                                        data-form-type="tel"
                                     />
                                 </div>
 
@@ -188,6 +236,8 @@ function Ambassador() {
                                         onChange={handleChange}
                                         className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-black/50 border-2 border-white rounded-lg focus:border-red-600 focus:outline-none transition-colors text-sm sm:text-base"
                                         required
+                                        autocomplete="off"
+                                        data-form-type="text"
                                     />
                                 </div>
 
@@ -202,6 +252,8 @@ function Ambassador() {
                                         onChange={handleChange}
                                         className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-black/50 border-2 border-white rounded-lg focus:border-red-600 focus:outline-none transition-colors text-sm sm:text-base"
                                         required
+                                        autocomplete="off"
+                                        data-form-type="text"
                                     />
                                 </div>
 
@@ -216,6 +268,8 @@ function Ambassador() {
                                         onChange={handleChange}
                                         className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-black/50 border-2 border-white rounded-lg focus:border-red-600 focus:outline-none transition-colors text-sm sm:text-base [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                                         required
+                                        autocomplete="off"
+                                        data-form-type="number"
                                     />
                                 </div>
 
@@ -228,6 +282,8 @@ function Ambassador() {
                                         onChange={handleChange}
                                         className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-black/50 border-2 border-white rounded-lg focus:border-red-600 focus:outline-none transition-colors text-sm sm:text-base text-gray-400"
                                         required
+                                        autocomplete="off"
+                                        data-form-type="select"
                                     >
                                         <option value="" className="text-gray-400">I want to be a</option>
                                         <option value="Content Creator" className="text-white">Content Creator</option>
@@ -245,6 +301,8 @@ function Ambassador() {
                                         onChange={handleChange}
                                         className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-black/50 border-2 border-white rounded-lg focus:border-red-600 focus:outline-none transition-colors text-sm sm:text-base text-gray-400"
                                         required
+                                        autocomplete="off"
+                                        data-form-type="select"
                                     >
                                         <option value="" className="text-gray-400">Select an option</option>
                                         <option value="Yes" className="text-white">Yes</option>
@@ -261,6 +319,8 @@ function Ambassador() {
                                         onChange={handleChange}
                                         className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-black/50 border-2 border-white rounded-lg focus:border-red-600 focus:outline-none transition-colors text-sm sm:text-base text-gray-400"
                                         required
+                                        autocomplete="off"
+                                        data-form-type="select"
                                     >
                                         <option value="" className="text-gray-400">Select payment method</option>
                                         <option value="PayPal" className="text-white">PayPal</option>
@@ -270,7 +330,7 @@ function Ambassador() {
                                     </select>
                                 </div>
                             </div>
-                            
+
                             <button
                                 type="submit"
                                 disabled={loading}
@@ -280,7 +340,7 @@ function Ambassador() {
                             >
                                 {loading ? 'SUBMITTING...' : 'SUBMIT YOUR APPLICATION'}
                             </button>
-                            
+
                             {/* Error message display */}
                             {errorMessage && (
                                 <div className="mt-4 p-4 bg-red-600/20 border-2 border-red-600 rounded-lg animate-pulse">

@@ -282,7 +282,7 @@ function TestimonialCard({ index,flipSequence,sequenceIndex }) {
 
     if (isMobile) {
         return (
-            <div className="w-full h-[400px] relative overflow-hidden">
+            <div className="w-full h-[450px] relative overflow-hidden">
                 <style jsx>{`
                     @keyframes slideOutToLeft {
                         from { transform: translateX(0); }
@@ -347,10 +347,10 @@ function TestimonialCard({ index,flipSequence,sequenceIndex }) {
                 {/* Current card */}
                 <div
                     className={`current-card ${animationState === 'exiting-left'
-                            ? 'exiting-left'
-                            : animationState === 'exiting-right'
-                                ? 'exiting-right'
-                                : ''
+                        ? 'exiting-left'
+                        : animationState === 'exiting-right'
+                            ? 'exiting-right'
+                            : ''
                         }`}
                     onTouchStart={onTouchStart}
                     onTouchMove={onTouchMove}

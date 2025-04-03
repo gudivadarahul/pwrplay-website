@@ -82,6 +82,32 @@ function FAQ() {
         });
     },[location]);
 
+    const renderAnswer = (answer) => {
+        const paragraphs = answer.split('\n');
+
+        return paragraphs.map((paragraph,index) => {
+            // Break up email addresses so browsers don't auto-link them
+            const formattedText = paragraph.replace(
+                /\[([^\]]+)@([^\]]+\.[^\]]+)\]/g,
+                '<span class="text-red-600">$1<span style="display:none">-no-auto-link-</span>@<span style="display:none">-no-auto-link-</span>$2</span>'
+            );
+
+            // Handle social media handles
+            const finalText = formattedText.replace(
+                /\[@([^\]]+)\]/g,
+                '<span class="text-red-600">@$1</span>'
+            );
+
+            return (
+                <p
+                    key={index}
+                    className="mb-2 last:mb-0"
+                    dangerouslySetInnerHTML={{ __html: finalText }}
+                />
+            );
+        });
+    };
+
     return (
         <div className="pt-30 sm:pt-32 px-6 min-h-screen bg-black">
             {/* Logo in top-left */}
@@ -115,7 +141,9 @@ function FAQ() {
                                         )}
                                     </DisclosureButton>
                                     <DisclosurePanel className="mt-3 sm:mt-4 text-sm sm:text-xl md:text-2xl text-gray-300 font-body font-medium">
-                                        {faq.answer}
+                                        <div className="mt-2">
+                                            {renderAnswer(faq.answer)}
+                                        </div>
                                     </DisclosurePanel>
                                 </div>
                             )}

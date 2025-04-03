@@ -120,6 +120,49 @@ function Retailers() {
         }
     };
 
+    // Add the useEffect hook for fixing autofill styling
+    useEffect(() => {
+        // Function to fix autofill styling
+        const fixAutofillStyling = () => {
+            const inputs = document.querySelectorAll('input, select');
+            
+            inputs.forEach(input => {
+                // Apply direct style overrides
+                input.setAttribute('style', 'background-color: transparent !important; color: white !important;');
+                
+                // Add event listener to catch the moment Chrome applies autofill
+                input.addEventListener('animationstart', (e) => {
+                    if (e.animationName === 'autofill') {
+                        e.target.setAttribute('style', 'background-color: transparent !important; color: white !important;');
+                    }
+                });
+            });
+        };
+        
+        // Run immediately and after a short delay to catch Chrome's autofill
+        fixAutofillStyling();
+        setTimeout(fixAutofillStyling, 100);
+        
+        // Also add a style element to detect autofill
+        const styleElem = document.createElement('style');
+        styleElem.innerHTML = `
+            @keyframes autofill {
+                from {/**/}
+                to {/**/}
+            }
+            
+            input:-webkit-autofill {
+                animation-name: autofill;
+                animation-fill-mode: both;
+            }
+        `;
+        document.head.appendChild(styleElem);
+        
+        return () => {
+            document.head.removeChild(styleElem);
+        };
+    }, []);
+
     return (
         <div className="pt-24 sm:pt-32 px-6 min-h-screen bg-black text-white">
             <div className="absolute -top-8 sm:-top-10 md:-top-12 lg:-top-14 xl:-top-16 -left-2 sm:-left-3 z-[100]">
@@ -155,6 +198,8 @@ function Retailers() {
                                         onChange={handleChange}
                                         className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-black/50 border-2 border-white rounded-lg focus:border-red-600 focus:outline-none transition-colors text-white text-sm sm:text-base"
                                         required
+                                        autocomplete="off"
+                                        data-form-type="other"
                                     />
                                 </div>
 
@@ -169,6 +214,8 @@ function Retailers() {
                                         onChange={handleChange}
                                         className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-black/50 border-2 border-white rounded-lg focus:border-red-600 focus:outline-none transition-colors text-white text-sm sm:text-base"
                                         required
+                                        autocomplete="off"
+                                        data-form-type="other"
                                     />
                                 </div>
 
@@ -183,6 +230,8 @@ function Retailers() {
                                         onChange={handleChange}
                                         className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-black/50 border-2 border-white rounded-lg focus:border-red-600 focus:outline-none transition-colors text-white text-sm sm:text-base"
                                         required
+                                        autocomplete="off"
+                                        data-form-type="other"
                                     />
                                 </div>
 
@@ -197,6 +246,8 @@ function Retailers() {
                                         onChange={handleChange}
                                         className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-black/50 border-2 border-white rounded-lg focus:border-red-600 focus:outline-none transition-colors text-white text-sm sm:text-base"
                                         required
+                                        autocomplete="off"
+                                        data-form-type="other"
                                     />
                                 </div>
 
@@ -210,6 +261,8 @@ function Retailers() {
                                         value={formData.website}
                                         onChange={handleChange}
                                         className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-black/50 border-2 border-white rounded-lg focus:border-red-600 focus:outline-none transition-colors text-white text-sm sm:text-base"
+                                        autocomplete="off"
+                                        data-form-type="other"
                                     />
                                 </div>
 
@@ -224,6 +277,8 @@ function Retailers() {
                                         onChange={handleChange}
                                         className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-black/50 border-2 border-white rounded-lg focus:border-red-600 focus:outline-none transition-colors text-white text-sm sm:text-base [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                                         required
+                                        autocomplete="off"
+                                        data-form-type="other"
                                     />
                                 </div>
 
@@ -238,6 +293,8 @@ function Retailers() {
                                         onChange={handleChange}
                                         className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-black/50 border-2 border-white rounded-lg focus:border-red-600 focus:outline-none transition-colors text-white text-sm sm:text-base"
                                         required
+                                        autocomplete="off"
+                                        data-form-type="other"
                                     />
                                 </div>
 
@@ -251,6 +308,8 @@ function Retailers() {
                                         onChange={handleChange}
                                         rows="3"
                                         className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-black/50 border-2 border-white rounded-lg focus:border-red-600 focus:outline-none transition-colors text-white text-sm sm:text-base"
+                                        autocomplete="off"
+                                        data-form-type="other"
                                     />
                                 </div>
 
@@ -265,6 +324,8 @@ function Retailers() {
                                             className="peer appearance-none h-4 w-4 sm:h-5 sm:w-5 border-2 border-red-600 rounded bg-black/50 checked:bg-red-600 
                                             hover:border-red-500 focus:outline-none focus:ring-2 focus:ring-red-500/30 transition-all duration-200"
                                             required
+                                            autocomplete="off"
+                                            data-form-type="other"
                                         />
                                         <svg
                                             className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-2 sm:w-3 h-2 sm:h-3 pointer-events-none 

@@ -1,16 +1,25 @@
-import { Link } from "react-router-dom";
+import { useState,useEffect } from "react";
+import { Link,useLocation } from "react-router-dom";
 import "../assets/Hero.css";
 
 function Hero() {
+  const handleNavClick = (path) => {
+    if (window.location.pathname === path) {
+      window.location.reload();
+    }
+  };
+
   return (
     <section className="relative bg-black text-white h-[50vh] md:h-screen flex items-center px-4 sm:px-6 text-center overflow-hidden">
       {/* Logo in top-left */}
       <div className="absolute -top-8 sm:-top-10 md:-top-12 lg:-top-14 xl:-top-16 -left-2 sm:-left-3 z-[30]">
-        <img
-          src="/pwrplay-logo.png"
-          alt="PWRPLAY Logo"
-          className="w-48 sm:w-56 md:w-64 lg:w-72 xl:w-80 h-auto"
-        />
+        <Link to="/" onClick={() => handleNavClick('/')} className="block">
+          <img
+            src="/pwrplay-logo.png"
+            alt="PWRPLAY Logo"
+            className="w-48 sm:w-56 md:w-64 lg:w-72 xl:w-80 h-auto cursor-pointer"
+          />
+        </Link>
       </div>
 
       {/* Content Container */}
@@ -19,25 +28,25 @@ function Hero() {
         <div className="w-full flex flex-col justify-center mt-16 sm:mt-20 md:mt-24 relative">
           {/* Top line animation - hidden on mobile */}
           <div className="absolute w-full overflow-visible -top-8 sm:-top-12 md:-top-16 left-0 right-0 hidden sm:flex justify-end pr-4 sm:pr-8 md:pr-12 z-20">
-            <img 
-              src="/top_line.png" 
-              alt="" 
+            <img
+              src="/top_line.png"
+              alt=""
               className="line-animation-right w-2/5 md:w-1/3"
             />
           </div>
-          
+
           <h1 className="text-5xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-headers leading-tight -mt-12 sm:-mt-10 md:-mt-12 relative z-10">
             <span className="inline-block reveal-text-1">Reinventing</span>{" "}
             <span className="inline-block reveal-text-2">the Way</span>{" "}
             <span className="inline-block reveal-text-3">You</span>{" "}
             <span className="inline-block reveal-text-4 text-red-600">Connect.</span>
           </h1>
-          
+
           {/* Bottom line animation - hidden on mobile */}
           <div className="absolute w-full overflow-visible top-6 sm:top-10 md:top-14 left-0 right-0 hidden sm:flex justify-start pl-4 sm:pl-8 md:pl-12 z-20">
-            <img 
-              src="/bottom_line.png" 
-              alt="" 
+            <img
+              src="/bottom_line.png"
+              alt=""
               className="line-animation-left w-2/5 md:w-1/3"
             />
           </div>
