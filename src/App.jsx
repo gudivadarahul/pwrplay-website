@@ -15,7 +15,7 @@ import Timeline from "./pages/Timeline";
 import Ambassador from "./pages/Ambassador";
 import { initGA, trackPageView } from './config/analytics';
 import ScrollToTop from "./components/ScrollToTop";
-import Products from "./pages/Products";
+// import Products from "./pages/Products"; // Comment this out temporarily
 import NotificationPopup from './components/NotificationPopup';
 
 function AppContent() {
@@ -81,7 +81,7 @@ function AppContent() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
-            <Route path="/products" element={<Products />} />
+            {/* <Route path="/products" element={<Products />} /> */} {/* Comment this out temporarily */}
             <Route path="/buy" element={<BuyNow />} />
             <Route path="/terms" element={<Terms />} />
             <Route path="/privacy" element={<Privacy />} />
