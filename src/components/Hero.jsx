@@ -67,32 +67,32 @@ function Hero() {
       <div className="relative z-10 max-w-6xl mx-auto w-full flex flex-col items-center justify-center text-center">
         {/* Text Content */}
         <div className="w-full flex flex-col justify-center mt-16 sm:mt-20 md:mt-24 relative">
-          {/* Countdown Timer - Positioned much higher */}
-          <div className="absolute w-full top-[-300px] sm:top-[-320px] md:top-[-340px] left-0 right-0 z-30">
+          {/* Countdown Timer - Adjusted position on mobile */}
+          <div className="absolute w-full top-[-60px] sm:top-[-200px] md:top-[-340px] left-0 right-0 z-30">
             <p className="text-xl sm:text-2xl md:text-3xl font-subheaders mb-3 sm:mb-4 font-bold text-white">PRESALE LAUNCH</p>
-            <div className="flex justify-center items-center space-x-3 sm:space-x-5 md:space-x-6">
+            <div className="flex justify-center items-center space-x-2 sm:space-x-3 md:space-x-5">
               <div className="flex flex-col items-center">
-                <div className="bg-black border-2 border-red-600 rounded-lg w-16 sm:w-20 md:w-24 h-16 sm:h-20 md:h-24 flex flex-col items-center justify-center">
-                  <span className="text-2xl sm:text-3xl md:text-4xl font-bold">{timeLeft.days}</span>
-                  <span className="text-sm sm:text-base text-red-600 font-semibold">DAYS</span>
+                <div className="bg-black border-2 border-red-600 rounded-lg w-14 sm:w-16 md:w-24 h-14 sm:h-16 md:h-24 flex flex-col items-center justify-center shadow-lg shadow-red-500/30 glow-effect">
+                  <span className="text-xl sm:text-2xl md:text-4xl font-bold">{timeLeft.days}</span>
+                  <span className="text-xs sm:text-sm md:text-base text-red-600 font-semibold">DAYS</span>
                 </div>
               </div>
               <div className="flex flex-col items-center">
-                <div className="bg-black border-2 border-red-600 rounded-lg w-16 sm:w-20 md:w-24 h-16 sm:h-20 md:h-24 flex flex-col items-center justify-center">
-                  <span className="text-2xl sm:text-3xl md:text-4xl font-bold">{timeLeft.hours}</span>
-                  <span className="text-sm sm:text-base text-red-600 font-semibold">HRS</span>
+                <div className="bg-black border-2 border-red-600 rounded-lg w-14 sm:w-16 md:w-24 h-14 sm:h-16 md:h-24 flex flex-col items-center justify-center shadow-lg shadow-red-500/30 glow-effect">
+                  <span className="text-xl sm:text-2xl md:text-4xl font-bold">{timeLeft.hours}</span>
+                  <span className="text-xs sm:text-sm md:text-base text-red-600 font-semibold">HRS</span>
                 </div>
               </div>
               <div className="flex flex-col items-center">
-                <div className="bg-black border-2 border-red-600 rounded-lg w-16 sm:w-20 md:w-24 h-16 sm:h-20 md:h-24 flex flex-col items-center justify-center">
-                  <span className="text-2xl sm:text-3xl md:text-4xl font-bold">{timeLeft.minutes}</span>
-                  <span className="text-sm sm:text-base text-red-600 font-semibold">MINS</span>
+                <div className="bg-black border-2 border-red-600 rounded-lg w-14 sm:w-16 md:w-24 h-14 sm:h-16 md:h-24 flex flex-col items-center justify-center shadow-lg shadow-red-500/30 glow-effect">
+                  <span className="text-xl sm:text-2xl md:text-4xl font-bold">{timeLeft.minutes}</span>
+                  <span className="text-xs sm:text-sm md:text-base text-red-600 font-semibold">MINS</span>
                 </div>
               </div>
               <div className="flex flex-col items-center">
-                <div className="bg-black border-2 border-red-600 rounded-lg w-16 sm:w-20 md:w-24 h-16 sm:h-20 md:h-24 flex flex-col items-center justify-center">
-                  <span className="text-2xl sm:text-3xl md:text-4xl font-bold">{timeLeft.seconds}</span>
-                  <span className="text-sm sm:text-base text-red-600 font-semibold">SECS</span>
+                <div className="bg-black border-2 border-red-600 rounded-lg w-14 sm:w-16 md:w-24 h-14 sm:h-16 md:h-24 flex flex-col items-center justify-center shadow-lg shadow-red-500/30 glow-effect">
+                  <span className="text-xl sm:text-2xl md:text-4xl font-bold">{timeLeft.seconds}</span>
+                  <span className="text-xs sm:text-sm md:text-base text-red-600 font-semibold">SECS</span>
                 </div>
               </div>
             </div>
@@ -107,7 +107,7 @@ function Hero() {
             />
           </div>
 
-          <h1 className="text-5xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-headers leading-tight -mt-12 sm:-mt-10 md:-mt-12 relative z-10">
+          <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-headers leading-tight mt-16 sm:mt-0 md:-mt-12 relative z-10">
             <span className="inline-block reveal-text-1">Reinventing</span>{" "}
             <span className="inline-block reveal-text-2">the Way</span>{" "}
             <span className="inline-block reveal-text-3">You</span>{" "}
@@ -123,7 +123,7 @@ function Hero() {
             />
           </div>
 
-          <div className="button-fade absolute top-25 sm:top-48 md:top-60 lg:top-72 left-0 right-0 reveal-button">
+          <div className="button-fade absolute top-32 sm:top-48 md:top-60 lg:top-72 left-0 right-0 reveal-button">
             <Link
               to="/controlled-chaos"
               className="inline-block border-2 border-red-600 bg-black text-white 

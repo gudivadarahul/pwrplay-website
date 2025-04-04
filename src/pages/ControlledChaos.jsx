@@ -435,24 +435,6 @@ function ControlledChaos() {
                 </div>
             </section>
 
-            {/* Buy Now Section */}
-            <div id="buy-section" className="flex flex-col md:flex-row justify-center gap-4 sm:gap-6 mb-12 px-4">
-                <button
-                    onClick={() => setShowPopup(true)}
-                    className="bg-red-600 text-white px-4 py-2 md:px-8 md:py-4 rounded-lg text-sm md:text-lg font-bold text-center
-                    hover:shadow-lg hover:shadow-red-500/20 hover:-translate-y-0.5 transition-all duration-300 max-w-[250px] md:max-w-none mx-auto md:mx-0 w-full"
-                >
-                    Buy Now (Amazon U.S.)
-                </button>
-                <button
-                    onClick={() => setShowPopup(true)}
-                    className="bg-red-600 text-white px-4 py-2 md:px-8 md:py-4 rounded-lg text-sm md:text-lg font-bold text-center
-                    hover:shadow-lg hover:shadow-red-500/20 hover:-translate-y-0.5 transition-all duration-300 max-w-[250px] md:max-w-none mx-auto md:mx-0 w-full"
-                >
-                    Buy Now (Amazon Canada)
-                </button>
-            </div>
-
             {/* Coming Soon Popup */}
             {showPopup && (
                 <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-80 backdrop-blur-sm transition-all duration-300">
