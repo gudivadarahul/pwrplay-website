@@ -1,5 +1,5 @@
-import { Routes, Route, useLocation } from "react-router-dom";
-import { useEffect } from "react";
+import { Routes,Route,useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import BuyNow from "./pages/BuyNow";
@@ -14,27 +14,63 @@ import Retailers from "./pages/Retailers";
 import Timeline from "./pages/Timeline";
 import Ambassador from "./pages/Ambassador";
 import { initGA, trackPageView } from './config/analytics';
-import ScrollToTop from './components/ScrollToTop';
+import ScrollToTop from "./components/ScrollToTop";
+import Products from "./pages/Products";
+import NotificationPopup from './components/NotificationPopup';
 
-function App() {
+function AppContent() {
+  const [showPopup, setShowPopup] = useState(false);
+  const [emailSubmitted, setEmailSubmitted] = useState(false);
   const location = useLocation();
-  
+
   useEffect(() => {
     if ('scrollRestoration' in window.history) {
       window.history.scrollRestoration = 'manual';
-      window.scrollTo(0, 0);
+      window.scrollTo(0,0);
     }
-  }, []);
+  },[]);
 
   useEffect(() => {
     // Initialize Google Analytics with your measurement ID
     initGA('G-GED2BCB4MJ');
-  }, []);
-  
+  },[]);
+
   useEffect(() => {
     // Track page views whenever the location changes
     trackPageView(location.pathname + location.search);
-  }, [location]);
+  },[location]);
+
+  useEffect(() => {
+    const style = document.createElement('style');
+    style.textContent = `
+      :root {
+        --font-headers: 'Bebas Neue', sans-serif;
+        --font-body: 'Montserrat', sans-serif;
+      }
+    `;
+    document.head.appendChild(style);
+    return () => document.head.removeChild(style);
+  },[]);
+
+  // Show popup when on home page and email not submitted
+  useEffect(() => {
+    if (location.pathname === '/' && !emailSubmitted) {
+      // Longer delay to wait for Hero animations to complete
+      // Most CSS animations in Hero.jsx finish within 3-4 seconds
+      const timer = setTimeout(() => {
+        setShowPopup(true);
+      }, 4500); // 4.5 seconds delay
+      
+      return () => clearTimeout(timer);
+    } else {
+      setShowPopup(false);
+    }
+  }, [location.pathname, emailSubmitted]);
+
+  const handleEmailSubmit = () => {
+    setEmailSubmitted(true);
+    setShowPopup(false);
+  };
 
   return (
     <>
@@ -45,6 +81,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
+            <Route path="/products" element={<Products />} />
             <Route path="/buy" element={<BuyNow />} />
             <Route path="/terms" element={<Terms />} />
             <Route path="/privacy" element={<Privacy />} />
@@ -58,7 +95,20 @@ function App() {
         </main>
         <Footer />
       </div>
+      
+      {showPopup && (
+        <NotificationPopup 
+          onClose={() => setShowPopup(false)} 
+          onSubmit={handleEmailSubmit} 
+        />
+      )}
     </>
+  );
+}
+
+function App() {
+  return (
+    <AppContent />
   );
 }
 
