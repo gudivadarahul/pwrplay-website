@@ -9,8 +9,49 @@ function Hero() {
     }
   };
 
+  // Add countdown timer state and logic
+  const [timeLeft,setTimeLeft] = useState({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0
+  });
+
+  useEffect(() => {
+    // Set your target date to April 11th, 2025 at 12:00 PM
+    const targetDate = new Date("2025-04-11T12:00:00").getTime();
+
+    const interval = setInterval(() => {
+      const now = new Date().getTime();
+      const difference = targetDate - now;
+
+      if (difference <= 0) {
+        clearInterval(interval);
+        setTimeLeft({ days: 0,hours: 0,minutes: 0,seconds: 0 });
+        return;
+      }
+
+      const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+      setTimeLeft({ days,hours,minutes,seconds });
+    },1000);
+
+    return () => clearInterval(interval);
+  },[]);
+
   return (
-    <section className="relative bg-black text-white h-[50vh] md:h-screen flex items-center px-4 sm:px-6 text-center overflow-hidden">
+    <section
+      className="relative text-white h-[50vh] md:h-screen flex items-center px-4 sm:px-6 text-center overflow-hidden"
+      style={{
+        backgroundImage: "linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('/hero-bg1.jpeg')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat"
+      }}
+    >
       {/* Logo in top-left */}
       <div className="absolute -top-8 sm:-top-10 md:-top-12 lg:-top-14 xl:-top-16 -left-2 sm:-left-3 z-[30]">
         <Link to="/" onClick={() => handleNavClick('/')} className="block">
@@ -26,6 +67,37 @@ function Hero() {
       <div className="relative z-10 max-w-6xl mx-auto w-full flex flex-col items-center justify-center text-center">
         {/* Text Content */}
         <div className="w-full flex flex-col justify-center mt-16 sm:mt-20 md:mt-24 relative">
+          {/* Countdown Timer - Positioned much higher */}
+          <div className="absolute w-full top-[-300px] sm:top-[-320px] md:top-[-340px] left-0 right-0 z-30">
+            <p className="text-xl sm:text-2xl md:text-3xl font-subheaders mb-3 sm:mb-4 font-bold text-white">PRESALE LAUNCH</p>
+            <div className="flex justify-center items-center space-x-3 sm:space-x-5 md:space-x-6">
+              <div className="flex flex-col items-center">
+                <div className="bg-black border-2 border-red-600 rounded-lg w-16 sm:w-20 md:w-24 h-16 sm:h-20 md:h-24 flex flex-col items-center justify-center">
+                  <span className="text-2xl sm:text-3xl md:text-4xl font-bold">{timeLeft.days}</span>
+                  <span className="text-sm sm:text-base text-red-600 font-semibold">DAYS</span>
+                </div>
+              </div>
+              <div className="flex flex-col items-center">
+                <div className="bg-black border-2 border-red-600 rounded-lg w-16 sm:w-20 md:w-24 h-16 sm:h-20 md:h-24 flex flex-col items-center justify-center">
+                  <span className="text-2xl sm:text-3xl md:text-4xl font-bold">{timeLeft.hours}</span>
+                  <span className="text-sm sm:text-base text-red-600 font-semibold">HRS</span>
+                </div>
+              </div>
+              <div className="flex flex-col items-center">
+                <div className="bg-black border-2 border-red-600 rounded-lg w-16 sm:w-20 md:w-24 h-16 sm:h-20 md:h-24 flex flex-col items-center justify-center">
+                  <span className="text-2xl sm:text-3xl md:text-4xl font-bold">{timeLeft.minutes}</span>
+                  <span className="text-sm sm:text-base text-red-600 font-semibold">MINS</span>
+                </div>
+              </div>
+              <div className="flex flex-col items-center">
+                <div className="bg-black border-2 border-red-600 rounded-lg w-16 sm:w-20 md:w-24 h-16 sm:h-20 md:h-24 flex flex-col items-center justify-center">
+                  <span className="text-2xl sm:text-3xl md:text-4xl font-bold">{timeLeft.seconds}</span>
+                  <span className="text-sm sm:text-base text-red-600 font-semibold">SECS</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
           {/* Top line animation - hidden on mobile */}
           <div className="absolute w-full overflow-visible -top-8 sm:-top-12 md:-top-16 left-0 right-0 hidden sm:flex justify-end pr-4 sm:pr-8 md:pr-12 z-20">
             <img
