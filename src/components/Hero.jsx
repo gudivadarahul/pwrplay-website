@@ -66,7 +66,7 @@ function Hero() {
       {/* Content Container */}
       <div className="relative z-10 max-w-6xl mx-auto w-full flex flex-col items-center justify-center text-center">
         {/* Text Content */}
-        <div className="w-full flex flex-col justify-center mt-16 sm:mt-20 md:mt-24 relative">
+        <div className="w-full flex flex-col justify-center mt-16 sm:mt-20 md:mt-60 relative">
           {/* Countdown Timer - Adjusted position on mobile */}
           <div className="absolute w-full top-[-60px] sm:top-[-200px] md:top-[-340px] left-0 right-0 z-30">
             <p className="text-xl sm:text-2xl md:text-3xl font-subheaders mb-3 sm:mb-4 font-bold text-white">PRESALE LAUNCH</p>
@@ -123,12 +123,12 @@ function Hero() {
             />
           </div>
 
-          <div className="button-fade absolute top-32 sm:top-48 md:top-60 lg:top-72 left-0 right-0 reveal-button">
+          <div className="button-fade absolute top-32 sm:top-48 md:top-60 lg:top-64 xl:top-56 left-0 right-0 reveal-button">
             <Link
               to="/controlled-chaos"
               className="inline-block border-2 border-red-600 bg-black text-white 
-              px-4 sm:px-5 md:px-6 lg:px-8 
-              py-2 sm:py-2.5 md:py-3 lg:py-4 
+              px-4 sm:px-5 lg:px-8 
+              py-2 sm:py-2.5 lg:py-4 
               rounded-lg lg:rounded-xl
               text-base sm:text-lg md:text-xl lg:text-2xl
               font-subheaders font-semibold 
