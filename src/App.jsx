@@ -1,5 +1,5 @@
 import { Routes,Route,useLocation } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect,useState } from "react";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import BuyNow from "./pages/BuyNow";
@@ -13,14 +13,14 @@ import Contact from "./pages/Contact";
 import Retailers from "./pages/Retailers";
 import Timeline from "./pages/Timeline";
 import Ambassador from "./pages/Ambassador";
-import { initGA, trackPageView } from './config/analytics';
+import { initGA,trackPageView } from './config/analytics';
 import ScrollToTop from "./components/ScrollToTop";
-// import Products from "./pages/Products"; // Comment this out temporarily
+import Products from "./pages/Products";
 import NotificationPopup from './components/NotificationPopup';
 
 function AppContent() {
-  const [showPopup, setShowPopup] = useState(false);
-  const [emailSubmitted, setEmailSubmitted] = useState(false);
+  const [showPopup,setShowPopup] = useState(false);
+  const [emailSubmitted,setEmailSubmitted] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
@@ -59,13 +59,13 @@ function AppContent() {
       // Most CSS animations in Hero.jsx finish within 3-4 seconds
       const timer = setTimeout(() => {
         setShowPopup(true);
-      }, 4500); // 4.5 seconds delay
-      
+      },4500); // 4.5 seconds delay
+
       return () => clearTimeout(timer);
     } else {
       setShowPopup(false);
     }
-  }, [location.pathname, emailSubmitted]);
+  },[location.pathname,emailSubmitted]);
 
   const handleEmailSubmit = () => {
     setEmailSubmitted(true);
@@ -81,7 +81,7 @@ function AppContent() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
-            {/* <Route path="/products" element={<Products />} /> */} {/* Comment this out temporarily */}
+            <Route path="/products" element={<Products />} />
             <Route path="/buy" element={<BuyNow />} />
             <Route path="/terms" element={<Terms />} />
             <Route path="/privacy" element={<Privacy />} />
@@ -95,11 +95,11 @@ function AppContent() {
         </main>
         <Footer />
       </div>
-      
+
       {showPopup && (
-        <NotificationPopup 
-          onClose={() => setShowPopup(false)} 
-          onSubmit={handleEmailSubmit} 
+        <NotificationPopup
+          onClose={() => setShowPopup(false)}
+          onSubmit={handleEmailSubmit}
         />
       )}
     </>
