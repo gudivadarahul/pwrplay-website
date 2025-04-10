@@ -74,9 +74,9 @@ const Navbar = () => {
     };
 
     return (
-        <nav className={`fixed w-full z-[200] h-20 ${isScrolled
-            ? 'bg-black border-b-2 border-red-600 transition-none'
-            : 'bg-transparent border-b-0 border-transparent transition-colors duration-300'
+        <nav className={`fixed w-full z-[200] transition-colors duration-300 h-20 ${isScrolled
+                ? 'bg-black lg:border-b-0 border-b-2 border-red-600'
+                : 'bg-transparent border-b-0 lg:border-b-2 lg:border-transparent'
             }`}>
             <div className="max-w-8xl pr-6 flex justify-between items-center h-full">
                 {/* Left side - Logo */}
@@ -181,8 +181,8 @@ const Navbar = () => {
 
                     <h3>
                         <Link
-                            to="/controlled-chaos#buy-section"
-                            onClick={() => handleNavClick('/controlled-chaos#buy-section')}
+                            to="/products"
+                            onClick={() => handleNavClick('/products')}
                             className="px-4 py-2 bg-red-600 rounded-lg 
                                 text-xl lg:text-2xl xl:text-4xl font-headers 
                                 uppercase"
@@ -330,8 +330,8 @@ const Navbar = () => {
 
                     <div className="w-[90%] mt-2">
                         <Link
-                            to="/controlled-chaos#buy-section"
-                            onClick={() => handleNavClick('/controlled-chaos#buy-section')}
+                            to="/products"
+                            onClick={() => handleNavClick('/products')}
                             className="block w-full text-center px-6 py-4 bg-gradient-to-r from-red-700 to-red-600 
                                 transition-all duration-300 rounded-xl text-2xl font-bold uppercase tracking-wider
                                 shadow-lg shadow-red-600/20 hover:shadow-red-500/40 hover:scale-105 outline-none"

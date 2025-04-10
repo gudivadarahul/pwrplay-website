@@ -11,3 +11,8 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     </BrowserRouter>
   </React.StrictMode>
 );
+
+// Add this for better HMR support
+if (import.meta.hot) {
+  import.meta.hot.accept();
+}

@@ -1,4 +1,4 @@
-import { FaRotate,FaPlay,FaTrophy,FaChampagneGlasses,FaRepeat, FaArrowRight, FaArrowDown, FaDice, FaEnvelope } from "react-icons/fa6";
+import { FaRotate,FaPlay,FaTrophy,FaChampagneGlasses,FaRepeat,FaArrowRight,FaArrowDown,FaDice,FaEnvelope } from "react-icons/fa6";
 import { BsArrowDownRight } from "react-icons/bs";
 import { useEffect,useState,useRef } from 'react';
 import { useLocation,Link } from 'react-router-dom';
@@ -6,12 +6,12 @@ import API_URL from '../config/api'; // Add this import for the API URL
 
 function ControlledChaos() {
     const location = useLocation();
-    const [showPopup, setShowPopup] = useState(false);
-    const [activeBox, setActiveBox] = useState(0); // Track which box is currently active
-    const [emailSubmitted, setEmailSubmitted] = useState(false); // New state for tracking email submission
-    const [email, setEmail] = useState(''); // New state for email input
-    const [loading, setLoading] = useState(false); // Add loading state
-    const [message, setMessage] = useState(''); // Add message state for errors
+    const [showPopup,setShowPopup] = useState(false);
+    const [activeBox,setActiveBox] = useState(0); // Track which box is currently active
+    const [emailSubmitted,setEmailSubmitted] = useState(false); // New state for tracking email submission
+    const [email,setEmail] = useState(''); // New state for email input
+    const [loading,setLoading] = useState(false); // Add loading state
+    const [message,setMessage] = useState(''); // Add message state for errors
 
     useEffect(() => {
         if (location.hash === '#buy-section') {
@@ -90,10 +90,10 @@ function ControlledChaos() {
             const isMobile = window.innerWidth < 768;
             // Position cards at a balanced distance - 15% for mobile
             const positionValue = isMobile ? '10%' : '15%';
-            
+
             // Adjust vertical offset based on screen size - 35% for mobile
             const verticalOffset = isMobile ? '40%' : '50%';
-            
+
             // Spread cards to their positions with adjusted vertical position
             cards[0].style.transform = `translate(-50%, -${verticalOffset})`; // Blue (top-left)
             cards[0].style.top = positionValue;
@@ -135,28 +135,28 @@ function ControlledChaos() {
 
         // Define the color sequence with default and glowing classes
         const colorSequence = [
-            { 
+            {
                 degree: 135,
                 card: purpleCard,
                 name: 'purple',
                 defaultClass: "absolute backface-hidden max-w-full max-h-full m-auto inset-0",
                 glowClass: "absolute backface-hidden max-w-full max-h-full m-auto inset-0 drop-shadow-[0_0_30px_rgba(168,85,247,1.0)] brightness-110 saturate-150"
             },
-            { 
+            {
                 degree: 225,
                 card: redCard,
                 name: 'red',
                 defaultClass: "absolute backface-hidden max-w-full max-h-full m-auto inset-0",
                 glowClass: "absolute backface-hidden max-w-full max-h-full m-auto inset-0 drop-shadow-[0_0_30px_rgba(239,68,68,1.0)] brightness-110 saturate-150"
             },
-            { 
+            {
                 degree: 315,
                 card: orangeCard,
                 name: 'orange',
                 defaultClass: "absolute backface-hidden max-w-full max-h-full m-auto inset-0",
                 glowClass: "absolute backface-hidden max-w-full max-h-full m-auto inset-0 drop-shadow-[0_0_30px_rgba(249,115,22,1.0)] brightness-110 saturate-150"
             },
-            { 
+            {
                 degree: 45,
                 card: blueCard,
                 name: 'blue',
@@ -192,7 +192,7 @@ function ControlledChaos() {
                 arrow.style.transform = `rotate(${totalRotation}deg)`;
 
                 // Wait for spin to complete
-                await new Promise(resolve => setTimeout(resolve, 3000));
+                await new Promise(resolve => setTimeout(resolve,3000));
 
                 // Add glow and flip selected card
                 const frontImage = currentColor.card.querySelector('img:first-child');
@@ -202,7 +202,7 @@ function ControlledChaos() {
                 currentColor.card.style.transform = 'rotateY(180deg)';
 
                 // Wait while card is shown
-                await new Promise(resolve => setTimeout(resolve, 6000));
+                await new Promise(resolve => setTimeout(resolve,6000));
 
                 // Remove glow and unflip card
                 frontImage.className = currentColor.defaultClass;
@@ -213,7 +213,7 @@ function ControlledChaos() {
                 currentIndex = (currentIndex + 1) % colorSequence.length;
 
                 // Pause before next sequence
-                await new Promise(resolve => setTimeout(resolve, 1000));
+                await new Promise(resolve => setTimeout(resolve,1000));
             }
         };
 
@@ -222,16 +222,16 @@ function ControlledChaos() {
         return () => {
             isAnimating = false;
         };
-    }, []);
+    },[]);
 
     // Add new useEffect for box border animation
     useEffect(() => {
         const interval = setInterval(() => {
             setActiveBox(prev => (prev + 1) % 4); // Cycle through 0-3
-        }, 2000); // Change every 2 seconds
+        },2000); // Change every 2 seconds
 
         return () => clearInterval(interval);
-    }, []);
+    },[]);
 
     // Function to handle email submission
     const handleNotifySubmit = async () => {
@@ -245,7 +245,7 @@ function ControlledChaos() {
         setMessage('');
 
         try {
-            const response = await fetch(`${API_URL}/mailchimp`, {
+            const response = await fetch(`${API_URL}/mailchimp`,{
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -277,6 +277,7 @@ function ControlledChaos() {
     return (
         <div className="pt-24 sm:pt-40 text-white min-h-screen bg-black">
             {/* Logo in top-left */}
+<<<<<<< Updated upstream
             <div className="absolute -top-8 sm:-top-10 md:-top-12 lg:-top-14 xl:-top-16 -left-2 sm:-left-3 z-[201]">
         <Link to="/">
           <img
@@ -286,6 +287,17 @@ function ControlledChaos() {
           />
         </Link>
       </div>
+=======
+            <div className="absolute -top-8 sm:-top-10 md:-top-12 lg:-top-14 xl:-top-16 -left-2 sm:-left-3 z-[30]">
+                <Link to="/">
+                    <img
+                        src="/pwrplay-logo.png"
+                        alt="PWRPLAY Logo"
+                        className="w-48 sm:w-56 md:w-64 lg:w-72 xl:w-80 h-auto cursor-pointer"
+                    />
+                </Link>
+            </div>
+>>>>>>> Stashed changes
 
             {/* Title */}
             <h1 className="text-4xl md:text-6xl font-headers text-center fade-in px-4 sm:px-8">
@@ -398,19 +410,19 @@ function ControlledChaos() {
                             <FaRotate className={`${activeBox === 0 ? 'text-red-500 drop-shadow-[0_0_8px_#ff0000]' : 'text-red-600'} text-2xl md:text-5xl mb-1 md:mb-2`} />
                             <h3 className="text-sm md:text-3xl font-subheaders text-white">SPIN</h3>
                         </div>
-                        
+
                         {/* Step 2: Play */}
                         <div className={`bg-black aspect-square rounded-lg shadow-lg flex flex-col items-center justify-center ${activeBox === 1 ? 'border-red-600 border-[3px] shadow-[0_0_50px_15px_rgba(255,0,0,1.0),0_0_20px_5px_rgba(255,0,0,0.8)_inset] saturate-150 scale-105 transition-all duration-500' : 'border-white border-2'} w-20 md:w-40`}>
                             <FaPlay className={`${activeBox === 1 ? 'text-red-500 drop-shadow-[0_0_8px_#ff0000]' : 'text-red-600'} text-2xl md:text-5xl mb-1 md:mb-2`} />
                             <h3 className="text-sm md:text-3xl font-subheaders text-white">PLAY</h3>
                         </div>
-                        
+
                         {/* Step 3: Sip */}
                         <div className={`bg-black aspect-square rounded-lg shadow-lg flex flex-col items-center justify-center ${activeBox === 2 ? 'border-red-600 border-[3px] shadow-[0_0_50px_15px_rgba(255,0,0,1.0),0_0_20px_5px_rgba(255,0,0,0.8)_inset] saturate-150 scale-105 transition-all duration-500' : 'border-white border-2'} w-20 md:w-40`}>
                             <FaChampagneGlasses className={`${activeBox === 2 ? 'text-red-500 drop-shadow-[0_0_8px_#ff0000]' : 'text-red-600'} text-2xl md:text-5xl mb-1 md:mb-2`} />
                             <h3 className="text-sm md:text-3xl font-subheaders text-white">SIP</h3>
                         </div>
-                        
+
                         {/* Step 4: Repeat */}
                         <div className={`bg-black aspect-square rounded-lg shadow-lg flex flex-col items-center justify-center ${activeBox === 3 ? 'border-red-600 border-[3px] shadow-[0_0_50px_15px_rgba(255,0,0,1.0),0_0_20px_5px_rgba(255,0,0,0.8)_inset] saturate-150 scale-105 transition-all duration-500' : 'border-white border-2'} w-20 md:w-40`}>
                             <FaRepeat className={`${activeBox === 3 ? 'text-red-500 drop-shadow-[0_0_8px_#ff0000]' : 'text-red-600'} text-2xl md:text-5xl mb-1 md:mb-2`} />
@@ -432,84 +444,25 @@ function ControlledChaos() {
                             allowFullScreen
                         ></iframe>
                     </div>
+
+                    {/* Buy Now Button */}
+                    <div className="mt-8 md:mt-12 flex justify-center" id="buy-section">
+                        <Link
+                            to="/products"
+                            className="inline-block border-2 border-red-600 bg-black text-white 
+                            px-6 sm:px-8 md:px-10 
+                            py-3 sm:py-4 md:py-5 
+                            rounded-lg lg:rounded-xl
+                            text-xl sm:text-2xl md:text-3xl
+                            font-subheaders font-bold 
+                            shadow-lg transform hover:scale-105 transition-all duration-300 
+                            hover:bg-red-600 hover:text-white hover:shadow-red-500/50 hover:shadow-xl glow-effect"
+                        >
+                            BUY NOW
+                        </Link>
+                    </div>
                 </div>
             </section>
-
-            {/* Coming Soon Popup */}
-            {showPopup && (
-                <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-80 backdrop-blur-sm transition-all duration-300">
-                    <div 
-                        className="bg-black border-2 border-red-600 rounded-lg p-6 md:p-8 max-w-md w-full mx-4 
-                        shadow-lg shadow-red-500/30 animate-fade-in relative"
-                    >
-                        <div className="text-center">
-                            <h3 className="text-3xl md:text-4xl font-headers text-white mb-2">COMING SOON</h3>
-                            <div className="w-16 h-1 bg-red-600 mx-auto mb-4"></div>
-                            
-                            <p className="text-lg md:text-xl font-subheaders text-white mb-6">
-                                Controlled Chaos™ will be available for purchase soon! 
-                            </p>
-                            
-                            {/* Email input field */}
-                            <div className="mb-4">
-                                <input 
-                                    type="email" 
-                                    placeholder="Email" 
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                    className="w-full px-4 py-3 bg-black border-2 border-white/30 rounded-lg text-white 
-                                    focus:outline-none focus:border-red-600 transition-colors duration-300"
-                                    disabled={loading}
-                                />
-                                {message && (
-                                    <p className="mt-2 text-yellow-500 text-sm text-left">{message}</p>
-                                )}
-                            </div>
-                            
-                            {/* Notify Me Button */}
-                            <button 
-                                className="bg-red-600 text-white px-6 py-3 rounded-lg text-lg font-bold
-                                hover:bg-red-700 transition-all duration-300 mb-4 w-full disabled:opacity-50 disabled:cursor-not-allowed"
-                                onClick={handleNotifySubmit}
-                                disabled={loading}
-                            >
-                                {loading ? "Submitting..." : "Notify Me on Release"}
-                            </button>
-                            
-                            {/* Close Button - Improved styling */}
-                            <button 
-                                className="mt-2 px-4 py-2 border border-white/30 rounded-md text-white/80 
-                                hover:text-white hover:border-red-600 transition-all duration-300 
-                                font-subheaders text-sm uppercase tracking-wider"
-                                onClick={() => setShowPopup(false)}
-                            >
-                                Close
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            )}
-            
-            {/* Submission Confirmation - Similar to Contact.jsx */}
-            {emailSubmitted && (
-                <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-80 backdrop-blur-sm transition-all duration-300">
-                    <div className="bg-black border-2 border-red-600 rounded-lg p-6 md:p-8 max-w-md w-full mx-4 
-                        shadow-lg shadow-red-500/30 animate-fade-in text-center">
-                        <FaEnvelope className="text-red-600 text-4xl sm:text-6xl mx-auto mb-4 sm:mb-6 animate-bounce" />
-                        <h3 className="text-2xl sm:text-3xl font-subheaders mb-2 sm:mb-4">Submitted!</h3>
-                        <p className="font-body font-medium text-base sm:text-xl mb-6">
-                            We'll notify you when Controlled Chaos™ is released!
-                        </p>
-                        <button 
-                            className="px-6 py-3 bg-red-600 text-white rounded-lg text-lg font-bold
-                            hover:bg-red-700 transition-all duration-300"
-                            onClick={() => setEmailSubmitted(false)}
-                        >
-                            Close
-                        </button>
-                    </div>
-                </div>
-            )}
         </div>
     );
 }

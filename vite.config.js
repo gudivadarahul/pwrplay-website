@@ -1,15 +1,22 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
+import path from 'path';
 
 export default defineConfig({
-  plugins: [react(), tailwindcss()],
+  plugins: [
+    react({
+      fastRefresh: true,
+    }),
+    tailwindcss()
+  ],
   server: {
+    port: 3000, // Use a standard port instead of 443
+    https: false, // Disable https for local development
     host: '0.0.0.0',  // Allows external access (for iPhone & ngrok)
-    port: 5173,       // Keeps the port consistent
     strictPort: true, // Ensures Vite always runs on 5173
     hmr: {
-      clientPort: 443, // Fixes HMR issues when using ngrok
+      overlay: true,
     },
     proxy: {
       '/api': {
@@ -24,5 +31,14 @@ export default defineConfig({
       '.ngrok.app',
       '.ngrok-free.app',
     ],
+    watch: {
+      usePolling: true,
+      interval: 100,
+    }
+  },
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname,'./src'),
+    },
   },
 });
