@@ -16,7 +16,7 @@ function About() {
     return (
         <div className="relative pt-24 sm:pt-32 px-6 min-h-screen bg-black">
             {/* Logo in top-left */}
-            <div className="absolute -top-8 sm:-top-10 md:-top-12 lg:-top-14 xl:-top-16 -left-2 sm:-left-3 z-[100]">
+            <div className="absolute -top-8 sm:-top-10 md:-top-12 lg:-top-14 xl:-top-16 -left-2 sm:-left-3 z-[201]">
                 <Link to="/">
                     <img
                         src="/pwrplay-logo.png"

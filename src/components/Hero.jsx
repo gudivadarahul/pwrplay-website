@@ -53,7 +53,7 @@ function Hero() {
       }}
     >
       {/* Logo in top-left */}
-      <div className="absolute -top-8 sm:-top-10 md:-top-12 lg:-top-14 xl:-top-16 -left-2 sm:-left-3 z-[30]">
+      <div className="absolute -top-8 sm:-top-10 md:-top-12 lg:-top-14 xl:-top-16 -left-2 sm:-left-3 z-[201]">
         <Link to="/" onClick={() => handleNavClick('/')} className="block">
           <img
             src="/pwrplay-logo.png"
