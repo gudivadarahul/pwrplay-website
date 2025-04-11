@@ -47,10 +47,38 @@ function AppContent() {
         --font-headers: 'Bebas Neue', sans-serif;
         --font-body: 'Montserrat', sans-serif;
       }
+      
+      /* Hide scrollbar for all browsers */
+      html, body {
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        overflow-y: scroll;
+      }
+      
+      /* Hide scrollbar for Chrome, Safari and Opera */
+      html::-webkit-scrollbar, 
+      body::-webkit-scrollbar, 
+      ::-webkit-scrollbar {
+        width: 0 !important;
+        height: 0 !important;
+        background: transparent !important;
+        display: none !important;
+      }
+      
+      /* Additional selector for Chrome */
+      *::-webkit-scrollbar {
+        display: none !important;
+        width: 0 !important;
+      }
+      
+      /* For IE/Edge */
+      * {
+        -ms-overflow-style: none;
+      }
     `;
     document.head.appendChild(style);
     return () => document.head.removeChild(style);
-  },[]);
+  }, []);
 
   // Show popup when on home page and email not submitted
   useEffect(() => {
@@ -83,6 +111,7 @@ function AppContent() {
             <Route path="/about" element={<About />} />
             <Route path="/products" element={<Products />} />
             <Route path="/buy" element={<BuyNow />} />
+            <Route path="/buy-now" element={<BuyNow />} />
             <Route path="/terms" element={<Terms />} />
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/faq" element={<FAQ />} />

@@ -8,6 +8,7 @@ export default {
         'pulse-slow': 'pulse 3s infinite',
         'glow': 'glow 2s infinite',
         'float': 'float 15s infinite',
+        'marquee': 'marquee 25s linear infinite',
       },
       keyframes: {
         fadeIn: {
@@ -27,6 +28,10 @@ export default {
           '25%': { transform: 'translate(10px, -30px)',opacity: 0.3 },
           '50%': { transform: 'translate(-15px, -50px)',opacity: 0.2 },
           '75%': { transform: 'translate(8px, -20px)',opacity: 0.3 }
+        },
+        marquee: {
+          '0%': { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(-50%)' }
         }
       },
       fontFamily: {

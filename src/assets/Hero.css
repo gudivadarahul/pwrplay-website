@@ -116,20 +116,58 @@
     }
 }
 
+/* Floating icon grid animations */
+@keyframes float-grid {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+    opacity: 0.3;
+  }
+  50% {
+    transform: translateY(-10px) rotate(var(--rotation, 0deg));
+    opacity: 0.5;
+  }
+}
+
+.grid-background {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+/* Adjust floating icon opacity for better visibility with the expanded grid */
 .floating-icon {
-    position: absolute;
-    animation: float 6s ease-in-out infinite;
+  position: absolute;
+  opacity: 0.12;
+  pointer-events: none;
+  z-index: 0;
+  color: rgba(239, 68, 68, 0.7);
+  animation: float-grid 4s ease-in-out infinite;
+  --rotation: 0deg;
 }
 
-.floating-icon-reverse {
-    position: absolute;
-    animation: float-reverse 7s ease-in-out infinite;
-}
-
-.floating-icon-slow {
-    position: absolute;
-    animation: float 8s ease-in-out infinite;
-}
+.floating-icon:nth-child(1) { animation-duration: 6s; }
+.floating-icon:nth-child(2) { animation-duration: 7s; }
+.floating-icon:nth-child(3) { animation-duration: 5s; }
+.floating-icon:nth-child(4) { animation-duration: 8s; }
+.floating-icon:nth-child(5) { animation-duration: 6.5s; }
+.floating-icon:nth-child(6) { animation-duration: 7.5s; }
+.floating-icon:nth-child(7) { animation-duration: 8.5s; }
+.floating-icon:nth-child(8) { animation-duration: 6.8s; }
+.floating-icon:nth-child(9) { animation-duration: 7.2s; }
+.floating-icon:nth-child(10) { animation-duration: 5.8s; }
+.floating-icon:nth-child(11) { animation-duration: 7.4s; }
+.floating-icon:nth-child(12) { animation-duration: 6.2s; }
+.floating-icon:nth-child(13) { animation-duration: 8.3s; }
+.floating-icon:nth-child(14) { animation-duration: 7.7s; }
+.floating-icon:nth-child(15) { animation-duration: 6.6s; }
+.floating-icon:nth-child(16) { animation-duration: 5.9s; }
+.floating-icon:nth-child(17) { animation-duration: 7.1s; }
+.floating-icon:nth-child(18) { animation-duration: 6.3s; }
+.floating-icon:nth-child(19) { animation-duration: 7.8s; }
+.floating-icon:nth-child(20) { animation-duration: 6.7s; }
 
 /* Remove the hover opacity effect */
 .floating-icon:hover,
@@ -358,4 +396,54 @@
     transform: translateX(0);
     opacity: 1;
   }
+}
+
+@keyframes flash-red {
+  0%, 100% {
+    text-shadow: -1px -1px 0 #ff0000, 1px -1px 0 #ff0000, -1px 1px 0 #ff0000, 1px 1px 0 #ff0000;
+    color: white;
+  }
+  50% {
+    text-shadow: -2px -2px 0 #ff0000, 2px -2px 0 #ff0000, -2px 2px 0 #ff0000, 2px 2px 0 #ff0000, 0 0 10px #ff0000, 0 0 20px #ff0000;
+    color: #ffcccc;
+  }
+}
+
+.animate-pulse-red {
+  animation: flash-red 1.5s ease-in-out infinite;
+}
+
+/* Product page card animations */
+@keyframes float-card {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+    opacity: 0.3;
+  }
+  50% {
+    transform: translateY(-15px) rotate(2deg);
+    opacity: 0.4;
+  }
+}
+
+@keyframes pulse-badge {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 5px rgba(239, 68, 68, 0.5);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 0 12px rgba(239, 68, 68, 0.8), 0 0 20px rgba(239, 68, 68, 0.4);
+  }
+}
+
+.pulse-badge {
+  animation: pulse-badge 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.product-card {
+  transition: all 0.3s ease-out;
+}
+
+.product-card:hover {
+  transform: scale(1.03);
 }

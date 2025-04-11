@@ -44,6 +44,12 @@ function Timeline() {
             title: "Building the Community",
             description: "With trademarks secured and prototypes tested, we launched our website and built a thriving online community. Our focus is now on marketing, brand awareness, and gearing up for the next big step.",
             stats: "6 Social Platforms | Website Launches"
+        },
+        {
+            date: "April 2025",
+            title: "Presale Launch",
+            description: "The moment we've been waiting for! We officially launched the presale of Controlled Chaos™, giving our eager community the first opportunity to secure their copies of the game before general release.",
+            stats: "Presale Open | Limited First Edition Available"
         }
     ];
 

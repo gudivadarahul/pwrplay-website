@@ -74,15 +74,15 @@ const Navbar = () => {
     };
 
     return (
-        <nav className={`fixed w-full z-[200] transition-colors duration-300 h-20 ${isScrolled
-                ? 'bg-black lg:border-b-0 border-b-2 border-red-600'
+        <nav className={`fixed w-full z-[200] transition-colors duration-300 h-16 sm:h-18 md:h-20 ${isScrolled
+                ? 'bg-black border-b-2 border-red-600'
                 : 'bg-transparent border-b-0 lg:border-b-2 lg:border-transparent'
             }`}>
             <div className="max-w-8xl pr-6 flex justify-between items-center h-full">
                 {/* Left side - Logo */}
                 <div className="flex items-center -ml-2">
                     {/* Mobile Logo - Only visible when scrolled */}
-                    <div className={`block lg:hidden transition-all duration-500 absolute -top-4 ${isScrolled ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-10'
+                    <div className={`block lg:hidden transition-all duration-500 absolute -top-6 ${isScrolled ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-10'
                         }`}>
                         <Link to="/" onClick={() => handleNavClick('/')} className="block">
                             <img
@@ -100,7 +100,7 @@ const Navbar = () => {
                             <img
                                 src="/pwrplay-logo.png"
                                 alt="PWRPLAY Logo"
-                                className="h-20 lg:h-24 xl:h-45 w-auto object-contain -mt-10"
+                                className="h-20 lg:h-24 xl:h-45 w-auto object-contain -mt-12"
                             />
                         </Link>
                     </div>
@@ -192,18 +192,20 @@ const Navbar = () => {
                     </h3>
                 </div>
 
-                {/* Mobile Menu Button */}
-                <button
-                    onClick={() => setIsOpen(!isOpen)}
-                    className="lg:hidden hover:text-red-500 transition-all duration-300 p-3
-                        hover:bg-red-600/10 rounded-full outline-none z-[400] relative"
-                    aria-label={isOpen ? "Close menu" : "Open menu"}
-                >
-                    {isOpen ?
-                        <FaXmark size={28} className="text-red-500" /> :
-                        <FaBars size={28} />
-                    }
-                </button>
+                {/* Mobile Menu Button - positioned absolutely on mobile */}
+                <div className={`lg:hidden absolute ${isOpen ? 'top-3.5' : 'top-1.5'} right-1.5 z-[500]`}>
+                    <button
+                        onClick={() => setIsOpen(!isOpen)}
+                        className="hover:text-red-500 transition-all duration-300 p-3
+                            hover:bg-red-600/10 rounded-full outline-none z-[500]"
+                        aria-label={isOpen ? "Close menu" : "Open menu"}
+                    >
+                        {isOpen ?
+                            <FaXmark size={36} className="text-red-500" /> :
+                            <FaBars size={28} />
+                        }
+                    </button>
+                </div>
             </div>
 
             {/* Mobile Navigation */}
