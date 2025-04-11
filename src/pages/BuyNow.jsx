@@ -614,13 +614,56 @@ function BuyNow() {
                                 onTouchEnd={onTouchEnd}
                                 onClick={nextImage}
                             >
+                                {/* Desktop-only navigation arrows */}
+                                <div className="hidden md:block">
+                                    <button
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            prevImage();
+                                        }}
+                                        className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-colors duration-200"
+                                        aria-label="Previous image"
+                                    >
+                                        <FaChevronLeft className="w-5 h-5" />
+                                    </button>
+                                    <button
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            nextImage();
+                                        }}
+                                        className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-colors duration-200"
+                                        aria-label="Next image"
+                                    >
+                                        <FaChevronRight className="w-5 h-5" />
+                                    </button>
+                                </div>
+
                                 {/* Image */}
                                 <img
                                     src={productImages[currentImageIndex]}
                                     alt={`Controlled Chaos Game - Image ${currentImageIndex + 1}`}
                                     className="w-full h-full object-fill"
-                                    draggable="false" // Prevent image dragging during swipe
+                                    draggable="false"
                                 />
+                            </div>
+
+                            {/* Image navigation dots - now below the image box */}
+                            <div className="flex justify-center space-x-2 mt-4">
+                                {productImages.map((_, index) => (
+                                    <button
+                                        key={index}
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            goToImage(index);
+                                        }}
+                                        className={`w-3 h-3 rounded-full transition-all duration-200 ${
+                                            index === currentImageIndex
+                                                ? 'bg-red-600 scale-125'
+                                                : 'bg-white/50 hover:bg-white/75'
+                                        }`}
+                                        aria-label={`Go to image ${index + 1}`}
+                                    />
+                                ))}
                             </div>
                         </div>
 
