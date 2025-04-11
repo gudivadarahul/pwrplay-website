@@ -405,7 +405,7 @@ function BuyNow() {
 
             <div className="pt-20 sm:pt-24 md:pt-32 px-4 sm:px-6 min-h-screen relative">
                 {/* Logo in top-left */}
-                <div className="absolute -top-6 sm:-top-8 md:-top-10 lg:-top-12 xl:-top-16 -left-1 sm:-left-2 md:-left-3 z-[30]">
+                <div className="absolute -top-6 sm:-top-8 md:-top-10 lg:-top-12 xl:-top-16 -left-1 sm:-left-2 md:-left-3 z-[201]">
                     <Link to="/" className="block">
                         <img
                             src="/pwrplay-logo.png"
@@ -621,35 +621,6 @@ function BuyNow() {
                                     className="w-full h-full object-fill"
                                     draggable="false" // Prevent image dragging during swipe
                                 />
-
-                                {/* Navigation arrows - hidden on small screens */}
-                                <button
-                                    onClick={prevImage}
-                                    className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hidden sm:block hover:bg-black/70 transition-colors"
-                                    aria-label="Previous image"
-                                >
-                                    <FaChevronLeft className="text-xl" />
-                                </button>
-                                <button
-                                    onClick={nextImage}
-                                    className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hidden sm:block hover:bg-black/70 transition-colors"
-                                    aria-label="Next image"
-                                >
-                                    <FaChevronRight className="text-xl" />
-                                </button>
-                            </div>
-
-                            {/* Navigation dots */}
-                            <div className="flex justify-center mt-3 sm:mt-4 space-x-1 sm:space-x-2">
-                                {productImages.map((_,index) => (
-                                    <button
-                                        key={index}
-                                        onClick={() => goToImage(index)}
-                                        className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full transition-colors ${currentImageIndex === index ? 'bg-red-600' : 'bg-gray-400'
-                                            }`}
-                                        aria-label={`Go to image ${index + 1}`}
-                                    />
-                                ))}
                             </div>
                         </div>
 
