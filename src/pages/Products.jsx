@@ -41,7 +41,7 @@ function Products() {
       id: 1,
       name: {
         main: "Controlled Chaos™",
-        tagline: "The Ultimate Drinking Game"
+        tagline: "The Ultimate Party Game"
       },
       shopifyId: "8205554024627",
       prices: {
@@ -93,7 +93,6 @@ function Products() {
         // Use the hardcoded prices since we know what they should be
         setProductData(products);
 
-        console.log("Using hardcoded prices:",products[0].prices);
       } catch (error) {
         console.error("Error initializing Shopify:",error);
         setProductData(products); // Still use hardcoded prices on error

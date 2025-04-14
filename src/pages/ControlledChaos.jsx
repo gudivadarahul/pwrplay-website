@@ -382,6 +382,23 @@ function ControlledChaos() {
                 </div>
             </section>
 
+            {/* Buy Now Button - Moved above How to Play */}
+            <div className="flex justify-center mb-8 sm:mb-12" id="buy-section">
+                <Link
+                    to="/buy"
+                    className="inline-block border-2 border-red-600 bg-black text-white 
+                    px-6 sm:px-8 md:px-10 
+                    py-3 sm:py-4 md:py-5 
+                    rounded-lg lg:rounded-xl
+                    text-xl sm:text-2xl md:text-3xl
+                    font-subheaders font-bold 
+                    shadow-lg transform hover:scale-105 transition-all duration-300 
+                    hover:bg-red-600 hover:text-white hover:shadow-red-500/50 hover:shadow-xl glow-effect"
+                >
+                    BUY NOW
+                </Link>
+            </div>
+
             {/* How to Play Section */}
             <section className="bg-black text-white py-6 sm:py-8 px-4 sm:px-6 text-center mb-8 sm:mb-12">
                 <h2 className="text-5xl sm:text-6xl md:text-8xl font-headers mb-4 sm:mb-6">How to <span className="text-red-600">Play</span></h2>
@@ -431,23 +448,6 @@ function ControlledChaos() {
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                             allowFullScreen
                         ></iframe>
-                    </div>
-
-                    {/* Buy Now Button */}
-                    <div className="mt-8 md:mt-12 flex justify-center" id="buy-section">
-                        <Link
-                            to="/buy"
-                            className="inline-block border-2 border-red-600 bg-black text-white 
-                            px-6 sm:px-8 md:px-10 
-                            py-3 sm:py-4 md:py-5 
-                            rounded-lg lg:rounded-xl
-                            text-xl sm:text-2xl md:text-3xl
-                            font-subheaders font-bold 
-                            shadow-lg transform hover:scale-105 transition-all duration-300 
-                            hover:bg-red-600 hover:text-white hover:shadow-red-500/50 hover:shadow-xl glow-effect"
-                        >
-                            BUY NOW
-                        </Link>
                     </div>
                 </div>
             </section>
