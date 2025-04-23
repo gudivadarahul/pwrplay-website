@@ -78,20 +78,42 @@ function AppContent() {
     `;
     document.head.appendChild(style);
     return () => document.head.removeChild(style);
-  }, []);
+  },[]);
 
-  // Show popup when on home page and email not submitted
+  // Show popup on specific pages
   useEffect(() => {
-    if (location.pathname === '/' && !emailSubmitted) {
-      // Longer delay to wait for Hero animations to complete
-      // Most CSS animations in Hero.jsx finish within 3-4 seconds
-      const timer = setTimeout(() => {
-        setShowPopup(true);
-      },4500); // 4.5 seconds delay
+    if (!emailSubmitted) {
+      // Pages where the popup should appear:
+      // - '/' - Homepage
+      // - '/buy' - Buy page
+      // Only showing on homepage and buy page as requested
+      const showablePages = ['/','/buy'];
 
-      return () => clearTimeout(timer);
+      const isOnShowablePage = showablePages.includes(location.pathname);
+
+      if (isOnShowablePage) {
+        // Use a longer delay for homepage to wait for animations to complete
+        const delayTime = location.pathname === '/' ? 4000 : 3000; // 5.5 seconds for homepage, 2 seconds for other pages
+
+        // Show popup after the appropriate delay
+        const timer = setTimeout(() => {
+          setShowPopup(true);
+        },delayTime);
+
+        return () => clearTimeout(timer);
+      } else {
+        setShowPopup(false);
+      }
     } else {
+      // Hide popup for current page view if email was submitted
       setShowPopup(false);
+
+      // Reset emailSubmitted after navigating away, so popup can show again on next visit
+      const resetTimer = setTimeout(() => {
+        setEmailSubmitted(false);
+      },30000); // Reset after 30 seconds
+
+      return () => clearTimeout(resetTimer);
     }
   },[location.pathname,emailSubmitted]);
 

@@ -8,7 +8,7 @@ mailchimp.setConfig({
 });
 
 // Reuse the handleSubscription logic from server.js
-const handleSubscription = async (email, tags = ['Newsletter'], additionalData = {}) => {
+const handleSubscription = async (email,tags = ['Newsletter'],additionalData = {}) => {
     const subscriberHash = crypto
         .createHash('md5')
         .update(email.toLowerCase())
@@ -22,7 +22,7 @@ const handleSubscription = async (email, tags = ['Newsletter'], additionalData =
                 process.env.MAILCHIMP_LIST_ID,
                 subscriberHash
             );
-            
+
             // Check if the member is archived
             if (existingMember.status === 'archived') {
                 // If archived, resubscribe them
@@ -33,18 +33,18 @@ const handleSubscription = async (email, tags = ['Newsletter'], additionalData =
                         email_address: email,
                         status: 'subscribed', // Change status from archived to subscribed
                         merge_fields: additionalData,
-                        tags: tags // This will apply the Newsletter tag
+                        tags: [...tags,'CHAOS25'] // Add the CHAOS25 tag
                     }
                 );
-                
-                return { 
+
+                return {
                     success: true,
                     alreadySubscribed: false,
                     message: "Welcome back to our community! We've reactivated your subscription."
                 };
             } else {
                 // If already subscribed (not archived), just update them
-                // Also ensure they have the Newsletter tag
+                // Also ensure they have the Newsletter tag and the CHAOS25 tag
                 await mailchimp.lists.updateListMember(
                     process.env.MAILCHIMP_LIST_ID,
                     subscriberHash,
@@ -52,14 +52,14 @@ const handleSubscription = async (email, tags = ['Newsletter'], additionalData =
                         email_address: email,
                         status_if_new: 'subscribed',
                         merge_fields: additionalData,
-                        tags: tags // This will apply the Newsletter tag
+                        tags: [...tags,'CHAOS25'] // Add the CHAOS25 tag
                     }
                 );
-                
-                return { 
+
+                return {
                     success: true,
                     alreadySubscribed: true,
-                    message: "You're already part of our community!" 
+                    message: "You're already part of our community!"
                 };
             }
         } catch (error) {
@@ -71,10 +71,10 @@ const handleSubscription = async (email, tags = ['Newsletter'], additionalData =
                         email_address: email,
                         status: 'subscribed',
                         merge_fields: additionalData,
-                        tags: tags // This will apply the Newsletter tag
+                        tags: [...tags,'CHAOS25'] // Add the CHAOS25 tag
                     }
                 );
-                return { 
+                return {
                     success: true,
                     alreadySubscribed: false,
                     message: "Thanks for joining our community! We've sent you a welcome email."
@@ -85,25 +85,25 @@ const handleSubscription = async (email, tags = ['Newsletter'], additionalData =
             }
         }
     } catch (error) {
-        console.error('Mailchimp API error:', error);
-        
+        console.error('Mailchimp API error:',error);
+
         // Check for specific error types
         if (error.response && error.response.body) {
             const errorBody = error.response.body;
-            
+
             // Handle fake email error
-            if (errorBody.title === "Invalid Resource" && 
-                errorBody.detail && 
+            if (errorBody.title === "Invalid Resource" &&
+                errorBody.detail &&
                 errorBody.detail.includes("looks fake or invalid")) {
                 throw new Error("Please enter a valid email address. This email appears to be invalid.");
             }
-            
+
             // Handle other specific errors
             if (errorBody.detail) {
                 throw new Error(errorBody.detail);
             }
         }
-        
+
         // If we can't extract a specific error, throw the original
         throw error;
     }
@@ -111,14 +111,14 @@ const handleSubscription = async (email, tags = ['Newsletter'], additionalData =
 
 // Add a function to handle retailer subscriptions
 const handleRetailerSubscription = async (data) => {
-    const { email, name, phone, storeName, website, locationCount, primaryLocation, hearAboutUs } = data;
-    
+    const { email,name,phone,storeName,website,locationCount,primaryLocation,hearAboutUs } = data;
+
     // Basic email validation before sending to Mailchimp
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
         throw new Error("Please enter a valid email address.");
     }
-    
+
     const subscriberHash = crypto
         .createHash('md5')
         .update(email.toLowerCase())
@@ -129,7 +129,7 @@ const handleRetailerSubscription = async (data) => {
         const nameParts = name.split(' ');
         const firstName = nameParts[0] || '';
         const lastName = nameParts.slice(1).join(' ') || '';
-        
+
         // Prepare merge fields for Mailchimp - using the exact merge tags from your Mailchimp account
         const mergeFields = {
             FNAME: firstName,           // *|FNAME|* OR *|MERGE1|*
@@ -142,7 +142,7 @@ const handleRetailerSubscription = async (data) => {
             HEARABOUT: hearAboutUs || '' // *|HEARABOUT|* OR *|MERGE8|*
         };
 
-        console.log('Sending merge fields to Mailchimp:', mergeFields);
+        console.log('Sending merge fields to Mailchimp:',mergeFields);
 
         try {
             // Check if the member already exists in the retailers list
@@ -150,7 +150,7 @@ const handleRetailerSubscription = async (data) => {
                 process.env.MAILCHIMP_RETAILERS_LIST_ID,
                 subscriberHash
             );
-            
+
             // Update existing member
             await mailchimp.lists.updateListMember(
                 process.env.MAILCHIMP_RETAILERS_LIST_ID,
@@ -161,23 +161,23 @@ const handleRetailerSubscription = async (data) => {
                     status_if_new: 'subscribed'
                 }
             );
-            
+
             // Add/update tags
             await mailchimp.lists.updateListMemberTags(
                 process.env.MAILCHIMP_RETAILERS_LIST_ID,
                 subscriberHash,
                 {
                     tags: [
-                        { name: "Retailer", status: "active" }
+                        { name: "Retailer",status: "active" }
                     ]
                 }
             );
-            
-            return { 
+
+            return {
                 success: true,
                 message: "Your application has been updated. We'll be in touch soon!"
             };
-            
+
         } catch (error) {
             // If member doesn't exist, add them
             if (error.status === 404) {
@@ -190,8 +190,8 @@ const handleRetailerSubscription = async (data) => {
                         tags: ["Retailer"]
                     }
                 );
-                
-                return { 
+
+                return {
                     success: true,
                     message: "Thank you for your application! We'll review it and get back to you soon."
                 };
@@ -200,33 +200,33 @@ const handleRetailerSubscription = async (data) => {
             }
         }
     } catch (error) {
-        console.error('Mailchimp API error:', error);
-        
+        console.error('Mailchimp API error:',error);
+
         // Improve error handling
         if (error.response && error.response.body) {
             const errorBody = error.response.body;
-            
+
             if (errorBody.detail && errorBody.detail.includes("looks fake or invalid")) {
                 throw new Error("Please enter a valid email address.");
             } else if (errorBody.detail) {
                 throw new Error(errorBody.detail);
             }
         }
-        
+
         throw error;
     }
 };
 
 // Add this function after handleRetailerSubscription
 const handleAmbassadorSubscription = async (data) => {
-    const { email, name, phone, instagram, tiktok, followers, role, amazon, payment } = data;
-    
+    const { email,name,phone,instagram,tiktok,followers,role,amazon,payment } = data;
+
     // Basic email validation before sending to Mailchimp
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
         throw new Error("Please enter a valid email address.");
     }
-    
+
     const subscriberHash = crypto
         .createHash('md5')
         .update(email.toLowerCase())
@@ -237,7 +237,7 @@ const handleAmbassadorSubscription = async (data) => {
         const nameParts = name.split(' ');
         const firstName = nameParts[0] || '';
         const lastName = nameParts.slice(1).join(' ') || '';
-        
+
         // Prepare merge fields for Mailchimp - using the exact merge tags from your Mailchimp account
         const mergeFields = {
             FNAME: firstName,           // *|FNAME|* OR *|MERGE1|*
@@ -251,7 +251,7 @@ const handleAmbassadorSubscription = async (data) => {
             PAYMENT: payment || ''      // *|PAYMENT|* OR *|MERGE9|*
         };
 
-        console.log('Sending ambassador merge fields to Mailchimp:', mergeFields);
+        console.log('Sending ambassador merge fields to Mailchimp:',mergeFields);
 
         try {
             // Check if the member already exists in the ambassadors list
@@ -259,7 +259,7 @@ const handleAmbassadorSubscription = async (data) => {
                 process.env.MAILCHIMP_AMBASSADORS_LIST_ID,
                 subscriberHash
             );
-            
+
             // Update existing member
             await mailchimp.lists.updateListMember(
                 process.env.MAILCHIMP_AMBASSADORS_LIST_ID,
@@ -270,23 +270,23 @@ const handleAmbassadorSubscription = async (data) => {
                     status_if_new: 'subscribed'
                 }
             );
-            
+
             // Add/update tags
             await mailchimp.lists.updateListMemberTags(
                 process.env.MAILCHIMP_AMBASSADORS_LIST_ID,
                 subscriberHash,
                 {
                     tags: [
-                        { name: "Ambassador", status: "active" }
+                        { name: "Ambassador",status: "active" }
                     ]
                 }
             );
-            
-            return { 
+
+            return {
                 success: true,
                 message: "Your application has been updated. We'll be in touch soon!"
             };
-            
+
         } catch (error) {
             // If member doesn't exist, add them
             if (error.status === 404) {
@@ -299,8 +299,8 @@ const handleAmbassadorSubscription = async (data) => {
                         tags: ["Ambassador"]
                     }
                 );
-                
-                return { 
+
+                return {
                     success: true,
                     message: "Thank you for your application! We'll review it and get back to you soon."
                 };
@@ -309,19 +309,19 @@ const handleAmbassadorSubscription = async (data) => {
             }
         }
     } catch (error) {
-        console.error('Mailchimp API error:', error);
-        
+        console.error('Mailchimp API error:',error);
+
         // Improve error handling
         if (error.response && error.response.body) {
             const errorBody = error.response.body;
-            
+
             if (errorBody.detail && errorBody.detail.includes("looks fake or invalid")) {
                 throw new Error("Please enter a valid email address.");
             } else if (errorBody.detail) {
                 throw new Error(errorBody.detail);
             }
         }
-        
+
         throw error;
     }
 };
@@ -345,28 +345,28 @@ export const handler = async (event) => {
     }
 
     if (event.httpMethod !== 'POST') {
-        return { 
+        return {
             statusCode: 405,
             headers,
-            body: JSON.stringify({ success: false, error: 'Method Not Allowed' })
+            body: JSON.stringify({ success: false,error: 'Method Not Allowed' })
         };
     }
 
     try {
-        console.log('Function invoked with body:', event.body);
-        const { type, data } = JSON.parse(event.body);
-        
-        console.log('Processing request type:', type);
-        console.log('With data:', data);
-        
+        console.log('Function invoked with body:',event.body);
+        const { type,data } = JSON.parse(event.body);
+
+        console.log('Processing request type:',type);
+        console.log('With data:',data);
+
         switch (type) {
             case 'retailer':
                 try {
-                    console.log('Processing retailer application:', data);
-                    
+                    console.log('Processing retailer application:',data);
+
                     // Use the retailer-specific function
                     const result = await handleRetailerSubscription(data);
-                    
+
                     // Try to send an email notification if credentials are available
                     try {
                         if (process.env.EMAIL_USER && process.env.EMAIL_PASS) {
@@ -377,7 +377,7 @@ export const handler = async (event) => {
                                     pass: process.env.EMAIL_PASS
                                 }
                             });
-                            
+
                             const mailOptions = {
                                 from: process.env.EMAIL_USER,
                                 to: 'contact@pwrplaycreations.com',
@@ -394,33 +394,33 @@ export const handler = async (event) => {
                                     ${data.hearAboutUs ? `<p><strong>How they heard about us:</strong> ${data.hearAboutUs}</p>` : ''}
                                 `
                             };
-                            
+
                             await transporter.sendMail(mailOptions);
                         }
                     } catch (emailError) {
-                        console.error('Email sending error:', emailError);
+                        console.error('Email sending error:',emailError);
                         // Continue even if email fails - we've already added to Mailchimp
                     }
-                    
+
                     return {
                         statusCode: 200,
                         headers,
                         body: JSON.stringify(result)
                     };
                 } catch (retailerError) {
-                    console.error('Retailer form error:', retailerError);
-                    
+                    console.error('Retailer form error:',retailerError);
+
                     // Extract a user-friendly error message
                     let errorMessage = "Failed to process your application. Please try again.";
-                    
+
                     // Check for specific Mailchimp errors
                     if (retailerError.response && retailerError.response.body) {
                         const errorBody = retailerError.response.body;
-                        
+
                         // Handle email validation errors
                         if (errorBody.detail && errorBody.detail.includes("looks fake or invalid")) {
                             errorMessage = "Please enter a valid email address.";
-                        } 
+                        }
                         // Handle other specific Mailchimp errors
                         else if (errorBody.detail) {
                             errorMessage = errorBody.detail;
@@ -428,7 +428,7 @@ export const handler = async (event) => {
                     } else if (retailerError.message) {
                         errorMessage = retailerError.message;
                     }
-                    
+
                     return {
                         statusCode: 400, // Use 400 for validation errors
                         headers,
@@ -440,14 +440,14 @@ export const handler = async (event) => {
                 }
             case 'contact':
                 try {
-                    console.log('Processing contact form submission:', data);
-                    
+                    console.log('Processing contact form submission:',data);
+
                     // 1. Subscribe the user to your list with both tags
                     const subscriberHash = crypto
                         .createHash('md5')
                         .update(data.email.toLowerCase())
                         .digest('hex');
-                        
+
                     // Check if user already exists
                     try {
                         // Try to get the member
@@ -455,7 +455,7 @@ export const handler = async (event) => {
                             process.env.MAILCHIMP_LIST_ID,
                             subscriberHash
                         );
-                        
+
                         // Update existing member with new tags and merge fields
                         await mailchimp.lists.updateListMember(
                             process.env.MAILCHIMP_LIST_ID,
@@ -472,19 +472,19 @@ export const handler = async (event) => {
                                 status_if_new: 'subscribed'
                             }
                         );
-                        
+
                         // Add tags to the member
                         await mailchimp.lists.updateListMemberTags(
                             process.env.MAILCHIMP_LIST_ID,
                             subscriberHash,
                             {
                                 tags: [
-                                    { name: "Contact Form", status: "active" },
-                                    { name: "Newsletter", status: "active" }
+                                    { name: "Contact Form",status: "active" },
+                                    { name: "Newsletter",status: "active" }
                                 ]
                             }
                         );
-                        
+
                     } catch (error) {
                         // If member doesn't exist, add them
                         if (error.status === 404) {
@@ -500,14 +500,14 @@ export const handler = async (event) => {
                                         SUBJECT: data.subject || '',
                                         MESSAGE: data.message || ''
                                     },
-                                    tags: ["Contact Form", "Newsletter"]
+                                    tags: ["Contact Form","Newsletter"]
                                 }
                             );
                         } else {
                             throw error;
                         }
                     }
-                    
+
                     // 2. Try to send an email notification if credentials are available
                     try {
                         // Only attempt to send email if credentials are provided
@@ -519,7 +519,7 @@ export const handler = async (event) => {
                                     pass: process.env.EMAIL_PASS
                                 }
                             });
-                            
+
                             const mailOptions = {
                                 from: process.env.EMAIL_USER,
                                 to: 'contact@pwrplaycreations.com',
@@ -531,14 +531,14 @@ export const handler = async (event) => {
                                     ${data.phone ? `<p><strong>Phone:</strong> ${data.phone}</p>` : ''}
                                     <p><strong>Subject:</strong> ${data.subject}</p>
                                     <p><strong>Message:</strong></p>
-                                    <p>${data.message.replace(/\n/g, '<br>')}</p>
+                                    <p>${data.message.replace(/\n/g,'<br>')}</p>
                                 `
                             };
-                            
+
                             await transporter.sendMail(mailOptions);
                         }
                     } catch (emailError) {
-                        console.error('Email sending error:', emailError);
+                        console.error('Email sending error:',emailError);
                         // If email sending fails, return a 500 status
                         return {
                             statusCode: 500,
@@ -549,7 +549,7 @@ export const handler = async (event) => {
                             })
                         };
                     }
-                    
+
                     return {
                         statusCode: 200,
                         headers,
@@ -559,7 +559,7 @@ export const handler = async (event) => {
                         })
                     };
                 } catch (contactError) {
-                    console.error('Contact form error:', contactError);
+                    console.error('Contact form error:',contactError);
                     return {
                         statusCode: 500,
                         headers,
@@ -571,24 +571,24 @@ export const handler = async (event) => {
                 }
             case 'subscribe':
                 try {
-                    console.log('Attempting to subscribe email:', data.email);
+                    console.log('Attempting to subscribe email:',data.email);
                     // Explicitly pass the Newsletter tag
-                    const result = await handleSubscription(data.email, ['Newsletter']);
-                    console.log('Subscription successful:', result);
+                    const result = await handleSubscription(data.email,['Newsletter']);
+                    console.log('Subscription successful:',result);
                     return {
                         statusCode: 200,
                         headers,
                         body: JSON.stringify(result)
                     };
                 } catch (subscribeError) {
-                    console.error('Subscription error details:', subscribeError);
-                    
+                    console.error('Subscription error details:',subscribeError);
+
                     // Extract a user-friendly message
                     let errorMessage = "Something went wrong. Please try again.";
-                    
+
                     if (subscribeError.response && subscribeError.response.body) {
                         const errorBody = subscribeError.response.body;
-                        
+
                         if (errorBody.detail && errorBody.detail.includes("looks fake or invalid")) {
                             errorMessage = "Please enter a valid email address. This email appears to be invalid.";
                         } else if (errorBody.detail) {
@@ -597,23 +597,23 @@ export const handler = async (event) => {
                     } else if (subscribeError.message) {
                         errorMessage = subscribeError.message;
                     }
-                    
+
                     return {
                         statusCode: 200, // Return 200 even for validation errors
                         headers,
-                        body: JSON.stringify({ 
-                            success: false, 
+                        body: JSON.stringify({
+                            success: false,
                             error: errorMessage
                         })
                     };
                 }
             case 'ambassador':
                 try {
-                    console.log('Processing ambassador application:', data);
-                    
+                    console.log('Processing ambassador application:',data);
+
                     // Use the ambassador-specific function
                     const result = await handleAmbassadorSubscription(data);
-                    
+
                     // Try to send an email notification if credentials are available
                     try {
                         if (process.env.EMAIL_USER && process.env.EMAIL_PASS) {
@@ -624,7 +624,7 @@ export const handler = async (event) => {
                                     pass: process.env.EMAIL_PASS
                                 }
                             });
-                            
+
                             const mailOptions = {
                                 from: process.env.EMAIL_USER,
                                 to: 'contact@pwrplaycreations.com',
@@ -642,33 +642,33 @@ export const handler = async (event) => {
                                     <p><strong>Payment Method:</strong> ${data.payment || 'Not provided'}</p>
                                 `
                             };
-                            
+
                             await transporter.sendMail(mailOptions);
                         }
                     } catch (emailError) {
-                        console.error('Email sending error:', emailError);
+                        console.error('Email sending error:',emailError);
                         // Continue even if email fails - we've already added to Mailchimp
                     }
-                    
+
                     return {
                         statusCode: 200,
                         headers,
                         body: JSON.stringify(result)
                     };
                 } catch (ambassadorError) {
-                    console.error('Ambassador form error:', ambassadorError);
-                    
+                    console.error('Ambassador form error:',ambassadorError);
+
                     // Extract a user-friendly error message
                     let errorMessage = "Failed to process your application. Please try again.";
-                    
+
                     // Check for specific Mailchimp errors
                     if (ambassadorError.response && ambassadorError.response.body) {
                         const errorBody = ambassadorError.response.body;
-                        
+
                         // Handle email validation errors
                         if (errorBody.detail && errorBody.detail.includes("looks fake or invalid")) {
                             errorMessage = "Please enter a valid email address.";
-                        } 
+                        }
                         // Handle other specific Mailchimp errors
                         else if (errorBody.detail) {
                             errorMessage = errorBody.detail;
@@ -676,7 +676,7 @@ export const handler = async (event) => {
                     } else if (ambassadorError.message) {
                         errorMessage = ambassadorError.message;
                     }
-                    
+
                     return {
                         statusCode: 400, // Use 400 for validation errors
                         headers,
@@ -691,16 +691,16 @@ export const handler = async (event) => {
                 return {
                     statusCode: 400,
                     headers,
-                    body: JSON.stringify({ success: false, error: 'Invalid type' })
+                    body: JSON.stringify({ success: false,error: 'Invalid type' })
                 };
         }
     } catch (error) {
-        console.error('Function error:', error);
+        console.error('Function error:',error);
         return {
             statusCode: 500,
             headers,
-            body: JSON.stringify({ 
-                success: false, 
+            body: JSON.stringify({
+                success: false,
                 error: error.message,
                 stack: error.stack
             })

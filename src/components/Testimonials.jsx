@@ -283,7 +283,7 @@ function TestimonialCard({ index,flipSequence,sequenceIndex }) {
     if (isMobile) {
         return (
             <div className="w-full h-[450px] relative overflow-hidden">
-                <style jsx>{`
+                <style jsx="true">{`
                     @keyframes slideOutToLeft {
                         from { transform: translateX(0); }
                         to { transform: translateX(-100%); }
@@ -428,7 +428,7 @@ function TestimonialCard({ index,flipSequence,sequenceIndex }) {
     return (
         <div className="w-full max-w-sm h-full py-4">
             <div className={`flip-card ${isFlipping ? 'flipping' : ''}`}>
-                <style jsx>{`
+                <style jsx="true">{`
                     .flip-card {
                         perspective: 1000px;
                         width: 100%;

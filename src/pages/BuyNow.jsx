@@ -1,8 +1,9 @@
 import { useEffect,useState,useRef,useCallback } from 'react';
 import { useLocation,Link } from 'react-router-dom';
-import { FaChevronDown,FaChevronUp,FaShoppingCart,FaTimes,FaChevronLeft,FaChevronRight } from 'react-icons/fa';
-import { GiBottleCap, GiGlassShot } from "react-icons/gi";
+import { FaChevronDown,FaChevronUp,FaShoppingCart,FaTimes,FaChevronLeft,FaChevronRight,FaTag } from 'react-icons/fa';
+import { GiBottleCap,GiGlassShot } from "react-icons/gi";
 import Navbar from '../components/Navbar';
+import NotificationPopup from '../components/NotificationPopup';
 
 function BuyNow() {
     const location = useLocation();
@@ -14,6 +15,7 @@ function BuyNow() {
     const [region,setRegion] = useState('USA');
     const [productPrice,setProductPrice] = useState('29.99');
     const [currencyCode,setCurrencyCode] = useState('USD');
+    const [showDiscountPopup,setShowDiscountPopup] = useState(false);
 
     // Add state for image carousel
     const [currentImageIndex,setCurrentImageIndex] = useState(0);
@@ -163,7 +165,7 @@ function BuyNow() {
             if (item.isVirtualItem) {
                 return; // Skip this item - it's a virtual display item
             }
-            
+
             // Use our hardcoded price instead of Shopify's price
             const itemPrice = region === 'USA' ? 29.99 : 34.99;
             total += itemPrice * item.quantity;
@@ -188,9 +190,9 @@ function BuyNow() {
         const gameId = 'gid://shopify/Product/8205554024627'; // Controlled Chaos
 
         // Check if the cart already has the game
-        const hasGame = cartItems.some(item => 
-            !item.customAttributes || 
-            !item.customAttributes.length || 
+        const hasGame = cartItems.some(item =>
+            !item.customAttributes ||
+            !item.customAttributes.length ||
             !item.customAttributes.some(attr => attr.key === 'Promotional')
         );
 
@@ -198,10 +200,10 @@ function BuyNow() {
         clientRef.current.product.fetch(gameId).then((gameProduct) => {
             // Get the variant IDs
             const gameVariantId = gameProduct.variants[0].id;
-            
+
             // Create line items to add - ONLY add the main game, not promotional items
             const lineItemsToAdd = [];
-            
+
             // Only add the game if it's not already in cart
             if (!hasGame) {
                 // Create a line item without visible custom attributes that show in checkout
@@ -211,7 +213,7 @@ function BuyNow() {
                     // No custom attributes that would show in checkout
                 });
             }
-            
+
             // If nothing to add (already has the game), just open cart
             if (lineItemsToAdd.length === 0) {
                 setIsCartOpen(true);
@@ -227,14 +229,14 @@ function BuyNow() {
         }).then((checkout) => {
             // Update the checkout reference
             checkoutRef.current = checkout;
-            
+
             // Create a modified version of the line items for display purposes only
             const displayLineItems = [...checkout.lineItems];
-            
+
             // If this is the first add, add the virtual promotional items
             if (isFirstAdd) {
                 const mainGame = displayLineItems[0]; // The game we just added
-                
+
                 if (mainGame) {
                     // Create virtual promotional items for display only (not sent to Shopify)
                     const shotGlassItem = {
@@ -246,7 +248,7 @@ function BuyNow() {
                         variant: mainGame.variant,
                         isVirtualItem: true // Flag to identify display-only items
                     };
-                    
+
                     const bottleOpenerItem = {
                         id: 'display-bottle-opener-' + Date.now(),
                         title: 'Controlled Chaos™',
@@ -256,22 +258,22 @@ function BuyNow() {
                         variant: mainGame.variant,
                         isVirtualItem: true // Flag to identify display-only items
                     };
-                    
+
                     // Add virtual items to the display array
-                    displayLineItems.push(shotGlassItem, bottleOpenerItem);
+                    displayLineItems.push(shotGlassItem,bottleOpenerItem);
                 }
             } else {
                 // If not the first add, preserve any existing virtual items
                 const virtualItems = cartItems.filter(item => item.isVirtualItem);
                 displayLineItems.push(...virtualItems);
             }
-            
+
             setCartItems(displayLineItems);
             setIsCartOpen(true);
             setIsLoading(false);
         }).catch(error => {
-            console.error('Error adding items to cart:', error);
-            console.error('Error details:', error.message);
+            console.error('Error adding items to cart:',error);
+            console.error('Error details:',error.message);
             setIsLoading(false);
             alert('Failed to add items to cart. Please try again.');
         });
@@ -289,30 +291,30 @@ function BuyNow() {
         }
 
         const itemToRemove = cartItems.find(item => item.id === lineItemId);
-        
+
         // Remove the real item from Shopify checkout
         clientRef.current.checkout.removeLineItems(
             checkoutRef.current.id,
             [lineItemId]
         ).then((checkout) => {
             checkoutRef.current = checkout;
-            
+
             // If we removed all real items, also clear the virtual display items
             if (checkout.lineItems.length === 0) {
                 setCartItems([]);
             } else {
                 // Update real items and keep any virtual display items
                 const virtualItems = cartItems.filter(item => item.isVirtualItem);
-                const updatedItems = [...checkout.lineItems, ...virtualItems];
+                const updatedItems = [...checkout.lineItems,...virtualItems];
                 setCartItems(updatedItems);
             }
         }).catch(error => handleRemoveError(error));
     };
-    
+
     // Helper for error handling in removeFromCart
     const handleRemoveError = (error) => {
-        console.error('Error removing item from cart:', error);
-        
+        console.error('Error removing item from cart:',error);
+
         // If we get an error, refresh the checkout to get the current state
         clientRef.current.checkout.fetch(checkoutRef.current.id)
             .then((freshCheckout) => {
@@ -320,7 +322,7 @@ function BuyNow() {
                 setCartItems(freshCheckout.lineItems);
             })
             .catch(fetchError => {
-                console.error('Error fetching checkout:', fetchError);
+                console.error('Error fetching checkout:',fetchError);
                 // If we can't fetch the checkout, create a new one
                 return clientRef.current.checkout.create();
             })
@@ -337,7 +339,7 @@ function BuyNow() {
         if (checkoutRef.current && checkoutRef.current.webUrl) {
             // Force the URL to go directly to checkout rather than the store page
             let checkoutUrl = checkoutRef.current.webUrl;
-            
+
             // If the URL doesn't already end with checkout, ensure it redirects to checkout
             if (!checkoutUrl.includes('/checkout')) {
                 checkoutUrl = checkoutUrl.split('?')[0]; // Remove any existing query params
@@ -346,17 +348,17 @@ function BuyNow() {
 
             // Ensure we're using the checkout with a proper redirect_to
             if (!checkoutUrl.includes('redirect_to=checkout')) {
-                checkoutUrl = checkoutUrl.includes('?') 
-                    ? `${checkoutUrl}&redirect_to=checkout` 
+                checkoutUrl = checkoutUrl.includes('?')
+                    ? `${checkoutUrl}&redirect_to=checkout`
                     : `${checkoutUrl}?redirect_to=checkout`;
             }
-            
-            window.open(checkoutUrl, '_blank');
+
+            window.open(checkoutUrl,'_blank');
         }
     };
 
     // Update item quantity function
-    const updateItemQuantity = (lineItemId, quantity) => {
+    const updateItemQuantity = (lineItemId,quantity) => {
         if (!clientRef.current || !checkoutRef.current) {
             return;
         }
@@ -375,19 +377,19 @@ function BuyNow() {
         // Update the actual item in Shopify checkout
         clientRef.current.checkout.updateLineItems(
             checkoutRef.current.id,
-            [{ id: lineItemId, quantity: quantity }]
+            [{ id: lineItemId,quantity: quantity }]
         ).then((checkout) => {
             checkoutRef.current = checkout;
-            
+
             // Keep any virtual display items
             const virtualItems = cartItems.filter(item => item.isVirtualItem);
-            const updatedItems = [...checkout.lineItems, ...virtualItems];
+            const updatedItems = [...checkout.lineItems,...virtualItems];
             setCartItems(updatedItems);
         })
-        .catch(error => {
-            console.error('Error updating item quantity:', error);
-            handleRemoveError(error);
-        });
+            .catch(error => {
+                console.error('Error updating item quantity:',error);
+                handleRemoveError(error);
+            });
     };
 
     // Add handleRegionChange function 
@@ -396,7 +398,7 @@ function BuyNow() {
         setRegion(newRegion);
         setCurrencyCode(newRegion === 'USA' ? 'USD' : 'CAD');
         setProductPrice(newRegion === 'USA' ? '29.99' : '34.99');
-        localStorage.setItem("userRegion", newRegion);
+        localStorage.setItem("userRegion",newRegion);
     };
 
     return (
@@ -468,7 +470,7 @@ function BuyNow() {
                                 <span className="absolute -top-2 -right-2 bg-white text-red-600 rounded-full w-5 sm:w-6 h-5 sm:h-6 flex items-center justify-center text-xs sm:text-sm font-bold">
                                     {cartItems
                                         .filter(item => !item.displayTitle) // Filter out promotional items
-                                        .reduce((total, item) => total + item.quantity, 0)
+                                        .reduce((total,item) => total + item.quantity,0)
                                     }
                                 </span>
                             )}
@@ -540,8 +542,8 @@ function BuyNow() {
                                                                 </div>
                                                                 {/* Display promo items at $0.00 or regular price as needed */}
                                                                 <p className="text-red-500 font-bold mt-2 text-sm sm:text-base">
-                                                                    {item.displayPrice ? 
-                                                                        item.displayPrice : 
+                                                                    {item.displayPrice ?
+                                                                        item.displayPrice :
                                                                         `${currencyCode} $${region === 'USA' ? '29.99' : '34.99'}`
                                                                     }
                                                                 </p>
@@ -585,6 +587,27 @@ function BuyNow() {
                                                 <span className="text-lg sm:text-xl text-red-600 font-bold">
                                                     {currencyCode} ${calculateTotal()}
                                                 </span>
+                                            </div>
+
+                                            {/* Discount Reminder */}
+                                            <div className="mb-6 p-4 bg-black border-2 border-red-600 rounded-lg shadow-md shadow-red-500/20">
+                                                <div className="flex items-center mb-2">
+                                                    <div className="w-8 h-8 mr-3 flex items-center justify-center bg-red-600 rounded-full flex-shrink-0">
+                                                        <FaTag className="text-white" />
+                                                    </div>
+                                                    <p className="text-white font-headers text-lg sm:text-xl tracking-wide font-bold">
+                                                        SAVE <span className="text-red-600">25% OFF</span>
+                                                    </p>
+                                                </div>
+                                                <p className="hidden sm:block text-sm text-gray-300 mb-3 font-semibold">
+                                                    Sign up for our newsletter to get an exclusive discount code for your purchase.
+                                                </p>
+                                                <button
+                                                    onClick={() => setShowDiscountPopup(true)}
+                                                    className="w-full mt-2 sm:mt-0 bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded transition-colors duration-200 flex items-center justify-center"
+                                                >
+                                                    <span>Get Discount Code</span>
+                                                </button>
                                             </div>
 
                                             <button
@@ -649,18 +672,17 @@ function BuyNow() {
 
                             {/* Image navigation dots - now below the image box */}
                             <div className="flex justify-center space-x-2 mt-4">
-                                {productImages.map((_, index) => (
+                                {productImages.map((_,index) => (
                                     <button
                                         key={index}
                                         onClick={(e) => {
                                             e.stopPropagation();
                                             goToImage(index);
                                         }}
-                                        className={`w-3 h-3 rounded-full transition-all duration-200 ${
-                                            index === currentImageIndex
-                                                ? 'bg-red-600 scale-125'
-                                                : 'bg-white/50 hover:bg-white/75'
-                                        }`}
+                                        className={`w-3 h-3 rounded-full transition-all duration-200 ${index === currentImageIndex
+                                            ? 'bg-red-600 scale-125'
+                                            : 'bg-white/50 hover:bg-white/75'
+                                            }`}
                                         aria-label={`Go to image ${index + 1}`}
                                     />
                                 ))}
@@ -717,7 +739,7 @@ function BuyNow() {
                                     {isLoading ? 'Loading...' : `Add to Cart - ${currencyCode} $${productPrice}`}
                                 </button>
                             </div>
-                            
+
                             {/* Region selector - mobile only */}
                             <div className="flex md:hidden justify-center items-center mb-6 sm:mb-7">
                                 <div className="relative">
@@ -763,6 +785,17 @@ function BuyNow() {
                     </div>
                 </div>
             </div>
+
+            {/* Notification Popup */}
+            {showDiscountPopup && (
+                <NotificationPopup
+                    onClose={() => setShowDiscountPopup(false)}
+                    onSubmit={() => {
+                        setShowDiscountPopup(false);
+                        // Don't close the cart so they can continue their purchase with the code
+                    }}
+                />
+            )}
         </>
     );
 }
