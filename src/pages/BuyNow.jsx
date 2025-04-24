@@ -39,49 +39,34 @@ function BuyNow() {
 
     // Prevent background scrolling when cart is open
     useEffect(() => {
-        const preventScroll = (e) => {
-            // Allow scrolling within the cart content, prevent on the background
-            const cartContent = document.querySelector('.cart-content');
-            const isCartContentScrollable = cartContent && cartContent.scrollHeight > cartContent.clientHeight;
-
-            // Only prevent default if the event target is not within the scrollable cart content
-            if (!e.target.closest('.cart-content') || !isCartContentScrollable) {
-                e.preventDefault();
-            }
-        };
-
         if (isCartOpen) {
             // Save current scroll position
             const scrollY = window.scrollY;
 
-            // Add overflow hidden to body
+            // Disable scrolling on body
             document.body.style.overflow = 'hidden';
             document.body.style.position = 'fixed';
-            document.body.style.top = `-${scrollY}px`;
             document.body.style.width = '100%';
-
-            // Add touchmove event listener for mobile
-            document.addEventListener('touchmove',preventScroll,{ passive: false });
+            document.body.style.top = `-${scrollY}px`;
         } else {
-            // Restore scroll position
+            // Re-enable scrolling and restore position
             const scrollY = document.body.style.top;
             document.body.style.overflow = '';
             document.body.style.position = '';
-            document.body.style.top = '';
             document.body.style.width = '';
-            window.scrollTo(0,parseInt(scrollY || '0') * -1);
+            document.body.style.top = '';
 
-            // Remove event listener
-            document.removeEventListener('touchmove',preventScroll);
+            if (scrollY) {
+                window.scrollTo(0,parseInt(scrollY || '0') * -1);
+            }
         }
 
-        // Cleanup function
         return () => {
-            document.removeEventListener('touchmove',preventScroll);
+            // Cleanup
             document.body.style.overflow = '';
             document.body.style.position = '';
-            document.body.style.top = '';
             document.body.style.width = '';
+            document.body.style.top = '';
         };
     },[isCartOpen]);
 
@@ -525,163 +510,151 @@ function BuyNow() {
                         </button>
                     </div>
 
-                    {/* Cart Sidebar - Restructured with subtotal at bottom */}
+                    {/* Cart Sidebar */}
                     {isCartOpen && (
                         <div className="fixed inset-0 z-50">
-                            {/* Backdrop overlay to close cart */}
-                            <div
-                                className="absolute inset-0 bg-black bg-opacity-60"
-                                onClick={() => setIsCartOpen(false)}
-                                aria-hidden="true"
-                            />
-
-                            <div className="absolute inset-y-0 right-0 pt-16">
-                                <div className="h-full w-screen md:max-w-xs lg:max-w-sm xl:max-w-md pt-16">
-                                    <div
-                                        className="h-full flex flex-col bg-black shadow-xl"
-                                        onClick={(e) => e.stopPropagation()} // Prevent clicks inside cart from closing it
-                                    >
-                                        {/* Cart header */}
-                                        <div className="pt-6 pb-3 sm:pt-8 sm:pb-4 px-4 sm:px-6 border-b border-red-600/30">
-                                            <div className="flex items-center justify-between">
-                                                <h2 className="text-3xl font-bold text-white">Your Cart</h2>
-                                                <button
-                                                    onClick={() => setIsCartOpen(false)}
-                                                    className="h-8 w-8 flex items-center justify-center"
-                                                    aria-label="Close cart"
-                                                >
-                                                    <FaTimes className="h-7 w-7 text-white" />
-                                                </button>
-                                            </div>
+                            <div className="absolute inset-0 right-0 w-screen md:max-w-xs lg:max-w-sm xl:max-w-md md:left-auto">
+                                <div className="h-full flex flex-col bg-black shadow-xl">
+                                    {/* Cart header */}
+                                    <div className="pt-6 pb-3 sm:pt-8 sm:pb-4 px-4 sm:px-6 border-b border-red-600/30">
+                                        <div className="flex items-center justify-between">
+                                            <h2 className="text-3xl font-bold text-white">Your Cart</h2>
+                                            <button
+                                                onClick={() => setIsCartOpen(false)}
+                                                className="h-8 w-8 flex items-center justify-center"
+                                                aria-label="Close cart"
+                                            >
+                                                <FaTimes className="h-7 w-7 text-white" />
+                                            </button>
                                         </div>
+                                    </div>
 
-                                        {/* Cart items - scrollable area */}
-                                        <div className="flex-1 overflow-y-auto px-4 sm:px-6 py-4 cart-content">
-                                            {cartItems.length === 0 ? (
-                                                <div className="mt-8">
-                                                    <p className="text-center text-white">Your cart is empty</p>
-                                                </div>
-                                            ) : (
-                                                <div className="mt-2">
-                                                    {cartItems.map((item,index) => (
-                                                        <div key={item.id} className={`flex flex-col pb-4 ${index !== cartItems.length - 1 ? 'border-b border-red-600/30 mb-4' : ''}`}>
-                                                            {/* Product image and details */}
-                                                            <div className="flex items-start mb-3">
-                                                                <div className="w-16 sm:w-20 h-16 sm:h-20 flex-shrink-0 mr-4 bg-transparent rounded overflow-hidden relative">
-                                                                    {item.displayTitle ? (
-                                                                        // For promo items
-                                                                        <div className="w-full h-full flex items-center justify-center bg-black/50 border-2 border-red-600">
-                                                                            {item.displayTitle.includes('Shot Glass') ? (
-                                                                                <GiGlassShot className="text-3xl sm:text-4xl text-white" />
-                                                                            ) : item.displayTitle.includes('Bottle Opener') ? (
-                                                                                <GiBottleCap className="text-3xl sm:text-4xl text-white" />
-                                                                            ) : (
-                                                                                <img
-                                                                                    src="/box-top-view.png"
-                                                                                    alt={item.title}
-                                                                                    className="w-full h-full object-cover"
-                                                                                />
-                                                                            )}
-                                                                            {/* FREE badge */}
-                                                                            <div className="absolute top-0 right-0 bg-red-600 text-white text-xs font-bold px-1 py-0.5 rounded-bl">
-                                                                                FREE!
-                                                                            </div>
+                                    {/* Cart items - scrollable area */}
+                                    <div className="flex-1 overflow-y-auto px-4 sm:px-6 py-4 cart-content">
+                                        {cartItems.length === 0 ? (
+                                            <div className="mt-8">
+                                                <p className="text-center text-white">Your cart is empty</p>
+                                            </div>
+                                        ) : (
+                                            <div className="mt-2">
+                                                {cartItems.map((item,index) => (
+                                                    <div key={item.id} className={`flex flex-col pb-4 ${index !== cartItems.length - 1 ? 'border-b border-red-600/30 mb-4' : ''}`}>
+                                                        {/* Product image and details */}
+                                                        <div className="flex items-start mb-3">
+                                                            <div className="w-16 sm:w-20 h-16 sm:h-20 flex-shrink-0 mr-4 bg-transparent rounded overflow-hidden relative">
+                                                                {item.displayTitle ? (
+                                                                    // For promo items
+                                                                    <div className="w-full h-full flex items-center justify-center bg-black/50 border-2 border-red-600">
+                                                                        {item.displayTitle.includes('Shot Glass') ? (
+                                                                            <GiGlassShot className="text-3xl sm:text-4xl text-white" />
+                                                                        ) : item.displayTitle.includes('Bottle Opener') ? (
+                                                                            <GiBottleCap className="text-3xl sm:text-4xl text-white" />
+                                                                        ) : (
+                                                                            <img
+                                                                                src="/box-top-view.png"
+                                                                                alt={item.title}
+                                                                                className="w-full h-full object-cover"
+                                                                            />
+                                                                        )}
+                                                                        {/* FREE badge */}
+                                                                        <div className="absolute top-0 right-0 bg-red-600 text-white text-xs font-bold px-1 py-0.5 rounded-bl">
+                                                                            FREE!
                                                                         </div>
-                                                                    ) : (
-                                                                        // For regular item
-                                                                        <img
-                                                                            src="/box-top-view.png"
-                                                                            alt={item.title}
-                                                                            className="w-full h-full object-cover"
-                                                                        />
-                                                                    )}
-                                                                </div>
-                                                                <div className="flex-grow">
-                                                                    <div className="flex justify-between items-center">
-                                                                        <p className="font-bold text-lg sm:text-xl">{item.displayTitle || item.title}</p>
                                                                     </div>
-                                                                    {/* Display promo items at $0.00 or regular price as needed */}
-                                                                    <p className="text-red-500 font-bold mt-2 text-sm sm:text-base">
-                                                                        {item.displayPrice ?
-                                                                            item.displayPrice :
-                                                                            `${currencyCode} $${region === 'USA' ? '29.99' : '34.99'}`
-                                                                        }
-                                                                    </p>
+                                                                ) : (
+                                                                    // For regular item
+                                                                    <img
+                                                                        src="/box-top-view.png"
+                                                                        alt={item.title}
+                                                                        className="w-full h-full object-cover"
+                                                                    />
+                                                                )}
+                                                            </div>
+                                                            <div className="flex-grow">
+                                                                <div className="flex justify-between items-center">
+                                                                    <p className="font-bold text-lg sm:text-xl">{item.displayTitle || item.title}</p>
+                                                                </div>
+                                                                {/* Display promo items at $0.00 or regular price as needed */}
+                                                                <p className="text-red-500 font-bold mt-2 text-sm sm:text-base">
+                                                                    {item.displayPrice ?
+                                                                        item.displayPrice :
+                                                                        `${currencyCode} $${region === 'USA' ? '29.99' : '34.99'}`
+                                                                    }
+                                                                </p>
+                                                            </div>
+                                                        </div>
+
+                                                        {/* Quantity Counter - Only show for the main game, not for promotional items */}
+                                                        {!item.displayTitle && (
+                                                            <div className="mt-2 flex items-center">
+                                                                <span className="text-lg sm:text-xl text-white mr-3 font-medium">Quantity</span>
+                                                                <div className="flex items-center border-2 border-white rounded-full overflow-hidden">
+                                                                    <button
+                                                                        onClick={() => item.quantity <= 1 ? removeFromCart(item.id) : updateItemQuantity(item.id,item.quantity - 1)}
+                                                                        className="px-3 py-1 bg-black hover:bg-gray-900 text-white"
+                                                                    >
+                                                                        -
+                                                                    </button>
+                                                                    <span className="px-3 py-1 bg-black text-white min-w-[30px] text-center">
+                                                                        {item.quantity}
+                                                                    </span>
+                                                                    <button
+                                                                        onClick={() => updateItemQuantity(item.id,item.quantity + 1)}
+                                                                        className="px-3 py-1 bg-black hover:bg-gray-900 text-white"
+                                                                    >
+                                                                        +
+                                                                    </button>
                                                                 </div>
                                                             </div>
-
-                                                            {/* Quantity Counter - Only show for the main game, not for promotional items */}
-                                                            {!item.displayTitle && (
-                                                                <div className="mt-2 flex items-center">
-                                                                    <span className="text-lg sm:text-xl text-white mr-3 font-medium">Quantity</span>
-                                                                    <div className="flex items-center border-2 border-white rounded-full overflow-hidden">
-                                                                        <button
-                                                                            onClick={() => item.quantity <= 1 ? removeFromCart(item.id) : updateItemQuantity(item.id,item.quantity - 1)}
-                                                                            className="px-3 py-1 bg-black hover:bg-gray-900 text-white"
-                                                                        >
-                                                                            -
-                                                                        </button>
-                                                                        <span className="px-3 py-1 bg-black text-white min-w-[30px] text-center">
-                                                                            {item.quantity}
-                                                                        </span>
-                                                                        <button
-                                                                            onClick={() => updateItemQuantity(item.id,item.quantity + 1)}
-                                                                            className="px-3 py-1 bg-black hover:bg-gray-900 text-white"
-                                                                        >
-                                                                            +
-                                                                        </button>
-                                                                    </div>
-                                                                </div>
-                                                            )}
-                                                        </div>
-                                                    ))}
-                                                </div>
-                                            )}
-                                        </div>
-
-                                        {/* Subtotal and checkout - fixed at bottom */}
-                                        {cartItems.length > 0 && (
-                                            <div className="border-t border-red-600/30 px-4 sm:px-6 py-6">
-                                                <div className="flex justify-between mb-6">
-                                                    <span className="text-lg sm:text-xl text-white font-medium">Subtotal</span>
-                                                    <span className="text-lg sm:text-xl text-red-600 font-bold">
-                                                        {currencyCode} ${calculateTotal()}
-                                                    </span>
-                                                </div>
-
-                                                {/* Discount Reminder */}
-                                                <div className="mb-6 p-4 bg-black border-2 border-red-600 rounded-lg shadow-md shadow-red-500/20">
-                                                    <div className="flex items-center mb-2">
-                                                        <div className="w-8 h-8 mr-3 flex items-center justify-center bg-red-600 rounded-full flex-shrink-0">
-                                                            <FaTag className="text-white" />
-                                                        </div>
-                                                        <p className="text-white font-headers text-lg sm:text-xl tracking-wide font-bold">
-                                                            SAVE <span className="text-red-600">25% OFF</span>
-                                                        </p>
+                                                        )}
                                                     </div>
-                                                    <p className="hidden sm:block text-sm text-gray-300 mb-3 font-semibold">
-                                                        Sign up for our newsletter to get an exclusive discount code for your purchase.
-                                                    </p>
-                                                    <button
-                                                        onClick={() => setShowDiscountPopup(true)}
-                                                        className="w-full mt-2 sm:mt-0 bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded transition-colors duration-200 flex items-center justify-center"
-                                                    >
-                                                        <span>Get Discount Code</span>
-                                                    </button>
-                                                </div>
-
-                                                <button
-                                                    onClick={proceedToCheckout}
-                                                    className="w-full bg-red-600 hover:bg-red-700 text-white font-bold text-lg sm:text-xl py-3 sm:py-4 px-4 sm:px-6 rounded-full transition-colors duration-200 flex items-center justify-center"
-                                                >
-                                                    <span>Checkout</span>
-                                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 sm:h-5 sm:w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
-                                                        <path fillRule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
-                                                    </svg>
-                                                </button>
+                                                ))}
                                             </div>
                                         )}
                                     </div>
+
+                                    {/* Subtotal and checkout - fixed at bottom */}
+                                    {cartItems.length > 0 && (
+                                        <div className="border-t border-red-600/30 px-4 sm:px-6 py-6">
+                                            <div className="flex justify-between mb-6">
+                                                <span className="text-lg sm:text-xl text-white font-medium">Subtotal</span>
+                                                <span className="text-lg sm:text-xl text-red-600 font-bold">
+                                                    {currencyCode} ${calculateTotal()}
+                                                </span>
+                                            </div>
+
+                                            {/* Discount Reminder */}
+                                            <div className="mb-6 p-4 bg-black border-2 border-red-600 rounded-lg shadow-md shadow-red-500/20">
+                                                <div className="flex items-center mb-2">
+                                                    <div className="w-8 h-8 mr-3 flex items-center justify-center bg-red-600 rounded-full flex-shrink-0">
+                                                        <FaTag className="text-white" />
+                                                    </div>
+                                                    <p className="text-white font-headers text-lg sm:text-xl tracking-wide font-bold">
+                                                        SAVE <span className="text-red-600">25% OFF</span>
+                                                    </p>
+                                                </div>
+                                                <p className="hidden sm:block text-sm text-gray-300 mb-3 font-semibold">
+                                                    Sign up for our newsletter to get an exclusive discount code for your purchase.
+                                                </p>
+                                                <button
+                                                    onClick={() => setShowDiscountPopup(true)}
+                                                    className="w-full mt-2 sm:mt-0 bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded transition-colors duration-200 flex items-center justify-center"
+                                                >
+                                                    <span>Get Discount Code</span>
+                                                </button>
+                                            </div>
+
+                                            <button
+                                                onClick={proceedToCheckout}
+                                                className="w-full bg-red-600 hover:bg-red-700 text-white font-bold text-lg sm:text-xl py-3 sm:py-4 px-4 sm:px-6 rounded-full transition-colors duration-200 flex items-center justify-center"
+                                            >
+                                                <span>Checkout</span>
+                                                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 sm:h-5 sm:w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
+                                                    <path fillRule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                         </div>
