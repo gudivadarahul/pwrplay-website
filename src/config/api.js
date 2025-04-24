@@ -10,6 +10,4 @@ const API_URL = process.env.VITE_API_URL || (
         : `${window.location.origin}/.netlify/functions`     // Use the actual host in production
 );
 
-console.log('API URL:',API_URL);
-
 export default API_URL; 

@@ -353,15 +353,6 @@ export const handler = async (event) => {
     }
 
     try {
-        console.log('Function invoked with body:',event.body);
-
-        // Log environment status to help debug in production
-        console.log('Environment check:',{
-            hasMailchimpKey: !!process.env.MAILCHIMP_API_KEY,
-            hasServerPrefix: !!process.env.MAILCHIMP_SERVER_PREFIX,
-            hasListId: !!process.env.MAILCHIMP_LIST_ID
-        });
-
         const { type,data } = JSON.parse(event.body);
 
         console.log('Processing request type:',type);
