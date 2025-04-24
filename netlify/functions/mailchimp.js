@@ -142,8 +142,6 @@ const handleRetailerSubscription = async (data) => {
             HEARABOUT: hearAboutUs || '' // *|HEARABOUT|* OR *|MERGE8|*
         };
 
-        console.log('Sending merge fields to Mailchimp:',mergeFields);
-
         try {
             // Check if the member already exists in the retailers list
             const existingMember = await mailchimp.lists.getListMember(
@@ -251,8 +249,6 @@ const handleAmbassadorSubscription = async (data) => {
             PAYMENT: payment || ''      // *|PAYMENT|* OR *|MERGE9|*
         };
 
-        console.log('Sending ambassador merge fields to Mailchimp:',mergeFields);
-
         try {
             // Check if the member already exists in the ambassadors list
             const existingMember = await mailchimp.lists.getListMember(
@@ -355,14 +351,9 @@ export const handler = async (event) => {
     try {
         const { type,data } = JSON.parse(event.body);
 
-        console.log('Processing request type:',type);
-        console.log('With data:',data);
-
         switch (type) {
             case 'retailer':
                 try {
-                    console.log('Processing retailer application:',data);
-
                     // Use the retailer-specific function
                     const result = await handleRetailerSubscription(data);
 
@@ -439,8 +430,6 @@ export const handler = async (event) => {
                 }
             case 'contact':
                 try {
-                    console.log('Processing contact form submission:',data);
-
                     // 1. Subscribe the user to your list with both tags
                     const subscriberHash = crypto
                         .createHash('md5')
@@ -570,10 +559,8 @@ export const handler = async (event) => {
                 }
             case 'subscribe':
                 try {
-                    console.log('Attempting to subscribe email:',data.email);
                     // Explicitly pass the Newsletter tag
                     const result = await handleSubscription(data.email,['Newsletter']);
-                    console.log('Subscription successful:',result);
                     return {
                         statusCode: 200,
                         headers,
@@ -608,8 +595,6 @@ export const handler = async (event) => {
                 }
             case 'ambassador':
                 try {
-                    console.log('Processing ambassador application:',data);
-
                     // Use the ambassador-specific function
                     const result = await handleAmbassadorSubscription(data);
 
