@@ -3,6 +3,8 @@ import { Link,useLocation } from "react-router-dom";
 import "../assets/Hero.css";
 
 function Hero() {
+  const [isMobileMenuOpen,setIsMobileMenuOpen] = useState(false);
+
   const handleNavClick = (path) => {
     if (window.location.pathname === path) {
       window.location.reload();
@@ -39,7 +41,22 @@ function Hero() {
       setTimeLeft({ days,hours,minutes,seconds });
     },1000);
 
-    return () => clearInterval(interval);
+    // Do an initial check for the mobile menu
+    const mobileMenu = document.querySelector('[data-mobile-menu-open="true"]');
+    setIsMobileMenuOpen(!!mobileMenu);
+
+    // Function to handle the custom event
+    const handleMenuToggle = (event) => {
+      setIsMobileMenuOpen(event.detail.isOpen);
+    };
+
+    // Add event listener for the custom event
+    window.addEventListener('mobileMenuToggle',handleMenuToggle);
+
+    return () => {
+      clearInterval(interval);
+      window.removeEventListener('mobileMenuToggle',handleMenuToggle);
+    };
   },[]);
 
   return (
@@ -52,11 +69,11 @@ function Hero() {
         backgroundRepeat: "no-repeat"
       }}
     >
-      {/* Logo in top-left */}
-      <div className="absolute -top-6 sm:-top-8 md:-top-10 lg:-top-12 xl:-top-16 -left-1 sm:-left-2 md:-left-3 z-[201]">
+      {/* Logo in top-left - hide when mobile menu is open */}
+      <div className={`absolute -top-6 sm:-top-8 md:-top-10 lg:-top-12 xl:-top-16 -left-1 sm:-left-2 md:-left-3 z-[201] ${isMobileMenuOpen ? 'lg:block hidden' : 'block'}`}>
         <Link to="/" onClick={() => handleNavClick('/')} className="block">
           <img
-            src="/pwrplay-logo.png" 
+            src="/pwrplay-logo.png"
             alt="PWRPLAY Logo"
             className="w-36 sm:w-48 md:w-56 lg:w-64 xl:w-80 h-auto cursor-pointer"
           />

@@ -61,6 +61,11 @@ const Navbar = () => {
             document.body.style.overflow = 'auto';
         }
 
+        // Dispatch a custom event for Hero component to listen to
+        window.dispatchEvent(new CustomEvent('mobileMenuToggle',{
+            detail: { isOpen }
+        }));
+
         return () => {
             document.body.style.overflow = 'auto';
         };
@@ -75,8 +80,8 @@ const Navbar = () => {
 
     return (
         <nav className={`fixed w-full z-[200] transition-colors duration-300 h-16 sm:h-18 md:h-20 ${isScrolled
-                ? 'bg-black border-b-2 border-red-600'
-                : 'bg-transparent border-b-0 lg:border-b-2 lg:border-transparent'
+            ? 'bg-black border-b-2 border-red-600'
+            : 'bg-transparent border-b-0 lg:border-b-2 lg:border-transparent'
             }`}>
             <div className="max-w-8xl pr-6 flex justify-between items-center h-full">
                 {/* Left side - Logo */}
@@ -212,7 +217,7 @@ const Navbar = () => {
             {isOpen && (
                 <div className="fixed top-0 left-0 w-full h-full bg-black
                     text-white flex flex-col items-center py-8 shadow-xl animate-fadeIn lg:hidden
-                    overflow-y-auto z-[300] pt-32">
+                    overflow-y-auto z-[300] pt-32" data-mobile-menu-open="true">
 
                     {/* Logo in mobile menu */}
                     <div className="absolute -top-4 left-0 z-[350]">
