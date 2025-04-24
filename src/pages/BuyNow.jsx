@@ -513,8 +513,8 @@ function BuyNow() {
                     {/* Cart Sidebar */}
                     {isCartOpen && (
                         <div className="fixed inset-0 z-50">
-                            <div className="absolute inset-0 right-0 w-screen md:max-w-xs lg:max-w-sm xl:max-w-md md:left-auto">
-                                <div className="h-full flex flex-col bg-black shadow-xl">
+                            <div className="absolute inset-0 right-0 w-screen md:w-auto md:top-16 lg:top-20 md:max-w-xs lg:max-w-sm xl:max-w-md md:left-auto md:bottom-0">
+                                <div className="h-full flex flex-col bg-black shadow-xl md:max-h-[calc(100vh-4rem)] lg:max-h-[calc(100vh-5rem)]">
                                     {/* Cart header */}
                                     <div className="pt-6 pb-3 sm:pt-8 sm:pb-4 px-4 sm:px-6 border-b border-red-600/30">
                                         <div className="flex items-center justify-between">
