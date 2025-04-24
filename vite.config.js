@@ -56,7 +56,6 @@ export default defineConfig({
       '@': path.resolve(__dirname,'./src'),
     },
   },
-  assetsInclude: ['**/*.html'],
   // Set proper optimizeDeps options
   optimizeDeps: {
     include: ['react','react-dom'],
