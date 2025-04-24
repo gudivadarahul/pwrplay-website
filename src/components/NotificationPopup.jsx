@@ -54,6 +54,8 @@ function NotificationPopup({ onClose,onSubmit }) {
     setAttempts(prev => prev + 1);
 
     try {
+      console.log(`Submitting to API URL: ${API_URL}/mailchimp`); // Log the full API URL
+
       // Use the same API endpoint and request format as Join.jsx
       const response = await fetch(`${API_URL}/mailchimp`,{
         method: 'POST',
@@ -66,7 +68,15 @@ function NotificationPopup({ onClose,onSubmit }) {
         }),
       });
 
+      // Log the response status to help debug
+      console.log(`API response status: ${response.status}`);
+
+      if (!response.ok) {
+        console.error(`API error: ${response.status} ${response.statusText}`);
+      }
+
       const data = await response.json();
+      console.log('API response data:',data); // Log the full response
 
       // Even if the user is already subscribed, we want to show them the discount code
       if (data.success) {
@@ -94,6 +104,7 @@ function NotificationPopup({ onClose,onSubmit }) {
         trackEvent('Newsletter','Popup Signup Failed',data.error || 'Unknown Error');
       }
     } catch (error) {
+      console.error('Subscription error:',error);
       setMessage("Something went wrong. Please try again.");
       setIsSuccess(false);
       trackEvent('Newsletter','Popup Signup Error',error.message || 'Network Error');
