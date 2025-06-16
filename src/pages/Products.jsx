@@ -1,7 +1,7 @@
 import React,{ useState,useEffect } from "react";
 import { Link } from "react-router-dom";
-import { GiCardRandom, GiCardPlay, GiCardDraw, GiCardDiscard, GiCardPickup } from "react-icons/gi";
-import { FaTrophy, FaGlassCheers, FaCocktail, FaGlassWhiskey, FaBeer, FaWineGlassAlt, FaGamepad } from "react-icons/fa";
+import { GiCardRandom,GiCardPlay,GiCardDraw,GiCardDiscard,GiCardPickup } from "react-icons/gi";
+import { FaTrophy,FaGlassCheers,FaCocktail,FaGlassWhiskey,FaBeer,FaWineGlassAlt,FaGamepad } from "react-icons/fa";
 import { MdSportsBar } from "react-icons/md";
 import { BsController } from "react-icons/bs";
 
@@ -10,30 +10,30 @@ function Products() {
   const [currency,setCurrency] = useState("USD");
   const [loading,setLoading] = useState(true);
   const [productData,setProductData] = useState(null);
-  const [isMobile, setIsMobile] = useState(false);
-  const [iconsLoaded, setIconsLoaded] = useState(false);
+  const [isMobile,setIsMobile] = useState(false);
+  const [iconsLoaded,setIconsLoaded] = useState(false);
 
   // Pre-render icons for faster initial display
   useEffect(() => {
     // Set icons as loaded immediately
     setIconsLoaded(true);
-  }, []);
+  },[]);
 
   // Check for mobile screen size
   useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 640);
     };
-    
+
     // Initial check
     checkMobile();
-    
+
     // Add event listener for resize
-    window.addEventListener('resize', checkMobile);
-    
+    window.addEventListener('resize',checkMobile);
+
     // Cleanup
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
+    return () => window.removeEventListener('resize',checkMobile);
+  },[]);
 
   // Initial product structure with hardcoded prices that match your Shopify settings
   const products = [
@@ -148,7 +148,7 @@ function Products() {
   ];
 
   // Create a larger array with duplicated icons to ensure full rows
-  const extendedIcons = [...gameIcons, ...gameIcons.slice(0, 20)];
+  const extendedIcons = [...gameIcons,...gameIcons.slice(0,20)];
 
   return (
     <>
@@ -171,25 +171,25 @@ function Products() {
           `}
         </style>
         <div className={`grid-background icon-grid-container ${iconsLoaded ? 'loaded' : ''}`}>
-          {Array.from({ length: isMobile ? 42 : 56 }).map((_, index) => {
+          {Array.from({ length: isMobile ? 42 : 56 }).map((_,index) => {
             // Calculate grid position - 6 columns on mobile, 8 columns on larger screens
             const numCols = isMobile ? 6 : 8;
             const col = index % numCols;
             const row = Math.floor(index / numCols);
-            
+
             // Use modulo to cycle through the available icons
             const iconIndex = index % gameIcons.length;
-            
+
             // Calculate position based on screen size
             const leftPosition = isMobile
               ? col * (100 / 6) + 4  // Mobile: 6 columns
               : col * 12.5 + 4;      // Desktop: 8 columns
-            
+
             // Calculate animation duration based on index (staggered)
             const animationDuration = 6 + (index % 3);
-            
+
             return (
-              <div 
+              <div
                 key={`icon-${index}`}
                 className="floating-icon grid-icon text-3xl sm:text-4xl md:text-5xl"
                 style={{
@@ -220,7 +220,7 @@ function Products() {
       </div>
 
       <div className="container mx-auto px-4 pt-28 sm:pt-32 md:pt-36 lg:pt-40 pb-20 sm:pb-24 md:pb-28 lg:pb-40 relative overflow-hidden">
-        
+
         <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-headers mt-3 sm:mt-0 mb-10 sm:mb-10 md:mb-12 text-center relative z-10">
           <span className="text-white">Our</span>{" "}
           <span className="text-red-600">Products</span>
@@ -253,7 +253,7 @@ function Products() {
                       transform: translateY(-5px);
                     }
                   `}</style>
-                  
+
                   {/* Product Image with Red Border and Bounce animation */}
                   <div className="product-bounce rounded-lg overflow-hidden max-w-md sm:max-w-lg mx-auto w-full mb-4 relative product-card border-4 border-red-600 shadow-lg shadow-red-600/30 hover:shadow-xl hover:shadow-red-600/50 cursor-pointer">
                     {/* NEW badge */}
@@ -262,25 +262,22 @@ function Products() {
                         NEW
                       </div>
                     )}
-                    
-                    {/* PRE-ORDER badge - styled to match NEW badge */}
-                    <div className="absolute top-3 left-3 bg-red-600 text-white text-sm font-bold py-1 px-3 rounded-full z-10">
-                      PRE-ORDER
-                    </div>
-                    
+
+
+
                     <div className="overflow-hidden">
                       <img
                         src={product.image}
                         alt={product.name.main}
                         className="w-full h-auto mx-auto object-cover"
-                        style={{ 
+                        style={{
                           minHeight: "400px",
                           transformOrigin: "center center"
                         }}
                       />
                     </div>
                   </div>
-                  
+
                   {/* Product Details Outside the Box */}
                   <div className="text-center max-w-md sm:max-w-lg mx-auto w-full mt-3">
                     <h3 className="font-medium mb-1">

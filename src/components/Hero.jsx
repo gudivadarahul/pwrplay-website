@@ -84,13 +84,7 @@ function Hero() {
       <div className="relative z-10 max-w-6xl mx-auto w-full flex flex-col items-center justify-center text-center">
         {/* Text Content */}
         <div className="w-full flex flex-col justify-center mt-2 sm:mt-8 md:mt-12 lg:mt-60 relative">
-          <div className="absolute w-full top-[-40px] sm:top-[-60px] md:top-[-100px] lg:top-[-180px] left-0 right-0 z-30">
-            <Link to="/products" onClick={() => handleNavClick('/products')} className="cursor-pointer">
-              <p className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-subheaders mb-2 sm:mb-3 md:mb-4 font-bold text-white animate-pulse-red">
-                PRE-SALE LIVE NOW
-              </p>
-            </Link>
-          </div>
+
 
           {/* Top line animation - hidden on mobile */}
           <div className="absolute w-full overflow-visible -top-6 sm:-top-8 md:-top-12 lg:-top-16 left-0 right-0 hidden sm:flex justify-end pr-4 sm:pr-8 md:pr-12 z-20">

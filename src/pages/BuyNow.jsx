@@ -1,7 +1,6 @@
 import { useEffect,useState,useRef,useCallback } from 'react';
 import { useLocation,Link } from 'react-router-dom';
 import { FaChevronDown,FaChevronUp,FaShoppingCart,FaTimes,FaChevronLeft,FaChevronRight,FaTag } from 'react-icons/fa';
-import { GiBottleCap,GiGlassShot } from "react-icons/gi";
 import Navbar from '../components/Navbar';
 import NotificationPopup from '../components/NotificationPopup';
 
@@ -194,11 +193,6 @@ function BuyNow() {
     const calculateTotal = () => {
         let total = 0;
         cartItems.forEach(item => {
-            // Skip virtual promotional items when calculating total
-            if (item.isVirtualItem) {
-                return; // Skip this item - it's a virtual display item
-            }
-
             // Use our hardcoded price instead of Shopify's price
             const itemPrice = region === 'USA' ? 29.99 : 34.99;
             total += itemPrice * item.quantity;
@@ -223,27 +217,21 @@ function BuyNow() {
         const gameId = 'gid://shopify/Product/8205554024627'; // Controlled Chaos
 
         // Check if the cart already has the game
-        const hasGame = cartItems.some(item =>
-            !item.customAttributes ||
-            !item.customAttributes.length ||
-            !item.customAttributes.some(attr => attr.key === 'Promotional')
-        );
+        const hasGame = cartItems.length > 0;
 
         // Fetch the game product first
         clientRef.current.product.fetch(gameId).then((gameProduct) => {
             // Get the variant IDs
             const gameVariantId = gameProduct.variants[0].id;
 
-            // Create line items to add - ONLY add the main game, not promotional items
+            // Create line items to add
             const lineItemsToAdd = [];
 
             // Only add the game if it's not already in cart
             if (!hasGame) {
-                // Create a line item without visible custom attributes that show in checkout
                 lineItemsToAdd.push({
                     variantId: gameVariantId,
                     quantity: 1
-                    // No custom attributes that would show in checkout
                 });
             }
 
@@ -263,43 +251,10 @@ function BuyNow() {
             // Update the checkout reference
             checkoutRef.current = checkout;
 
-            // Create a modified version of the line items for display purposes only
+            // Update the cart items
             const displayLineItems = [...checkout.lineItems];
 
-            // If this is the first add, add the virtual promotional items
-            if (isFirstAdd) {
-                const mainGame = displayLineItems[0]; // The game we just added
 
-                if (mainGame) {
-                    // Create virtual promotional items for display only (not sent to Shopify)
-                    const shotGlassItem = {
-                        id: 'display-shot-glass-' + Date.now(),
-                        title: 'Controlled Chaos™',
-                        displayTitle: 'Controlled Chaos™ Shot Glass',
-                        quantity: 1,
-                        displayPrice: '$0.00',
-                        variant: mainGame.variant,
-                        isVirtualItem: true // Flag to identify display-only items
-                    };
-
-                    const bottleOpenerItem = {
-                        id: 'display-bottle-opener-' + Date.now(),
-                        title: 'Controlled Chaos™',
-                        displayTitle: 'Controlled Chaos™ Bottle Opener',
-                        quantity: 1,
-                        displayPrice: '$0.00',
-                        variant: mainGame.variant,
-                        isVirtualItem: true // Flag to identify display-only items
-                    };
-
-                    // Add virtual items to the display array
-                    displayLineItems.push(shotGlassItem,bottleOpenerItem);
-                }
-            } else {
-                // If not the first add, preserve any existing virtual items
-                const virtualItems = cartItems.filter(item => item.isVirtualItem);
-                displayLineItems.push(...virtualItems);
-            }
 
             setCartItems(displayLineItems);
             setIsCartOpen(true);
@@ -318,29 +273,13 @@ function BuyNow() {
             return;
         }
 
-        // Skip removing virtual display-only items
-        if (lineItemId.toString().includes('display-')) {
-            return;
-        }
-
-        const itemToRemove = cartItems.find(item => item.id === lineItemId);
-
-        // Remove the real item from Shopify checkout
+        // Remove the item from Shopify checkout
         clientRef.current.checkout.removeLineItems(
             checkoutRef.current.id,
             [lineItemId]
         ).then((checkout) => {
             checkoutRef.current = checkout;
-
-            // If we removed all real items, also clear the virtual display items
-            if (checkout.lineItems.length === 0) {
-                setCartItems([]);
-            } else {
-                // Update real items and keep any virtual display items
-                const virtualItems = cartItems.filter(item => item.isVirtualItem);
-                const updatedItems = [...checkout.lineItems,...virtualItems];
-                setCartItems(updatedItems);
-            }
+            setCartItems(checkout.lineItems);
         }).catch(error => handleRemoveError(error));
     };
 
@@ -396,28 +335,19 @@ function BuyNow() {
             return;
         }
 
-        // Ignore updates to virtual display items
-        if (lineItemId.toString().includes('display-')) {
-            return;
-        }
-
         // If quantity is 0 or less, remove the item completely
         if (quantity <= 0) {
             removeFromCart(lineItemId);
             return;
         }
 
-        // Update the actual item in Shopify checkout
+        // Update the item in Shopify checkout
         clientRef.current.checkout.updateLineItems(
             checkoutRef.current.id,
             [{ id: lineItemId,quantity: quantity }]
         ).then((checkout) => {
             checkoutRef.current = checkout;
-
-            // Keep any virtual display items
-            const virtualItems = cartItems.filter(item => item.isVirtualItem);
-            const updatedItems = [...checkout.lineItems,...virtualItems];
-            setCartItems(updatedItems);
+            setCartItems(checkout.lineItems);
         })
             .catch(error => {
                 console.error('Error updating item quantity:',error);
@@ -455,43 +385,6 @@ function BuyNow() {
                         <span className="text-red-600">Controlled Chaos™</span>
                     </h1>
 
-                    {/* Pre-sale banner with sliding text */}
-                    <div className="w-screen relative left-1/2 right-1/2 -mx-[50vw] bg-red-600 mb-6 sm:mb-8 py-2 overflow-hidden">
-                        <style jsx="true">{`
-                            .ticker-wrap {
-                                width: 100%;
-                                overflow: hidden;
-                            }
-                            .ticker {
-                                display: inline-block;
-                                white-space: nowrap;
-                                animation: ticker 30s linear infinite;
-                            }
-                            .ticker-content {
-                                display: inline-block;
-                                padding-right: 2rem;
-                            }
-                            @keyframes ticker {
-                                0% {
-                                    transform: translateX(0);
-                                }
-                                100% {
-                                    transform: translateX(-50%);
-                                }
-                            }
-                        `}</style>
-                        <div className="ticker-wrap">
-                            <div className="ticker">
-                                {/* Repeat the content to create a seamless loop */}
-                                <span className="ticker-content text-white font-bold text-sm sm:text-lg md:text-xl uppercase tracking-wider">PRE-SALE ORDERS SHIPPING IN JUNE • PRE-SALE ORDERS SHIPPING IN JUNE •</span>
-                                <span className="ticker-content text-white font-bold text-sm sm:text-lg md:text-xl uppercase tracking-wider">PRE-SALE ORDERS SHIPPING IN JUNE • PRE-SALE ORDERS SHIPPING IN JUNE •</span>
-                                <span className="ticker-content text-white font-bold text-sm sm:text-lg md:text-xl uppercase tracking-wider">PRE-SALE ORDERS SHIPPING IN JUNE • PRE-SALE ORDERS SHIPPING IN JUNE •</span>
-                                <span className="ticker-content text-white font-bold text-sm sm:text-lg md:text-xl uppercase tracking-wider">PRE-SALE ORDERS SHIPPING IN JUNE • PRE-SALE ORDERS SHIPPING IN JUNE •</span>
-                                <span className="ticker-content text-white font-bold text-sm sm:text-lg md:text-xl uppercase tracking-wider">PRE-SALE ORDERS SHIPPING IN JUNE • PRE-SALE ORDERS SHIPPING IN JUNE •</span>
-                            </div>
-                        </div>
-                    </div>
-
                     {/* Cart Icon */}
                     <div className="fixed bottom-4 sm:bottom-6 right-4 sm:right-6 z-40">
                         <button
@@ -499,12 +392,9 @@ function BuyNow() {
                             className="bg-red-600 hover:bg-red-700 text-white p-3 sm:p-4 rounded-full shadow-lg flex items-center justify-center relative transition-colors duration-200"
                         >
                             <FaShoppingCart className="text-xl sm:text-2xl" />
-                            {cartItems.some(item => !item.displayTitle) && (
+                            {cartItems.length > 0 && (
                                 <span className="absolute -top-2 -right-2 bg-white text-red-600 rounded-full w-5 sm:w-6 h-5 sm:h-6 flex items-center justify-center text-xs sm:text-sm font-bold">
-                                    {cartItems
-                                        .filter(item => !item.displayTitle) // Filter out promotional items
-                                        .reduce((total,item) => total + item.quantity,0)
-                                    }
+                                    {cartItems.reduce((total,item) => total + item.quantity,0)}
                                 </span>
                             )}
                         </button>
@@ -542,71 +432,43 @@ function BuyNow() {
                                                         {/* Product image and details */}
                                                         <div className="flex items-start mb-3">
                                                             <div className="w-16 sm:w-20 h-16 sm:h-20 flex-shrink-0 mr-4 bg-transparent rounded overflow-hidden relative">
-                                                                {item.displayTitle ? (
-                                                                    // For promo items
-                                                                    <div className="w-full h-full flex items-center justify-center bg-black/50 border-2 border-red-600">
-                                                                        {item.displayTitle.includes('Shot Glass') ? (
-                                                                            <GiGlassShot className="text-3xl sm:text-4xl text-white" />
-                                                                        ) : item.displayTitle.includes('Bottle Opener') ? (
-                                                                            <GiBottleCap className="text-3xl sm:text-4xl text-white" />
-                                                                        ) : (
-                                                                            <img
-                                                                                src="/box-top-view.png"
-                                                                                alt={item.title}
-                                                                                className="w-full h-full object-cover"
-                                                                            />
-                                                                        )}
-                                                                        {/* FREE badge */}
-                                                                        <div className="absolute top-0 right-0 bg-red-600 text-white text-xs font-bold px-1 py-0.5 rounded-bl">
-                                                                            FREE!
-                                                                        </div>
-                                                                    </div>
-                                                                ) : (
-                                                                    // For regular item
-                                                                    <img
-                                                                        src="/box-top-view.png"
-                                                                        alt={item.title}
-                                                                        className="w-full h-full object-cover"
-                                                                    />
-                                                                )}
+                                                                <img
+                                                                    src="/box-top-view.png"
+                                                                    alt={item.title}
+                                                                    className="w-full h-full object-cover"
+                                                                />
                                                             </div>
                                                             <div className="flex-grow">
                                                                 <div className="flex justify-between items-center">
-                                                                    <p className="font-bold text-lg sm:text-xl">{item.displayTitle || item.title}</p>
+                                                                    <p className="font-bold text-lg sm:text-xl">{item.title}</p>
                                                                 </div>
-                                                                {/* Display promo items at $0.00 or regular price as needed */}
                                                                 <p className="text-red-500 font-bold mt-2 text-sm sm:text-base">
-                                                                    {item.displayPrice ?
-                                                                        item.displayPrice :
-                                                                        `${currencyCode} $${region === 'USA' ? '29.99' : '34.99'}`
-                                                                    }
+                                                                    {currencyCode} ${region === 'USA' ? '29.99' : '34.99'}
                                                                 </p>
                                                             </div>
                                                         </div>
 
-                                                        {/* Quantity Counter - Only show for the main game, not for promotional items */}
-                                                        {!item.displayTitle && (
-                                                            <div className="mt-2 flex items-center">
-                                                                <span className="text-lg sm:text-xl text-white mr-3 font-medium">Quantity</span>
-                                                                <div className="flex items-center border-2 border-white rounded-full overflow-hidden">
-                                                                    <button
-                                                                        onClick={() => item.quantity <= 1 ? removeFromCart(item.id) : updateItemQuantity(item.id,item.quantity - 1)}
-                                                                        className="px-3 py-1 bg-black hover:bg-gray-900 text-white"
-                                                                    >
-                                                                        -
-                                                                    </button>
-                                                                    <span className="px-3 py-1 bg-black text-white min-w-[30px] text-center">
-                                                                        {item.quantity}
-                                                                    </span>
-                                                                    <button
-                                                                        onClick={() => updateItemQuantity(item.id,item.quantity + 1)}
-                                                                        className="px-3 py-1 bg-black hover:bg-gray-900 text-white"
-                                                                    >
-                                                                        +
-                                                                    </button>
-                                                                </div>
+                                                        {/* Quantity Counter */}
+                                                        <div className="mt-2 flex items-center">
+                                                            <span className="text-lg sm:text-xl text-white mr-3 font-medium">Quantity</span>
+                                                            <div className="flex items-center border-2 border-white rounded-full overflow-hidden">
+                                                                <button
+                                                                    onClick={() => item.quantity <= 1 ? removeFromCart(item.id) : updateItemQuantity(item.id,item.quantity - 1)}
+                                                                    className="px-3 py-1 bg-black hover:bg-gray-900 text-white"
+                                                                >
+                                                                    -
+                                                                </button>
+                                                                <span className="px-3 py-1 bg-black text-white min-w-[30px] text-center">
+                                                                    {item.quantity}
+                                                                </span>
+                                                                <button
+                                                                    onClick={() => updateItemQuantity(item.id,item.quantity + 1)}
+                                                                    className="px-3 py-1 bg-black hover:bg-gray-900 text-white"
+                                                                >
+                                                                    +
+                                                                </button>
                                                             </div>
-                                                        )}
+                                                        </div>
                                                     </div>
                                                 ))}
                                             </div>
@@ -791,30 +653,7 @@ function BuyNow() {
                                 </div>
                             </div>
 
-                            {/* Promotional Offers Section */}
-                            <div className="mb-8 sm:mb-10 bg-black/40 border-2 border-red-600 rounded-lg p-3 sm:p-4 shadow-lg shadow-red-500/30">
-                                <div className="space-y-3 sm:space-y-4">
-                                    <div className="flex items-center">
-                                        <div className="w-10 h-10 sm:w-12 sm:h-12 mr-3 sm:mr-4 flex-shrink-0 flex items-center justify-center bg-red-600 rounded-full">
-                                            <GiGlassShot className="text-xl sm:text-2xl text-white" />
-                                        </div>
-                                        <p className="text-sm sm:text-base md:text-lg">
-                                            <span className="font-bold text-red-500">First 250 orders</span> in each country (USA and Canada) will receive a <span className="font-bold text-white">custom Controlled Chaos™ shot glass</span>.
-                                        </p>
-                                    </div>
-                                    <div className="flex items-center">
-                                        <div className="w-10 h-10 sm:w-12 sm:h-12 mr-3 sm:mr-4 flex-shrink-0 flex items-center justify-center bg-red-600 rounded-full">
-                                            <GiBottleCap className="text-xl sm:text-2xl text-white" />
-                                        </div>
-                                        <p className="text-sm sm:text-base md:text-lg">
-                                            <span className="font-bold text-red-500">First 450 orders</span> in each country (USA and Canada) will receive a <span className="font-bold text-white">limited-edition keychain bottle opener</span>.
-                                        </p>
-                                    </div>
-                                    <div className="text-center pt-1 sm:pt-2">
-                                        <span className="inline-block animate-pulse bg-red-600 text-white text-xs sm:text-sm px-2 sm:px-3 py-0.5 sm:py-1 rounded-full">Limited Stock Available!</span>
-                                    </div>
-                                </div>
-                            </div>
+
                         </div>
                     </div>
                 </div>
