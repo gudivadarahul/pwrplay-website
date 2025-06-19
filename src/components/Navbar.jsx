@@ -148,6 +148,11 @@ const Navbar = () => {
                                         Timeline
                                     </Link>
                                 </h3>
+                                <h3>
+                                    <Link to="/faq" onClick={() => handleNavClick('/faq')} className="nav-link">
+                                        FAQ
+                                    </Link>
+                                </h3>
                             </div>
                         </div>
                     </div>
@@ -178,11 +183,6 @@ const Navbar = () => {
                                 <h3>
                                     <Link to="/store-locator" onClick={() => handleNavClick('/store-locator')} className="nav-link">
                                         Store Locator
-                                    </Link>
-                                </h3>
-                                <h3>
-                                    <Link to="/faq" onClick={() => handleNavClick('/faq')} className="nav-link">
-                                        FAQ
                                     </Link>
                                 </h3>
                             </div>
