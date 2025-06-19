@@ -80,11 +80,30 @@ function Hero() {
         </Link>
       </div>
 
+
+
+      {/* Launch Announcement Banner - positioned above content area */}
+      <div className="absolute top-32 sm:top-20 md:top-24 lg:top-100 left-1/2 transform -translate-x-1/2 z-[199]">
+        <Link
+          to="/buy"
+          className="inline-block text-white 
+          text-xl sm:text-xl md:text-2xl lg:text-3xl xl:text-5xl
+          font-subheaders font-bold 
+          transform hover:scale-105 transition-all duration-300 
+          animate-pulse hover:animate-none
+          cursor-pointer"
+          style={{
+            textShadow: '0 0 10px #dc2626, 0 0 20px #dc2626, 0 0 30px #dc2626, 0 0 40px #dc2626'
+          }}
+        >
+          GAME IS LIVE NOW - BUY TODAY!
+        </Link>
+      </div>
+
       {/* Content Container */}
       <div className="relative z-10 max-w-6xl mx-auto w-full flex flex-col items-center justify-center text-center">
         {/* Text Content */}
         <div className="w-full flex flex-col justify-center mt-2 sm:mt-8 md:mt-12 lg:mt-60 relative">
-
 
           {/* Top line animation - hidden on mobile */}
           <div className="absolute w-full overflow-visible -top-6 sm:-top-8 md:-top-12 lg:-top-16 left-0 right-0 hidden sm:flex justify-end pr-4 sm:pr-8 md:pr-12 z-20">

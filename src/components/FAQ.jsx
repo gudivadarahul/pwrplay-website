@@ -47,11 +47,23 @@ const faqs = [
     },
     {
         question: "Where can I buy Controlled Chaos™?",
-        answer: "Controlled Chaos™ will be available for purchase soon! Stay updated by following us on social media and subscribing to our newsletter."
+        answer: (
+            <span>
+                You can find Controlled Chaos™ on our site at{' '}
+                <Link to="/" className="text-red-600 hover:text-red-400 underline">
+                    pwrplaycreations.com
+                </Link>
+                ! You can also find it at game stores - check our{' '}
+                <Link to="/store-locator" className="text-red-600 hover:text-red-400 underline">
+                    store finder page
+                </Link>
+                {' '}to locate retailers near you.
+            </span>
+        )
     },
     {
         question: "Will Controlled Chaos™ be available outside of Canada?",
-        answer: "Yes! We're launching in Canada and the USA, with plans to expand to more regions. Keep an eye out for updates."
+        answer: "Yes! We have already launched in Canada and the USA, with plans to expand to more regions. Keep an eye out for updates."
     },
     {
         question: "Is Controlled Chaos™ family-friendly?",
@@ -83,6 +95,11 @@ function FAQ() {
     },[location]);
 
     const renderAnswer = (answer) => {
+        // If answer is JSX, render it directly
+        if (typeof answer !== 'string') {
+            return <div className="mb-2">{answer}</div>;
+        }
+
         const paragraphs = answer.split('\n');
 
         return paragraphs.map((paragraph,index) => {
