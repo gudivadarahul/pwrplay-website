@@ -83,7 +83,7 @@ function Hero() {
 
 
       {/* Launch Announcement Banner - positioned above content area */}
-      <div className="absolute top-32 sm:top-20 md:top-24 lg:top-100 left-1/2 transform -translate-x-1/2 z-[199]">
+      <div className="absolute top-32 sm:top-32 md:top-42 lg:top-90 left-1/2 transform -translate-x-1/2 z-[199]">
         <Link
           to="/buy"
           className="inline-block text-white 

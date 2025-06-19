@@ -94,7 +94,7 @@ function AppContent() {
 
       if (isOnShowablePage) {
         // Use a longer delay for homepage to wait for animations to complete
-        const delayTime = location.pathname === '/' ? 4000 : 3000; // 5.5 seconds for homepage, 2 seconds for other pages
+        const delayTime = location.pathname === '/' ? 8000 : 5000; // 8 seconds for homepage, 5 seconds for other pages
 
         // Show popup after the appropriate delay
         const timer = setTimeout(() => {
