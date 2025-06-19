@@ -83,15 +83,15 @@ function Hero() {
 
 
       {/* Launch Announcement Banner - positioned above content area */}
-      <div className="absolute top-24 sm:top-32 md:top-42 lg:top-80 left-1/2 transform -translate-x-1/2 z-[199]">
+      <div className="absolute top-28 sm:top-32 md:top-42 lg:top-80 left-1/2 transform -translate-x-1/2 z-[199]">
         <Link
           to="/buy"
           className="inline-block text-white 
-          text-xl sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl
+          text-sm sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl
           font-subheaders font-bold 
           transform hover:scale-105 transition-all duration-300 
           animate-pulse hover:animate-none
-          cursor-pointer"
+          cursor-pointer whitespace-nowrap"
           style={{
             textShadow: '0 0 10px #dc2626, 0 0 20px #dc2626, 0 0 30px #dc2626, 0 0 40px #dc2626'
           }}
