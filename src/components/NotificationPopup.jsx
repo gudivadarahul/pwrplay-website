@@ -103,7 +103,7 @@ function NotificationPopup({ onClose,onSubmit }) {
   };
 
   return (
-    <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 px-4">
+    <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-[300] px-4">
       <div className="bg-zinc-900 border-2 border-red-600 rounded-lg shadow-lg shadow-red-500/40 max-w-md w-full p-6 relative">
         {/* Close button */}
         <button

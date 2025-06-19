@@ -75,7 +75,7 @@ const faqs = [
     },
     {
         question: "What is your return policy?",
-        answer: "We stand by our game! If there are any issues with your order, we'll work with you to make it right. Stay tuned for our full return policy when we launch."
+        answer: "We stand by our game! If there are any issues with your order, we'll work with you to make it right. Contact us at [contact@pwrplaycreations.com]"
     },
     {
         question: "Other Questions?",
