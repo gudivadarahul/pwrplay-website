@@ -83,7 +83,7 @@ function Hero() {
 
 
       {/* Launch Announcement Banner - positioned above content area */}
-      <div className="absolute top-32 sm:top-32 md:top-42 lg:top-80 left-1/2 transform -translate-x-1/2 z-[199]">
+      <div className="absolute top-28 sm:top-32 md:top-42 lg:top-80 left-1/2 transform -translate-x-1/2 z-[199]">
         <Link
           to="/buy"
           className="inline-block text-white 
@@ -114,7 +114,7 @@ function Hero() {
             />
           </div>
 
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-8xl font-headers leading-tight mt-8 sm:mt-4 md:mt-0 lg:-mt-12 relative z-10">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-8xl font-headers leading-tight sm:mt-4 md:mt-0 lg:-mt-12 relative z-10">
             <span className="inline-block reveal-text-1">Reinventing</span>{" "}
             <span className="inline-block reveal-text-2">the Way</span>{" "}
             <span className="inline-block reveal-text-3">You</span>{" "}
@@ -130,7 +130,7 @@ function Hero() {
             />
           </div>
 
-          <div className="button-fade absolute top-24 sm:top-32 md:top-40 lg:top-60 xl:top-56 left-0 right-0 reveal-button">
+          <div className="button-fade absolute top-18 sm:top-32 md:top-40 lg:top-60 xl:top-56 left-0 right-0 reveal-button">
             <Link
               to="/controlled-chaos"
               className="inline-block border-2 border-red-600 bg-black text-white 
