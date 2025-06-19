@@ -470,27 +470,6 @@ function BuyNow() {
                                                 </span>
                                             </div>
 
-                                            {/* Discount Reminder */}
-                                            <div className="mb-6 p-4 bg-black border-2 border-red-600 rounded-lg shadow-md shadow-red-500/20">
-                                                <div className="flex items-center mb-2">
-                                                    <div className="w-8 h-8 mr-3 flex items-center justify-center bg-red-600 rounded-full flex-shrink-0">
-                                                        <FaTag className="text-white" />
-                                                    </div>
-                                                    <p className="text-white font-headers text-lg sm:text-xl tracking-wide font-bold">
-                                                        SAVE <span className="text-red-600">25% OFF</span>
-                                                    </p>
-                                                </div>
-                                                <p className="hidden sm:block text-sm text-gray-300 mb-3 font-semibold">
-                                                    Sign up for our newsletter to get an exclusive discount code for your purchase.
-                                                </p>
-                                                <button
-                                                    onClick={() => setShowDiscountPopup(true)}
-                                                    className="w-full mt-2 sm:mt-0 bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded transition-colors duration-200 flex items-center justify-center"
-                                                >
-                                                    <span>Get Discount Code</span>
-                                                </button>
-                                            </div>
-
                                             <button
                                                 onClick={proceedToCheckout}
                                                 className="w-full bg-red-600 hover:bg-red-700 text-white font-bold text-lg sm:text-xl py-3 sm:py-4 px-4 sm:px-6 rounded-full transition-colors duration-200 flex items-center justify-center"
