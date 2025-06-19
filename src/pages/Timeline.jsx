@@ -50,6 +50,12 @@ function Timeline() {
             title: "Presale Launch",
             description: "The moment we've been waiting for! We officially launched the presale of Controlled Chaos™, giving our eager community the first opportunity to secure their copies of the game before general release.",
             stats: "Presale Open | Limited First Edition Available"
+        },
+        {
+            date: "June 2025",
+            title: "Official Launch",
+            description: "We’re beyond excited to announce  Controlled Chaos™ has officially launched! It’s been an incredible journey turning this idea into reality, and we’re so grateful for all the support along the way!",
+            stats: "We're live | The Chaos Continues"
         }
     ];
 

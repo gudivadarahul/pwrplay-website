@@ -13,6 +13,7 @@ import Contact from "./pages/Contact";
 import Retailers from "./pages/Retailers";
 import Timeline from "./pages/Timeline";
 import Ambassador from "./pages/Ambassador";
+import StoreLocator from "./pages/StoreLocator";
 import { initGA,trackPageView } from './config/analytics';
 import ScrollToTop from "./components/ScrollToTop";
 import Products from "./pages/Products";
@@ -142,6 +143,7 @@ function AppContent() {
             <Route path="/connect/retailers" element={<Retailers />} />
             <Route path="/about/timeline" element={<Timeline />} />
             <Route path="/ambassador" element={<Ambassador />} />
+            <Route path="/store-locator" element={<StoreLocator />} />
           </Routes>
         </main>
         <Footer />

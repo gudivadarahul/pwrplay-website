@@ -1,6 +1,6 @@
 import { useEffect,useState,useRef,useCallback } from 'react';
 import { useLocation,Link } from 'react-router-dom';
-import { FaChevronDown,FaChevronUp,FaShoppingCart,FaTimes,FaChevronLeft,FaChevronRight,FaTag } from 'react-icons/fa';
+import { FaChevronDown,FaChevronUp,FaShoppingCart,FaTimes,FaChevronLeft,FaChevronRight,FaTag,FaMapMarkerAlt } from 'react-icons/fa';
 import Navbar from '../components/Navbar';
 import NotificationPopup from '../components/NotificationPopup';
 
@@ -309,23 +309,8 @@ function BuyNow() {
     // Proceed to checkout
     const proceedToCheckout = () => {
         if (checkoutRef.current && checkoutRef.current.webUrl) {
-            // Force the URL to go directly to checkout rather than the store page
-            let checkoutUrl = checkoutRef.current.webUrl;
-
-            // If the URL doesn't already end with checkout, ensure it redirects to checkout
-            if (!checkoutUrl.includes('/checkout')) {
-                checkoutUrl = checkoutUrl.split('?')[0]; // Remove any existing query params
-                checkoutUrl = `${checkoutUrl}/checkout`;
-            }
-
-            // Ensure we're using the checkout with a proper redirect_to
-            if (!checkoutUrl.includes('redirect_to=checkout')) {
-                checkoutUrl = checkoutUrl.includes('?')
-                    ? `${checkoutUrl}&redirect_to=checkout`
-                    : `${checkoutUrl}?redirect_to=checkout`;
-            }
-
-            window.open(checkoutUrl,'_blank');
+            // Use the checkout web URL directly - Shopify provides the correct URL
+            window.open(checkoutRef.current.webUrl,'_blank');
         }
     };
 
@@ -634,6 +619,17 @@ function BuyNow() {
                                 >
                                     {isLoading ? 'Loading...' : `Add to Cart - ${currencyCode} $${productPrice}`}
                                 </button>
+                            </div>
+
+                            {/* Store Locator Button */}
+                            <div className="flex justify-center items-center w-full mb-4 sm:mb-5">
+                                <Link
+                                    to="/store-locator"
+                                    className="bg-transparent hover:bg-red-600/10 text-red-600 hover:text-red-500 font-bold text-base sm:text-lg md:text-xl py-3 md:py-4 px-5 sm:px-6 md:px-10 rounded-full min-w-[140px] sm:min-w-[160px] md:min-w-[200px] text-center transition-all duration-200 border-2 border-red-600 hover:border-red-500 flex items-center justify-center gap-2"
+                                >
+                                    <FaMapMarkerAlt className="text-sm sm:text-base" />
+                                    <span>Find Stores Near You</span>
+                                </Link>
                             </div>
 
                             {/* Region selector - mobile only */}

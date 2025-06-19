@@ -17,8 +17,8 @@ export default defineConfig({
     strictPort: true, // Ensures Vite always runs on port 3000
     hmr: {
       overlay: true,
-      // Ensure HMR works with Netlify Dev
-      clientPort: 8888,
+      // Fix HMR to work with the correct port
+      clientPort: 3000,
       host: 'localhost',
     },
     proxy: {
